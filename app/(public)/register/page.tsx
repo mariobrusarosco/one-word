@@ -1,5 +1,5 @@
 import { MemberQueries } from "@/domains/member/server-side/queries";
-import { SharedRoutes } from "@/domains/shared/typing/enums-and-interfaces";
+import { SharedRoutes } from "@/domains/shared/typing/routing";
 import { TableRoutes } from "@/domains/tables/typing/enums-and-interfaces";
 import Link from "next/link";
 import { redirect } from "next/navigation";

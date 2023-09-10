@@ -1,4 +1,4 @@
-import { SharedRoutes } from "@/domains/shared/typing/enums-and-interfaces";
+import { SharedRoutes } from "@/domains/shared/typing/routing";
 import { db } from "@/server-side/db/prisma";
 import { User, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";

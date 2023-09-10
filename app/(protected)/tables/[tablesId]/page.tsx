@@ -1,5 +1,3 @@
-// import { useParams } from "next/navigation";
-
 interface Props {
   params: { tableId: string };
 }

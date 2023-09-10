@@ -15,6 +15,12 @@ module.exports = {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        app: "minmax(auto,95px) minmax(auto,224px) 1fr",
+      },
+      dropShadow: {
+        main: "0px 5px 5px rgba(0, 0, 0, 0.25)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

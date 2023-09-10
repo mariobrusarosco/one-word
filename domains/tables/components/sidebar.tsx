@@ -6,7 +6,7 @@ export const TableSidebar = () => {
   //   const { member } = useAuthentication();
 
   return (
-    <aside className="col-span-3 lg:col-span-2 flex flex-col bg-neutral-white shadow-main z-[1]">
+    <aside className="flex flex-col bg-neutral-white shadow-main z-[1]  h-screen ">
       <span>Olá</span>
       {/* <span>{member?.firstName}</span> */}
       <button

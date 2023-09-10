@@ -1,34 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# One Word
 
-## Getting Started
+This is a side project game and by now, is a Work In Progress
 
-First, run the development server:
+## Layout
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+[Link](https://www.figma.com/file/lTIxelelnjm83MiROxrlTe/One-Word?type=design&node-id=0%3A1&mode=design&t=8IL9mMSoloe1bCnK-1)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Next JS (13) as a framework - created via `create-next-app`
+- Prisma as ORM
+- Typescript
+- Tailwind CSS for Styles
+- Shadcn UI for Design System
+- Planet Scale (MySQL) integrated with Prisma for Database
+- Deployed using Vercel's built in CI/CD integration
+- Clerk JS for Authentication (possibly moving to NextAuth in the future)
+- Uploadthing to handle file uploading
+- Socket.io to handle instant communication
 
-## Learn More
+## Environments
 
-To learn more about Next.js, take a look at the following resources:
+So far, it works on Vercel's Preview Environments and an unique Production environment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Production**
+[https://one-word-orpin.vercel.app/](https://one-word-orpin.vercel.app/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Development
 
-## Deploy on Vercel
+// TODO
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### How to handle database changes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+// TODO
+
+- Get into details, of the procedures for using PlanetScales branches.
+- Get into details, of the procedures for using Prisma commands (generate and push).

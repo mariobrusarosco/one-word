@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/domains/shared/utils/ui";
+import { Loader2, Loader2Icon } from "lucide-react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -17,13 +18,13 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary-base text-neutral-white hover:bg-secondary-base/70",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "text-primary und erline-offset-4 hover:underline",
       },
       size: {
-        default: "px-5 py-2",
-        sm: "h[25px] w-[25px] px-1 px-1",
-        md: "h-[50px] w-[50px] px-3 px-1",
-        lg: "h-[100px] w-[100px] px-5",
+        default: "text-sm h-[36px] px-3 py-3 ",
+        sm: "text-sm h-[36px] px-3 py-3",
+        md: "text-lg h-[48px] px-4 py-5",
+        lg: "text-x2l h-[60px] px-6 py-6",
       },
       roundness: {
         square: "rounded-none",
@@ -49,11 +50,21 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  loading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant, size, roundness, shadow, asChild = false, ...props },
+    {
+      className,
+      variant,
+      size,
+      roundness,
+      shadow,
+      asChild = false,
+      loading = false,
+      ...props
+    },
     ref
   ) => {
     const Comp = asChild ? Slot : "button";
@@ -64,7 +75,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         ref={ref}
         {...props}
-      />
+      >
+        {loading ? <Loader2 className="animate-spin" /> : props.children}
+      </Comp>
     );
   }
 );

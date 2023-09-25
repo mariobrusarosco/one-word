@@ -9,29 +9,37 @@ import {
   TooltipTrigger,
 } from "@/domains/shared/components/ui/tooltip";
 import { GlobalTooltips } from "@/domains/shared/typing/ui";
+import { useGlobalModal } from "@/domains/shared/providers/store";
+import { CreateTableModal } from "./create-table-modal";
 
 export const AddTableCTA = () => {
+  const { openModal } = useGlobalModal();
+
   return (
-    <TooltipProvider delayDuration={GlobalTooltips.DURATION}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="secondary"
-            size="md"
-            roundness="full"
-            onClick={() => alert("asdsa")}
-            className="text-2xl"
+    <>
+      <CreateTableModal />
+      <TooltipProvider delayDuration={GlobalTooltips.DURATION}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="secondary"
+              size="md"
+              roundness="full"
+              onClick={() => openModal("create-table-modal")}
+              className="text-2xl"
+              loading={false}
+            >
+              <Plus />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent
+            className="bg-primary-base text-neutral-white"
+            side="right"
           >
-            <Plus />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent
-          className="bg-primary-base text-neutral-white"
-          side="right"
-        >
-          Create table
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+            Create table
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </>
   );
 };

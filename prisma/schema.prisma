@@ -9,10 +9,17 @@ generator client {
 }
 
 model Member {
-  id String @id @default(uuid())
-  userId String @unique
+  id        String  @id @default(uuid())
+  userId    String  @unique
   firstName String
-  lastName String
-  email String @unique
-  profileImageUrl String @db.Text
+  table     Table[]
+}
+
+model Table {
+  id   String @id @default(uuid())
+  name String
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [userId])
+  @@index([memberId])
 }

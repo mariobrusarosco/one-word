@@ -1,3 +1,3 @@
 export enum GlobalTooltips {
-  DURATION = 300,
+  DURATION = 150,
 }

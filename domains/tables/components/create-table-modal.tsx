@@ -64,6 +64,7 @@ export const CreateTableModal = () => {
         name: formValues.name,
       });
       router.refresh();
+      form.reset();
       closeModal();
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger

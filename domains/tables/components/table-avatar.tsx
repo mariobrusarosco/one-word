@@ -21,7 +21,7 @@ export const TableAvatar = ({ label }: Props) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            size="md"
+            size="lg"
             roundness="full"
             onClick={() => alert("asdsa")}
             className="text-lg font-thin"

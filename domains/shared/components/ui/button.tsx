@@ -6,7 +6,7 @@ import { cn } from "@/domains/shared/utils/ui";
 import { Loader2, Loader2Icon } from "lucide-react";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "grid place-items-center font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -18,14 +18,15 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary-base text-neutral-white hover:bg-secondary-base/70",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary und erline-offset-4 hover:underline",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "text-sm h-[36px] px-3 py-3 ",
-        sm: "text-sm h-[36px] px-3 py-3",
-        md: "text-lg h-[48px] px-4 py-5",
-        lg: "text-x2l h-[60px] px-6 py-6",
+        default: "text-sm px-3 py-3 ",
+        sm: "text-sm px-4 py-3",
+        md: "text-base px-5 py-4",
+        lg: "text-2xl px-6 py-6",
       },
+      // min-w-[74px]
       roundness: {
         square: "rounded-none",
         default: "rounded-sm",
@@ -37,6 +38,28 @@ const buttonVariants = cva(
         test: "drop-shadow-1",
       },
     },
+    compoundVariants: [
+      {
+        roundness: "full",
+        size: "sm",
+        class: "w-[20px] h-[20px] p-0",
+      },
+      {
+        roundness: "full",
+        size: "md",
+        class: "w-[30px] h-[30px] p-0",
+      },
+      {
+        roundness: "full",
+        size: "lg",
+        class: "w-[45px] h-[45px] p-0",
+      },
+      {
+        variant: "link",
+        size: ["sm", "md", "lg"],
+        class: "py-0",
+      },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",

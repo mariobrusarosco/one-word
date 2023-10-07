@@ -23,7 +23,7 @@ export const AddTableCTA = () => {
           <TooltipTrigger asChild>
             <Button
               variant="secondary"
-              size="md"
+              size="lg"
               roundness="full"
               onClick={() => openModal("create-table-modal")}
               className="text-2xl"

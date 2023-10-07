@@ -36,13 +36,14 @@ import { Info } from "lucide-react";
 import Image from "next/image";
 import { ImageUploader } from "@/domains/shared/components/image-uploader/image-uploader";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export const CreateTableModal = () => {
   const { ModalElement, openModal, closeModal } = useGlobalModal();
   const [uploadingImage, setUploadingImage] = useState(false);
   // TODO [PROJECT SPECIFIC FEATURE] : consider lib's hook to use a native 'isUploading'
   // https://docs.uploadthing.com/api-reference/react#useuploadthing
-
+  const router = useRouter();
   const form = useForm<TableInputData>({
     defaultValues: {
       name: "",
@@ -62,11 +63,12 @@ export const CreateTableModal = () => {
       await api.post(TableEndpoints.ROOT, {
         name: formValues.name,
       });
+      router.refresh();
+      closeModal();
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger
       console.log("[TABLES_FORM]: ", error);
     } finally {
-      form.reset();
     }
   };
 

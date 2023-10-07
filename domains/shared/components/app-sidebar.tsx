@@ -2,20 +2,14 @@ import { UserButton } from "@clerk/nextjs";
 import { Separator } from "@/domains/shared/components/ui/separator";
 import { AddTableCTA } from "@/domains/tables/components/add-table-cta";
 import { TableAvatar } from "@/domains/tables/components/table-avatar";
-import { db } from "@/server-side/db/prisma";
-import { Suspense } from "react";
 import { ScrollArea } from "./ui/scroll-area";
+import { TableQueries } from "@/domains/tables/server-side/queries";
 
-export const AppSidebar = async () => {
-  let tables = null;
-  try {
-    tables = await db.table.findMany({
-      where: {},
-    });
-  } catch (e) {
-    console.error(e);
-  }
+interface Props {
+  memberTables: Awaited<ReturnType<typeof TableQueries.fetchTables>>;
+}
 
+export const AppSidebar = async ({ memberTables }: Props) => {
   return (
     <aside className="flex flex-col bg-neutral-white shadow-main z-[2]  h-screen">
       <ScrollArea data-test="table-wrapper">
@@ -24,9 +18,9 @@ export const AppSidebar = async () => {
 
           <Separator className="h-[1px] bg-secondary-base" />
 
-          {tables?.map((table) => {
-            return <TableAvatar key={table.id} label={table.name} />;
-          })}
+          {memberTables?.map((table) => (
+            <TableAvatar key={table.id} label={table.name} tableId={table.id} />
+          ))}
         </div>
       </ScrollArea>
 

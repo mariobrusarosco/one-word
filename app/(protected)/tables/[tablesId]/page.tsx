@@ -1,7 +1,7 @@
 import { Button } from "@/domains/shared/components/ui/button";
 
 interface Props {
-  params: { tableId: string };
+  params: { tablesId: string };
 }
 
 const TableScreen = ({ params }: Props) => {
@@ -9,7 +9,7 @@ const TableScreen = ({ params }: Props) => {
     <main>
       <h2>
         Table:
-        {params.tableId}
+        {params.tablesId}
         <Button variant="default">Start Round</Button>
         <Button variant="secondary">Start Round</Button>
       </h2>

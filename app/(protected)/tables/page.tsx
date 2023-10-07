@@ -11,12 +11,12 @@ const List = async () => {
   return (
     <>
       <h2>Tables</h2>;
-      {/* {posts.map((post: any) => (
+      {posts.map((post: any) => (
         <div key={post.id} className="post-listing">
           <h3 className="post-title">{post.title}</h3>
           <p className="post-body">{post.body}</p>
         </div>
-      ))} */}
+      ))}
     </>
   );
 };

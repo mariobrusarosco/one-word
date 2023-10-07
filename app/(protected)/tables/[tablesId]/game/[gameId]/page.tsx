@@ -25,17 +25,42 @@ const GameScreen = ({ params }: Props) => {
         Ola mundao
       </ModalElement>
       <div className="flexl gap-2">
-        <div className="flex items-baseline gap-2">
+        <div className="flex items-end gap-2 mb-6">
           <Button variant="default" size="sm">
             create
           </Button>
-          <Button variant="default" size="md">
+          <Button variant="secondary" size="md">
             create
           </Button>
-          <Button variant="default" size="lg">
+          <Button variant="outline" size="lg">
             create
           </Button>
         </div>
+
+        <div className="flex items-end gap-2 mb-6">
+          <Button variant="destructive" size="sm">
+            create
+          </Button>
+          <Button variant="ghost" size="md">
+            create
+          </Button>
+          <Button variant="link" size="lg">
+            create
+          </Button>
+        </div>
+
+        <div className="flex items-end gap-2 mb-6">
+          <Button variant="default" size="sm" roundness="full">
+            x
+          </Button>
+          <Button variant="default" size="md" roundness="full">
+            x
+          </Button>
+          <Button variant="default" size="lg" roundness="full">
+            x
+          </Button>
+        </div>
+
         <Button
           size="sm"
           roundness="full"

@@ -8,13 +8,18 @@ import {
 } from "@/domains/shared/components/ui/tooltip";
 import { GlobalTooltips } from "@/domains/shared/typing/ui";
 import { getInitials } from "@/domains/shared/utils/string-manipulation";
+import { useRouter } from "next/navigation";
 
 interface Props {
   label: string;
+  tableId: string;
 }
 
-export const TableAvatar = ({ label }: Props) => {
+export const TableAvatar = ({ label, tableId }: Props) => {
   const tableInitials = getInitials(label);
+  const router = useRouter();
+
+  const goToTablePage = () => router.push(`/tables/${tableId}`);
 
   return (
     <TooltipProvider delayDuration={GlobalTooltips.DURATION}>
@@ -23,7 +28,7 @@ export const TableAvatar = ({ label }: Props) => {
           <Button
             size="lg"
             roundness="full"
-            onClick={() => alert("asdsa")}
+            onClick={goToTablePage}
             className="text-lg font-thin"
           >
             {tableInitials}

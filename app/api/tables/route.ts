@@ -1,7 +1,7 @@
 import { TableInputData } from "@/domains/tables/typing/enums-and-interfaces";
 import { db } from "@/server-side/db/prisma";
-import { getAuth, authMiddleware } from "@clerk/nextjs/server";
-import { Table } from "@prisma/client";
+import { getAuth } from "@clerk/nextjs/server";
+import { v4 as uuidV4 } from "uuid";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -22,7 +22,13 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const newTable = await db.table.create({
       data: {
         name: body.name,
-        memberId: profile.userId,
+        inviteCode: uuidV4(),
+        memberAdminId: profile.userId,
+        participants: {
+          connect: {
+            userId: profile.userId,
+          },
+        },
       },
     });
 

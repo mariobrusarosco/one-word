@@ -17,6 +17,10 @@ export const TableSidebar = async ({ memberTables }: Props) => {
         <h2 className="text-primary-base text-sm">{table?.name}</h2>
         <span>x</span>
       </div>
+
+      <button onClick={() => router.push(`/invite/${table?.inviteCode}`)}>
+        temp invititation
+      </button>
     </aside>
   );
 };

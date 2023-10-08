@@ -9,17 +9,21 @@ generator client {
 }
 
 model Member {
-  id        String  @id @default(uuid())
-  userId    String  @unique
-  firstName String
-  table     Table[]
+  id                      String @id @default(uuid())
+  userId                  String @unique
+  firstName               String
+  tablesAsAdmin           Table[] @relation("table_admin")
+  tablesAsParticipant     Table[] @relation("participants")
 }
 
 model Table {
-  id   String @id @default(uuid())
-  name String
+  id                    String @id @default(uuid())
+  name                  String
+  inviteCode            String @unique
 
-  memberId String
-  member   Member @relation(fields: [memberId], references: [userId])
-  @@index([memberId])
+  memberAdminId         String
+  memberAdmin           Member   @relation("table_admin", fields: [memberAdminId], references: [userId], onDelete: Cascade)
+  participants          Member[] @relation("participants")
+
+  @@index([memberAdminId])
 }

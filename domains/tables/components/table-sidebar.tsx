@@ -3,6 +3,7 @@ import { useParams, useRouter } from "next/navigation";
 import { TableQueries } from "../server-side/queries";
 import { TableHeading } from "./table-heading";
 import isEmpty from "lodash-es/isEmpty";
+import { TableParticipants } from "./table-participants";
 
 interface Props {
   memberTables: Awaited<ReturnType<typeof TableQueries.fetchTables>>;
@@ -24,6 +25,8 @@ export const TableSidebar = async ({ memberTables }: Props) => {
           <button onClick={() => router.push(`/invite/${table?.inviteCode}`)}>
             temp invititation
           </button>
+
+          <TableParticipants table={table} />
         </>
       )}
     </aside>

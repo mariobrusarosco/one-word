@@ -2,6 +2,7 @@ interface Props {
   children: React.ReactNode;
 }
 
+import { TableSidebar } from "@/domains/tables/components/table-sidebar";
 import { AppSidebar } from "@/domains/shared/components/app-sidebar/app-sidebar";
 import { redirect } from "next/navigation";
 import { MemberQueries } from "@/domains/member/server-side/queries";
@@ -17,7 +18,7 @@ const ProtectedLayout = async ({ children }: Props) => {
   return (
     <div className="grid grid-col grid-cols-app h-screen max-h-screen">
       <AppSidebar memberTables={memberTables} />
-      {/* <TableSidebar memberTables={memberTables} /> */}
+      <TableSidebar memberTables={memberTables} />
       <main className="container bg-neutral-white overflow-auto">
         {children}
       </main>

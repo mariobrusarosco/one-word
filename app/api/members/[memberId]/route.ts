@@ -20,8 +20,6 @@ export async function PATCH(req: NextRequest, res: NextApiResponse) {
 
     console.log({ params });
 
-    const member = await db.member.update({});
-
     return NextResponse.json({ temp: true });
   } catch (error) {
     // TODO [BOILERPLATE] - apply app's logger

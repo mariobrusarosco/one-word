@@ -54,7 +54,7 @@ const buttonVariants = cva(
       {
         variant: "link",
         size: ["sm", "md", "lg"],
-        class: "py-0",
+        class: "p-0",
       },
     ],
     defaultVariants: {

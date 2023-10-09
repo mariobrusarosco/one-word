@@ -14,11 +14,6 @@ model Member {
   firstName    String
   lastName     String
   email        String         @db.Text
-<<<<<<< HEAD
-  // tablesAsAdmin Table[] @relation("table_admin")
-  // tablesAsParticipant     Table[] @relation("participants")
-=======
->>>>>>> fa4a5838a9c32ff8d8d46ee9d057041348b01a0e
   TableProfile TableProfile[]
 }
 
@@ -32,20 +27,13 @@ model TableProfile {
   id   String @default(uuid()) @unique
   role TableRole @default(GUEST)
 
-<<<<<<< HEAD
-  member   Member @relation(fields: [id], references: [userId], onDelete: Cascade)
-=======
   memberId String
   member   Member @relation(fields: [memberId], references: [userId], onDelete: Cascade)
->>>>>>> fa4a5838a9c32ff8d8d46ee9d057041348b01a0e
 
   tableId String
   table   Table  @relation(fields: [tableId], references: [id], onDelete: Cascade)
 
-<<<<<<< HEAD
-=======
   @@index([memberId])
->>>>>>> fa4a5838a9c32ff8d8d46ee9d057041348b01a0e
   @@index([tableId])
 }
 

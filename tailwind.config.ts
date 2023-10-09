@@ -58,10 +58,12 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
         "neutral-white": "#FFF",
+        "neutral-black": "#000",
         "primary-base": "#EC185D",
         "primary-dark": "#BB2253",
         "base-light": "#FF6F59",
         "secondary-base": "#254441",
+        danger: "#FF2D2D",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -69,7 +71,8 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        main: "4px 0px 10px 0px rgba(135, 128, 128, 0.25);",
+        right: "4px 0px 10px 0px rgba(135, 128, 128, 0.25);",
+        bottom: "4px 0px 10px 0px rgba(135, 128, 128, 0.25);",
       },
       keyframes: {
         "accordion-down": {

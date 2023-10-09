@@ -38,7 +38,7 @@ const GameScreen = ({ params }: Props) => {
         </div>
 
         <div className="flex items-end gap-2 mb-6">
-          <Button variant="destructive" size="sm">
+          <Button variant="danger" size="sm">
             create
           </Button>
           <Button variant="ghost" size="md">

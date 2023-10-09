@@ -21,13 +21,7 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 
     const updatedTable = await db.table.update({
       where: { inviteCode: inviteCode },
-      data: {
-        participants: {
-          connect: {
-            userId: profile.userId,
-          },
-        },
-      },
+      data: {},
     });
 
     return NextResponse.json(updatedTable);

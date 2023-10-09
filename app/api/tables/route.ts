@@ -2,8 +2,9 @@ import { TableInputData } from "@/domains/tables/typing/enums-and-interfaces";
 import { db } from "@/server-side/db/prisma";
 import { getAuth } from "@clerk/nextjs/server";
 import { v4 as uuidV4 } from "uuid";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
+import { TableRole } from "@prisma/client";
 
 export async function POST(req: NextRequest, res: NextApiResponse) {
   try {
@@ -11,9 +12,9 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
 
     if (!profile.userId) {
       // TODO [BOILERPLATE] - apply app's logger
-      console.log("[TABLES_POST]: ", "NOT AUTHORIZED");
+      console.log("[TABLES_POST]: ", "UNAUTHORIZED");
 
-      return new NextResponse("[INTERNAL ERROR] - [SERVERS_POST]", {
+      return new NextResponse("[UNAUTHORIZED] - [SERVERS_POST]", {
         status: 401,
       });
     }
@@ -23,10 +24,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
       data: {
         name: body.name,
         inviteCode: uuidV4(),
-        memberAdminId: profile.userId,
-        participants: {
-          connect: {
-            userId: profile.userId,
+        profiles: {
+          create: {
+            memberId: profile.userId,
+            role: TableRole.ADMIN,
           },
         },
       },

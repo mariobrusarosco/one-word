@@ -33,7 +33,7 @@ export const TableHeading = ({ table }: Props) => {
   return (
     <>
       <CreateInviteModal table={table} />
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="flex justify-between items-center p-3 font-semibold shadow-bottom z-[1] text-secondary-base cursor-pointer ">
           <div className="text-left">
             <span className="text-xs">table</span>

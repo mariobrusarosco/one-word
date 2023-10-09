@@ -11,7 +11,7 @@ interface Props {
 
 export const AppSidebar = async ({ memberTables }: Props) => {
   return (
-    <aside className="flex flex-col bg-neutral-white shadow-right z-[2]  h-screen">
+    <aside className="flex flex-col bg-neutral-white shadow-right z-[2] min-w-[95px] h-screen">
       <ScrollArea data-test="table-wrapper">
         <div className="grid place-items-center flex-1 p-4 gap-4">
           <AddTableCTA />

@@ -16,10 +16,12 @@ const ProtectedLayout = async ({ children }: Props) => {
   if (member === null) return redirect(AuthRoutes.REGISTER);
 
   return (
-    <div className="grid grid-col grid-cols-app h-screen max-h-screen">
+    <div className="flex h-screen max-h-screen">
       <AppSidebar memberTables={memberTables} />
+
       <TableSidebar memberTables={memberTables} />
-      <main className="container bg-neutral-white overflow-auto">
+
+      <main className="container px-14 bg-neutral-white overflow-auto">
         {children}
       </main>
     </div>

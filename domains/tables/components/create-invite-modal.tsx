@@ -20,7 +20,7 @@ interface Props {
 }
 
 export const CreateInviteModal = ({ table }: Props) => {
-  const inviteurl = `${window?.origin}/invite/${table.inviteCode}`;
+  const inviteurl = `${window?.origin}/tables/${table.id}/invite/${table.inviteCode}`;
   const [isCopied, setIsCopied] = useState(false);
   // TODO [PROJECT SPECIFIC FEATURE] : replace this with React Query
   const router = useRouter();
@@ -81,7 +81,7 @@ export const CreateInviteModal = ({ table }: Props) => {
 
       <Button
         onClick={handleOnClick}
-        disabled={isLoading}
+        loading={isLoading}
         variant="link"
         size="sm"
         className="text-x"

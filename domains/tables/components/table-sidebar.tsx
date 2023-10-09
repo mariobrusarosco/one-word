@@ -17,18 +17,10 @@ export const TableSidebar = async ({ memberTables }: Props) => {
   if (isEmpty(table)) return null;
 
   return (
-    <aside className="flex flex-col bg-neutral-white shadow-right z-[1] h-screen">
-      {isEmpty(table) ? null : (
-        <>
-          <TableHeading table={table} />
+    <aside className="flex flex-col bg-neutral-white shadow-right z-[1] min-w-[224px] h-screen">
+      <TableHeading table={table} />
 
-          <button onClick={() => router.push(`/invite/${table?.inviteCode}`)}>
-            temp invititation
-          </button>
-
-          <TableParticipants table={table} />
-        </>
-      )}
+      <TableParticipants table={table} />
     </aside>
   );
 };

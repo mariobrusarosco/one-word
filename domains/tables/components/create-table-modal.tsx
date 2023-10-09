@@ -73,8 +73,6 @@ export const CreateTableModal = () => {
     }
   };
 
-  console.log({ uploadingImage, formIsValid, formIsLoading, formErrors });
-
   return (
     <ModalElement openModalWithId="create-table-modal">
       <DialogHeader className="">

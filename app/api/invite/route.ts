@@ -1,5 +1,6 @@
 import { db } from "@/server-side/db/prisma";
 import { getAuth } from "@clerk/nextjs/server";
+import { TableRole } from "@prisma/client";
 import { NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -22,9 +23,10 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     const updatedTable = await db.table.update({
       where: { inviteCode: inviteCode },
       data: {
-        participants: {
-          connect: {
-            userId: profile.userId,
+        profiles: {
+          create: {
+            memberId: profile.userId,
+            role: TableRole.GUEST,
           },
         },
       },

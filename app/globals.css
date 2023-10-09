@@ -80,3 +80,7 @@ body,
 :root {
   height: 100%;
 }
+
+.home {
+  background: linear-gradient(180deg, #ec185d 19.31%, #bb2253 63.97%);
+}

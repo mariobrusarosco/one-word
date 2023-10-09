@@ -9,7 +9,8 @@ const fetchTables = cache(async () => {
   if (authenticatedMember === null) return null;
 
   return await db.table.findMany({
-    where: { participants: { some: { userId: authenticatedMember.id } } },
+    where: { profiles: { some: { memberId: authenticatedMember.id } } },
+    include: { profiles: true },
   });
 });
 
@@ -18,7 +19,7 @@ const addParticipant = async (inviteCode: string) => {
   const authenticatedMember = await currentUser();
   if (authenticatedMember === null) return null;
 
-  const temp = db.table.update({});
+  // const temp = db.table.update({});
 };
 
 export const TableQueries = {

@@ -9,21 +9,42 @@ generator client {
 }
 
 model Member {
-  id                      String @id @default(uuid())
-  userId                  String @unique
-  firstName               String
-  tablesAsAdmin           Table[] @relation("table_admin")
-  tablesAsParticipant     Table[] @relation("participants")
+  id           String         @id @default(uuid())
+  userId       String         @unique
+  firstName    String
+  lastName     String
+  email        String         @db.Text
+  // tablesAsAdmin Table[] @relation("table_admin")
+  // tablesAsParticipant     Table[] @relation("participants")
+  TableProfile TableProfile[]
+}
+
+enum TableRole {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+model TableProfile {
+  id   String @default(uuid()) @unique
+  role TableRole @default(GUEST)
+
+  member   Member @relation(fields: [id], references: [userId], onDelete: Cascade)
+
+  tableId String
+  table   Table  @relation(fields: [tableId], references: [id], onDelete: Cascade)
+
+  @@index([tableId])
 }
 
 model Table {
-  id                    String @id @default(uuid())
-  name                  String
-  inviteCode            String @unique
+  id         String @id @default(uuid())
+  name       String
+  inviteCode String @unique
 
-  memberAdminId         String
-  memberAdmin           Member   @relation("table_admin", fields: [memberAdminId], references: [userId], onDelete: Cascade)
-  participants          Member[] @relation("participants")
+  // memberAdminId String
+  // memberAdmin   Member @relation("table_admin", fields: [memberAdminId], references: [userId], onDelete: Cascade)
+  // @@index([memberAdminId])
 
-  @@index([memberAdminId])
+  profiles TableProfile[]
 }

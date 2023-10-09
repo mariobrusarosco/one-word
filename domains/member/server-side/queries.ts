@@ -19,9 +19,9 @@ const createMember = async () => {
     return await db.member.create({
       data: {
         userId: authenticatedMember.id,
-        // email: authenticatedMember.emailAddresses[0].emailAddress,
+        email: authenticatedMember.emailAddresses[0].emailAddress,
         firstName: authenticatedMember.firstName ?? "",
-        // lastName: authenticatedMember.lastName ?? "",
+        lastName: authenticatedMember.lastName ?? "",
         // profileImageUrl: authenticatedMember.imageUrl,
       },
     });

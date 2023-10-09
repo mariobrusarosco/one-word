@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/domains/shared/utils/ui";
-import { Loader2, Loader2Icon } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 const buttonVariants = cva(
   "grid place-items-center font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -11,12 +11,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary-base text-neutral-white hover:bg-primary-base/80",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:
           "bg-secondary-base text-neutral-white hover:bg-secondary-base/70",
+        danger: "bg-danger hover:bg-danger/90 text-neutral-white",
+        outline: "border border-input bg-background hover:bg-neutral-black/10",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -26,7 +24,6 @@ const buttonVariants = cva(
         md: "text-base px-5 py-4",
         lg: "text-2xl px-6 py-6",
       },
-      // min-w-[74px]
       roundness: {
         square: "rounded-none",
         default: "rounded-sm",
@@ -35,24 +32,24 @@ const buttonVariants = cva(
       },
       shadow: {
         true: "drop-shadow-main",
-        test: "drop-shadow-1",
+        false: "drop-shadow-0",
       },
     },
     compoundVariants: [
       {
         roundness: "full",
         size: "sm",
-        class: "w-[20px] h-[20px] p-0",
+        class: "w-[20px] h-[20px] p-0 text-sm",
       },
       {
         roundness: "full",
         size: "md",
-        class: "w-[30px] h-[30px] p-0",
+        class: "w-[30px] h-[30px] p-0 text-md",
       },
       {
         roundness: "full",
         size: "lg",
-        class: "w-[45px] h-[45px] p-0",
+        class: "w-[45px] h-[45px] p-0 text-lg",
       },
       {
         variant: "link",
@@ -64,7 +61,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
       roundness: "default",
-      shadow: true,
+      shadow: false,
     },
   }
 );

@@ -1,9 +1,10 @@
+"use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/domains/shared/components/ui/dropdown-menu";
-import { Prisma } from "@prisma/client";
+
 import {
   ChevronDown,
   PlusCircle,
@@ -16,10 +17,11 @@ import { cn } from "@/domains/shared/utils/ui";
 import { useGlobalModal } from "@/domains/shared/providers/store";
 import { CreateInviteModal } from "./create-invite-modal";
 import { EditTableModal } from "./edit-table-modal";
-
-type TableWithProfiles = Prisma.TableGetPayload<{
-  include: { profiles: true };
-}>;
+import { getPermissionByRole } from "../utils/get-permission-by-role";
+import { TableWithProfiles } from "../typing/enums-and-interfaces";
+import { getMemberTableProfile } from "../utils/get-member-table-profile";
+import { useUser } from "@clerk/nextjs";
+import { TableProfile } from "@prisma/client";
 
 interface Props {
   table: TableWithProfiles;
@@ -29,6 +31,15 @@ export const TableHeading = ({ table }: Props) => {
   const rowStyles =
     "rounded-sm flex justify-between align-center text-sm cursor-pointer px-2 py-2 gap-7 hover:bg-neutral-white hover:text-secondary-base";
   const { openModal, activeModalId } = useGlobalModal();
+  const { user } = useUser();
+  const profile = getMemberTableProfile(table, user?.id ?? "") as TableProfile;
+  const {
+    canInviteMember,
+    canEditTable,
+    canManageMembers,
+    canCreateChannel,
+    canDeleteTable,
+  } = getPermissionByRole(profile.role);
 
   return (
     <>
@@ -47,37 +58,48 @@ export const TableHeading = ({ table }: Props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-secondary-base text-neutral-white p-3 max-w-[240px]">
           <ul className="grid grid-cols-1 gap-2">
-            <li
-              className={rowStyles}
-              onClick={() => openModal("create-invite-modal")}
-            >
-              <p>Invite Friends</p>
-              <UserPlus className="w-[20px]" />
-            </li>
-            <li
-              className={cn(rowStyles)}
-              onClick={() => openModal("edit-table-modal")}
-            >
-              <p>Table settings</p>
-              <Settings className="w-[20px]" />
-            </li>
-            <li className={cn(rowStyles)}>
-              <p>Manage members</p>
-              <Users2 className="w-[20px]" />
-            </li>
-            <li className={cn(rowStyles)}>
-              <p>Create channel</p>
-              <PlusCircle className="w-[20px]" />
-            </li>
-            <li
-              className={cn(
-                rowStyles,
-                "bg-danger text-neutral-white hover:text-danger hover:bg-neutral-white"
-              )}
-            >
-              <p>Delete table</p>
-              <Trash className="w-[20px]" />
-            </li>
+            {canInviteMember && (
+              <li
+                className={rowStyles}
+                onClick={() => openModal("create-invite-modal")}
+              >
+                <p>Invite Friends</p>
+                <UserPlus className="w-[20px]" />
+              </li>
+            )}
+            {canEditTable && (
+              <li
+                className={cn(rowStyles)}
+                onClick={() => openModal("edit-table-modal")}
+              >
+                <p>Table settings</p>
+                <Settings className="w-[20px]" />
+              </li>
+            )}
+            {canManageMembers && (
+              <li className={cn(rowStyles)}>
+                <p>Manage members</p>
+                <Users2 className="w-[20px]" />
+              </li>
+            )}
+            {canCreateChannel && (
+              <li className={cn(rowStyles)}>
+                <p>Create channel</p>
+                <PlusCircle className="w-[20px]" />
+              </li>
+            )}
+
+            {canDeleteTable && (
+              <li
+                className={cn(
+                  rowStyles,
+                  "bg-danger text-neutral-white hover:text-danger hover:bg-neutral-white"
+                )}
+              >
+                <p>Delete table</p>
+                <Trash className="w-[20px]" />
+              </li>
+            )}
           </ul>
         </DropdownMenuContent>
       </DropdownMenu>

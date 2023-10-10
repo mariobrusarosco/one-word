@@ -30,8 +30,8 @@ export const JoinTableButton = ({ inviteCode }: Props) => {
 
       if (!isEmpty(currentTableProfile)) {
         setIsLoading(false);
-        router.push(`/${TableRoutes.HOME}/${currentTableProfile.tableId}`);
         router.refresh();
+        router.push(`${TableRoutes.HOME}/${currentTableProfile.tableId}`);
       }
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger

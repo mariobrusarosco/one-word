@@ -1,5 +1,8 @@
 import { create } from "zustand";
-import { ModalContainer } from "../components/modals/components/modal-container";
+import {
+  ModalContainer,
+  ModalContainerProps,
+} from "../components/modals/components/modal-container";
 
 interface ModalStore {
   activeModalId: string;
@@ -11,10 +14,7 @@ interface ModalStore {
   ModalElement: ({
     children,
     openModalWithId,
-  }: {
-    children: React.ReactNode;
-    openModalWithId: string;
-  }) => JSX.Element;
+  }: ModalContainerProps) => JSX.Element;
 }
 
 export const useGlobalModal = create<ModalStore>((set) => {
@@ -22,7 +22,8 @@ export const useGlobalModal = create<ModalStore>((set) => {
     activeModalId: "",
     counter: 0,
     increment: () => set((state) => ({ counter: state.counter + 1 })),
-    closeModal: () => set(() => ({ state: "closed" })),
+    closeModal: () =>
+      set(() => ({ state: "closed", activeModalId: undefined })),
     openModal: (id: string) =>
       set(() => ({ state: "open", activeModalId: id })),
     state: "closed",

@@ -1,13 +1,17 @@
 import { useGlobalModal } from "@/domains/shared/providers/store";
 import { Dialog, DialogContent } from "../../ui/dialog";
 
+export interface ModalContainerProps {
+  children: React.ReactNode;
+  openModalWithId: string;
+  customOnClose: () => void;
+}
+
 export const ModalContainer = ({
   children,
   openModalWithId,
-}: {
-  children: React.ReactNode;
-  openModalWithId: string;
-}) => {
+  customOnClose,
+}: ModalContainerProps) => {
   const { activeModalId, state, closeModal } = useGlobalModal();
 
   const shouldDisplayModal =
@@ -15,7 +19,13 @@ export const ModalContainer = ({
 
   if (shouldDisplayModal) {
     return (
-      <Dialog open onOpenChange={closeModal}>
+      <Dialog
+        open
+        onOpenChange={() => {
+          customOnClose();
+          closeModal();
+        }}
+      >
         <DialogContent className="px-12 overflow-hidden">
           {children}
         </DialogContent>

@@ -4,7 +4,7 @@ import { Dialog, DialogContent } from "../../ui/dialog";
 export interface ModalContainerProps {
   children: React.ReactNode;
   openModalWithId: string;
-  customOnClose: () => void;
+  customOnClose?: () => void;
 }
 
 export const ModalContainer = ({
@@ -22,7 +22,7 @@ export const ModalContainer = ({
       <Dialog
         open
         onOpenChange={() => {
-          customOnClose();
+          customOnClose && customOnClose();
           closeModal();
         }}
       >

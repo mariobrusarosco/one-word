@@ -13,9 +13,9 @@ import {
   Users2,
 } from "lucide-react";
 import { cn } from "@/domains/shared/utils/ui";
-import { Separator } from "@/domains/shared/components/ui/separator";
 import { useGlobalModal } from "@/domains/shared/providers/store";
 import { CreateInviteModal } from "./create-invite-modal";
+import { EditTableModal } from "./edit-table-modal";
 
 type TableWithProfiles = Prisma.TableGetPayload<{
   include: { profiles: true };
@@ -28,11 +28,15 @@ interface Props {
 export const TableHeading = ({ table }: Props) => {
   const rowStyles =
     "rounded-sm flex justify-between align-center text-sm cursor-pointer px-2 py-2 gap-7 hover:bg-neutral-white hover:text-secondary-base";
-  const { openModal } = useGlobalModal();
+  const { openModal, activeModalId } = useGlobalModal();
 
   return (
     <>
-      <CreateInviteModal table={table} />
+      {activeModalId === "create-invite-modal" && (
+        <CreateInviteModal table={table} />
+      )}
+      {activeModalId === "edit-table-modal" && <EditTableModal table={table} />}
+
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger className="flex justify-between items-center p-3 font-semibold shadow-bottom z-[1] text-secondary-base cursor-pointer ">
           <div className="text-left">
@@ -50,7 +54,10 @@ export const TableHeading = ({ table }: Props) => {
               <p>Invite Friends</p>
               <UserPlus className="w-[20px]" />
             </li>
-            <li className={cn(rowStyles)}>
+            <li
+              className={cn(rowStyles)}
+              onClick={() => openModal("edit-table-modal")}
+            >
               <p>Table settings</p>
               <Settings className="w-[20px]" />
             </li>

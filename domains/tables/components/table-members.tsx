@@ -23,8 +23,6 @@ const MemberRoleActions = ({ role }: MemberActionProps) => {
 };
 
 export const TableMembers = ({ table }: Props) => {
-  console.log({ table });
-
   const temp = async () => {
     const result = await axios.patch(`/api/tables/${table.id}/profile`, {
       role: TableRole.MODERATOR,

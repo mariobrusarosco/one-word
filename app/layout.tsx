@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
-import { AppLoaderScreen } from "@/domains/shared/components/app-loader-screen";
+import { AppLoaderScreen } from "@/domains/shared/components/app-loader-screen/app-loader-screen";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";

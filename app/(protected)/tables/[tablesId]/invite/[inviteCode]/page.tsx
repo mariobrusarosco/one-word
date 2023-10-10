@@ -1,14 +1,34 @@
 import { Separator } from "@/domains/shared/components/ui/separator";
 
 import { Dices, Pen, SquareEqual } from "lucide-react";
-import { TableEndpoints } from "@/domains/tables/endpoints";
 import { JoinTableButton } from "./join-table-button";
+import { db } from "@/server-side/db/prisma";
+import { auth } from "@clerk/nextjs";
+import { isEmpty } from "lodash-es";
+import { redirect } from "next/navigation";
+import { TableRoutes } from "@/domains/tables/typing/enums-and-interfaces";
 
 interface Props {
   params: { inviteCode: string };
 }
 
-const InvitationScreen = ({ params }: Props) => {
+const InvitationScreen = async ({ params }: Props) => {
+  const { userId } = auth();
+  const table = await db.table.findFirst({
+    where: {
+      inviteCode: params?.inviteCode,
+    },
+    include: { profiles: true },
+  });
+
+  const userTableProfile = table?.profiles.find(
+    (profile) => profile.memberId === userId
+  );
+
+  if (!isEmpty(userTableProfile)) {
+    redirect(`/${TableRoutes.HOME}/${userTableProfile.tableId}`);
+  }
+
   return (
     <div className="flex flex-col pt-16 h-full">
       <h2 className="text-5xl text-primary-base pb-2">Invite</h2>
@@ -16,10 +36,13 @@ const InvitationScreen = ({ params }: Props) => {
 
       <div className="grid grid-cols-2 flex-1 text-neutral-white">
         <div className="flex flex-col pt-14">
-          <div>
-            <p className="text-primary-base font-semibold">table</p>
+          <div className="text-secondary-base ">
+            <p className="text-2xl">
+              You&apos;ve been invited to{" "}
+              <span className="text-primary-base">table</span>
+            </p>
 
-            <p className="uppercase text-secondary-base text-5xl">{"TODO"}</p>
+            <p className="text-5xl">{table?.name}</p>
           </div>
           <div className="flex items-end justify-between flex-1 pb-28 pr-16">
             <p className="text-secondary-base text-4xl max-w-[261px]">

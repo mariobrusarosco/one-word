@@ -1,8 +1,6 @@
 import { TableInputData } from "@/domains/tables/typing/enums-and-interfaces";
 import { db } from "@/server-side/db/prisma";
 import { getAuth } from "@clerk/nextjs/server";
-import { v4 as uuidV4 } from "uuid";
-import { NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { TableRole } from "@prisma/client";
 
@@ -29,11 +27,11 @@ export async function POST(
       });
     }
 
-    console.log("params.inviteCode", params);
     // TODO [PROJECT SPECIFIC FEATURE] : consider a middleware for this auth process
     const table = await db.table.update({
       where: {
         inviteCode: params.inviteCode,
+        profiles: { none: { memberId: authenticatedMember.userId } },
       },
       data: {
         profiles: {
@@ -43,6 +41,7 @@ export async function POST(
           },
         },
       },
+      include: { profiles: true },
     });
 
     return NextResponse.json(table);

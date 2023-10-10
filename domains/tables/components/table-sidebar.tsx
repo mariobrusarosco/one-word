@@ -1,5 +1,4 @@
-"use client";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { TableQueries } from "../server-side/queries";
 import { TableHeading } from "./table-heading";
 import isEmpty from "lodash-es/isEmpty";
@@ -9,8 +8,7 @@ interface Props {
   memberTables: Awaited<ReturnType<typeof TableQueries.fetchTables>>;
 }
 
-export const TableSidebar = async ({ memberTables }: Props) => {
-  const router = useRouter();
+export const TableSidebar = ({ memberTables }: Props) => {
   const params = useParams() as { tablesId: string };
   const table = memberTables?.find((table) => table.id === params.tablesId);
 

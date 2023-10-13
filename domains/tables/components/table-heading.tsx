@@ -22,6 +22,7 @@ import { TableWithProfiles } from "../typing/enums-and-interfaces";
 import { getMemberTableProfile } from "../utils/get-member-table-profile";
 import { useUser } from "@clerk/nextjs";
 import { TableProfile } from "@prisma/client";
+import { ManageMemberModal } from "./manage-member-modal";
 
 interface Props {
   table: TableWithProfiles;
@@ -47,8 +48,11 @@ export const TableHeading = ({ table }: Props) => {
         <CreateInviteModal table={table} />
       )}
       {activeModalId === "edit-table-modal" && <EditTableModal table={table} />}
+      {activeModalId === "manage-members-modal" && (
+        <ManageMemberModal table={table} />
+      )}
 
-      <DropdownMenu modal={false}>
+      <DropdownMenu>
         <DropdownMenuTrigger className="flex justify-between items-center p-3 font-semibold shadow-bottom z-[1] text-secondary-base cursor-pointer ">
           <div className="text-left">
             <span className="text-xs">table</span>
@@ -77,7 +81,10 @@ export const TableHeading = ({ table }: Props) => {
               </li>
             )}
             {canManageMembers && (
-              <li className={cn(rowStyles)}>
+              <li
+                className={cn(rowStyles)}
+                onClick={() => openModal("manage-members-modal")}
+              >
                 <p>Manage members</p>
                 <Users2 className="w-[20px]" />
               </li>

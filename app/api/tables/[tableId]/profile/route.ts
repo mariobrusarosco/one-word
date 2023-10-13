@@ -35,17 +35,8 @@ export async function PATCH(
 
     const payload = (await req.json()) as UpdateProfileRole;
 
-    const tableProfile = await db.tableProfile.findFirst({
-      where: {
-        memberId: payload.profileId,
-      },
-    });
-    if (!tableProfile) return false;
-
     const updateProfile = await db.tableProfile.update({
-      where: {
-        id: tableProfile.id,
-      },
+      where: { memberId: payload.profileId },
       data: {
         role: payload.role,
       },

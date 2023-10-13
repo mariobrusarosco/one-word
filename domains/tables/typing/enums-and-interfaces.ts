@@ -27,5 +27,9 @@ export const TableManagementPermissions: Record<TablePermission, TableRole[]> =
   };
 
 export type TableWithProfiles = Prisma.TableGetPayload<{
-  include: { profiles: true };
+  include: { profiles: { include: { member: true } } };
+}>;
+
+export type ProfileWithMembers = Prisma.TableProfileGetPayload<{
+  include: { member: true };
 }>;

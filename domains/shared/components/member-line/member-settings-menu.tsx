@@ -9,7 +9,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { RoleMapperIcon } from "./member-llne";
+import { RoleMapperIcon } from "./member-line";
 import { TableProfile, TableRole } from "@prisma/client";
 import { useState } from "react";
 import restApi from "../../api/rest";

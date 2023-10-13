@@ -1,7 +1,7 @@
 import { FileEdit, Loader, Trash } from "lucide-react";
 import { Channel } from "@prisma/client";
 import { useState } from "react";
-import restApi from "../../api/rest";
+import restApi from "../../shared/api/rest";
 import { useRouter } from "next/navigation";
 
 interface Props {

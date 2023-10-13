@@ -34,13 +34,10 @@ export const MemberSettingsMenu = ({ showMemberSettings, profile }: Props) => {
     try {
       setIsUpdatingRole(true);
       // TODO [PROJECT SPECIFIC FEATURE] : replace this with React Query
-      const result = await restApi.patch(
-        `/tables/${params?.tablesId}/profile`,
-        {
-          role,
-          profileId: profile.memberId,
-        }
-      );
+      const result = await restApi.patch(`/tables/${params?.tableId}/profile`, {
+        role,
+        profileId: profile.memberId,
+      });
       router.refresh();
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger

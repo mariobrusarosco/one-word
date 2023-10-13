@@ -24,7 +24,7 @@ enum TableRole {
 }
 
 model TableProfile {
-  id   String @default(uuid()) @unique
+  id   String    @unique @default(uuid())
   role TableRole @default(GUEST)
 
   memberId String
@@ -33,8 +33,12 @@ model TableProfile {
   tableId String
   table   Table  @relation(fields: [tableId], references: [id], onDelete: Cascade)
 
+  // channelId String?
+  // Channel   Channel? @relation(fields: [channelId], references: [id])
+
   @@index([memberId])
   @@index([tableId])
+  // @@index([channelId])
 }
 
 model Table {
@@ -42,9 +46,18 @@ model Table {
   name       String
   inviteCode String @unique
 
-  // memberAdminId String
-  // memberAdmin   Member @relation("table_admin", fields: [memberAdminId], references: [userId], onDelete: Cascade)
-  // @@index([memberAdminId])
-
   profiles TableProfile[]
+  channels Channel[]
+}
+
+model Channel {
+  id   String @id @default(uuid())
+  name String
+
+  tableId String
+  table   Table  @relation(fields: [tableId], references: [id], onDelete: Cascade)
+
+  // participants TableProfile[]
+
+  @@index([tableId])
 }

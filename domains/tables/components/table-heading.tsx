@@ -53,7 +53,7 @@ export const TableHeading = ({ table }: Props) => {
       )}
 
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex justify-between items-center p-3 font-semibold shadow-bottom z-[1] text-secondary-base cursor-pointer ">
+        <DropdownMenuTrigger className="flex justify-between items-center p-4 font-semibold shadow-bottom z-[1] text-secondary-base cursor-pointer ">
           <div className="text-left">
             <span className="text-xs">table</span>
             <h2 className="text-md">{table?.name}</h2>

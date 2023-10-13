@@ -30,6 +30,11 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
             role: TableRole.ADMIN,
           },
         },
+        channels: {
+          create: {
+            name: "general",
+          },
+        },
       },
     });
 

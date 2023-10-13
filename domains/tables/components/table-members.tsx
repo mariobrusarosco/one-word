@@ -1,4 +1,4 @@
-import { MemberLine } from "@/domains/shared/components/member-line/member-llne";
+import { MemberLine } from "@/domains/shared/components/member-line/member-line";
 import { TableWithProfiles } from "../typing/enums-and-interfaces";
 
 interface Props {

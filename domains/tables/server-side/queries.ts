@@ -10,7 +10,7 @@ const fetchTables = cache(async () => {
 
   return await db.table.findMany({
     where: { profiles: { some: { memberId: authenticatedMember.id } } },
-    include: { profiles: { include: { member: true } } },
+    include: { profiles: { include: { member: true } }, channels: true },
   });
 });
 

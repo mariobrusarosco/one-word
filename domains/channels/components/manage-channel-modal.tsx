@@ -7,7 +7,6 @@ import {
   DialogTitle,
 } from "@/domains/shared/components/ui/dialog";
 import { Input } from "@/domains/shared/components/ui/input";
-import { useGlobalModal } from "@/domains/shared/providers/store";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -23,6 +22,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Channel } from "@prisma/client";
 import restApi from "@/domains/shared/api/rest";
 import { ChannelEndpoints } from "../endpoints";
+import { AppModalGuard } from "@/domains/shared/components/modals/components/app-modal-guard";
 
 interface Props {
   modalMode: "create" | "edit";
@@ -34,7 +34,6 @@ export const ManageChannelModal = ({ modalMode, channel }: Props) => {
   const isCreateModal = modalMode === "create";
   const isEditModal = !isCreateModal;
 
-  const { ModalElement, closeModal } = useGlobalModal();
   const router = useRouter();
   const form = useForm<ChannelInputData>({
     defaultValues: {
@@ -42,8 +41,6 @@ export const ManageChannelModal = ({ modalMode, channel }: Props) => {
     },
     resolver: zodResolver(channelFormSchema),
   });
-
-  console.log({ params });
 
   const formIsLoading = form.formState.isSubmitting;
   const formIsValid = form.formState.isValid;
@@ -68,7 +65,7 @@ export const ManageChannelModal = ({ modalMode, channel }: Props) => {
 
       router.refresh();
       form.reset();
-      closeModal();
+      // closeModal();
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger
       console.log(`[${modalMode}_CHANNEL_FORM]: `, error);
@@ -77,7 +74,7 @@ export const ManageChannelModal = ({ modalMode, channel }: Props) => {
   };
 
   return (
-    <ModalElement openModalWithId={`${modalMode}-channel-modal`}>
+    <AppModalGuard modalUI="manage-channel" modalID={channel?.id}>
       <DialogHeader className="">
         <DialogTitle className="text-2xl text-center font-thin text-primary-base">
           {isCreateModal ? "Create Channel" : `Edit ${channel?.name}`}
@@ -116,6 +113,6 @@ export const ManageChannelModal = ({ modalMode, channel }: Props) => {
           </div>
         </form>
       </Form>
-    </ModalElement>
+    </AppModalGuard>
   );
 };

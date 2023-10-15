@@ -1,3 +1,4 @@
+"use client";
 import { UserButton } from "@clerk/nextjs";
 import { Separator } from "@/domains/shared/components/ui/separator";
 import { AddTableCTA } from "@/domains/tables/components/add-table-cta";
@@ -9,7 +10,7 @@ interface Props {
   memberTables: Awaited<ReturnType<typeof TableQueries.fetchTables>>;
 }
 
-export const AppSidebar = async ({ memberTables }: Props) => {
+export const AppSidebar = ({ memberTables }: Props) => {
   return (
     <aside className="flex flex-col bg-neutral-white shadow-right z-[2] min-w-[95px] h-screen">
       <ScrollArea data-test="table-wrapper">

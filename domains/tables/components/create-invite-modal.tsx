@@ -7,13 +7,13 @@ import {
   DialogTitle,
 } from "@/domains/shared/components/ui/dialog";
 import { Input } from "@/domains/shared/components/ui/input";
-import { useGlobalModal } from "@/domains/shared/providers/store";
 import api from "@/domains/shared/api/rest";
 import { TableEndpoints } from "../endpoints";
 import { Check, Copy, RefreshCcw } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Table } from "@prisma/client";
+import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
 
 interface Props {
   table: Table;
@@ -25,7 +25,7 @@ export const CreateInviteModal = ({ table }: Props) => {
   // TODO [PROJECT SPECIFIC FEATURE] : replace this with React Query
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { ModalElement } = useGlobalModal();
+  // const { ModalElement } = useGlobalModal();
   const onCopy = () => {
     setIsCopied(true);
     navigator.clipboard.writeText(inviteurl);
@@ -53,7 +53,7 @@ export const CreateInviteModal = ({ table }: Props) => {
   };
 
   return (
-    <ModalElement openModalWithId="create-invite-modal">
+    <AppModalGuardBase>
       <DialogHeader className="">
         <DialogTitle className="text-2xl text-center font-thin text-primary-base">
           Invitation
@@ -91,6 +91,6 @@ export const CreateInviteModal = ({ table }: Props) => {
           <RefreshCcw className="w-4" />
         </div>
       </Button>
-    </ModalElement>
+    </AppModalGuardBase>
   );
 };

@@ -1,4 +1,5 @@
 import { useModal } from "@/domains/shared/providers/hooks/modal";
+import React from "react";
 
 export interface ModalContainerProps {
   children: React.ReactNode;
@@ -6,16 +7,13 @@ export interface ModalContainerProps {
   modalID?: string;
 }
 
-export const AppModalGuard = ({
-  children,
-  modalUI,
-  modalID,
-}: ModalContainerProps) => {
-  const { ui, id } = useModal();
-  const shouldDisplayModal = modalUI === ui && modalID === id;
+export const AppModalGuard = (props: ModalContainerProps) => {
+  const modalProps = useModal();
+  const shouldDisplayModal =
+    props.modalUI === modalProps.ui && props.modalID === modalProps.id;
 
-  if (shouldDisplayModal) {
-    return children;
+  if (React.isValidElement(props.children) && shouldDisplayModal) {
+    React.cloneElement(props.children, modalProps);
   }
 
   return null;

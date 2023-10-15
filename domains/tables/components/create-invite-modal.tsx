@@ -14,10 +14,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Table } from "@prisma/client";
 import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
+import { WithModalProps } from "@/domains/shared/providers/hooks/modal";
 
-interface Props {
+type Props = WithModalProps<{
   table: Table;
-}
+}>;
 
 export const CreateInviteModal = ({ table }: Props) => {
   const inviteurl = `${window?.origin}/tables/${table.id}/invite/${table.inviteCode}`;

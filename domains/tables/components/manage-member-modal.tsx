@@ -7,12 +7,13 @@ import {
 import { Separator } from "@/domains/shared/components/ui/separator";
 import { TableWithProfiles } from "../typing/enums-and-interfaces";
 import { TableMembers } from "./table-members";
+import { WithModalProps } from "@/domains/shared/providers/hooks/modal";
 import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
 
 interface Props {
   table: TableWithProfiles;
 }
-export const ManageMemberModal = ({ table }: Props) => {
+export const ManageMemberModal = ({ table }: WithModalProps<Props>) => {
   return (
     <AppModalGuardBase>
       <DialogHeader className="">

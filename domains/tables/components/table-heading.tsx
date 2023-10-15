@@ -22,7 +22,6 @@ import { getMemberTableProfile } from "../utils/get-member-table-profile";
 import { useUser } from "@clerk/nextjs";
 import { TableProfile } from "@prisma/client";
 import { ManageMemberModal } from "./manage-member-modal";
-import { useParams } from "next/navigation";
 import { useModal } from "@/domains/shared/providers/hooks/modal";
 import { AppModalGuard } from "@/domains/shared/components/modals/components/app-modal-guard";
 

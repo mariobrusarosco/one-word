@@ -1,5 +1,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 
+export type ModalProps = ReturnType<typeof useModal>;
+export type WithModalProps<T> = T & Partial<ModalProps>;
+
 export const useModal = () => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);

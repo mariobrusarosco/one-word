@@ -35,11 +35,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Table } from ".prisma/client";
 import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
+import { WithModalProps } from "@/domains/shared/providers/hooks/modal";
 
-interface Props {
+type Props = WithModalProps<{
   table: Table;
-}
-export const EditTableModal = ({ table }: Props) => {
+}>;
+
+export const EditTableModal = ({ table, close }: Props) => {
   console.log("[EditTableModal]");
   const [uploadingImage, setUploadingImage] = useState(false);
   // TODO [PROJECT SPECIFIC FEATURE] : consider lib's hook to use a native 'isUploading'
@@ -61,13 +63,13 @@ export const EditTableModal = ({ table }: Props) => {
       await api.patch(TableEndpoints.UPDATE.replace(":tableId", table.id), {
         name: formValues.name,
       });
-      form.reset();
+      close?.();
       router.refresh();
-      // closeModal();
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger
       console.log("[TABLES_FORM]: ", error);
     } finally {
+      // form.reset();
     }
   };
 

@@ -1,6 +1,6 @@
 {
-  "name": "only-one",
-  "version": "0.1.1",
+  "name": "one-word",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -19,42 +19,8 @@ export const ChannelSettingsMenu = ({ channel }: Props) => {
   const router = useRouter();
   const { open } = useModal();
 
-  const handleDeleteChannel = async () => {
-    try {
-      setIsUpdatingOrDeletingChannel(true);
-      // TODO [PROJECT SPECIFIC FEATURE] : replace this with React Query
-      const result = await restApi.delete(`/channels/${channel?.id}`);
-      router.refresh();
-    } catch (error) {
-      // TODO [BOILERPLATE] - apply app's logger
-      console.log("[CHANNEL_SETTINGS_MENU]: ", error);
-    } finally {
-      setIsUpdatingOrDeletingChannel(false);
-    }
-  };
-
-  const handleUpdateChannel = async (channelName: string) => {
-    try {
-      setIsUpdatingOrDeletingChannel(true);
-      // TODO [PROJECT SPECIFIC FEATURE] : replace this with React Query
-      const result = await restApi.patch(`/channels/${channel?.id}/`, {
-        name: channelName,
-      });
-      router.refresh();
-    } catch (error) {
-      // TODO [BOILERPLATE] - apply app's logger
-      console.log("[CHANNEL_SETTINGS_MENU]: ", error);
-    } finally {
-      setIsUpdatingOrDeletingChannel(false);
-    }
-  };
-
   return (
     <div className="ml-auto flex gap-2">
-      <AppModalGuard modalUI="manage-channel">
-        <ManageChannelModal channel={channel} modalMode="edit" />
-      </AppModalGuard>
-
       {isUpdatingOrDeletingChannel ? (
         <Loader className="h-[15px] w-[15px]" />
       ) : (
@@ -68,7 +34,15 @@ export const ChannelSettingsMenu = ({ channel }: Props) => {
               })
             }
           />
-          <Trash className="h-[15px] w-[15px]" />
+          <Trash
+            className="h-[15px] w-[15px]"
+            onClick={() =>
+              open({
+                id: channel.id,
+                ui: "delete-channel",
+              })
+            }
+          />
         </>
       )}
     </div>

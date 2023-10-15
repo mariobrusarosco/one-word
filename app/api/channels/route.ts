@@ -5,6 +5,7 @@ import { ChannelInputData } from "@/domains/channels/typing/enums-and-interfaces
 
 export async function POST(req: NextRequest) {
   try {
+    // TODO [PROJECT SPECIFIC FEATURE] : consider a middleware for this auth process
     const profile = getAuth(req);
     if (!profile.userId) {
       // TODO [BOILERPLATE] - apply app's logger

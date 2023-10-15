@@ -22,29 +22,28 @@ import { useParams, useRouter } from "next/navigation";
 import { Channel } from "@prisma/client";
 import restApi from "@/domains/shared/api/rest";
 import { ChannelEndpoints } from "../endpoints";
-import { AppModalGuard } from "@/domains/shared/components/modals/components/app-modal-guard";
+import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
+import { WithModalProps } from "@/domains/shared/providers/hooks/modal";
+import { isEmpty } from "lodash-es";
 
-interface Props {
-  modalMode: "create" | "edit";
-  channel?: Channel;
-}
+type Props = WithModalProps<{
+  channels?: Channel[];
+}>;
 
-export const ManageChannelModal = ({ modalMode, channel }: Props) => {
+export const ManageChannelModal = ({ channels, id, close }: Props) => {
   const params = useParams();
-  const isCreateModal = modalMode === "create";
-  const isEditModal = !isCreateModal;
+  const channelToEdit = channels?.find((channel) => channel.id === id);
+  const isCreateModal = isEmpty(channelToEdit);
 
   const router = useRouter();
   const form = useForm<ChannelInputData>({
     defaultValues: {
-      name: channel?.name ?? "",
+      name: channelToEdit?.name ?? "",
     },
     resolver: zodResolver(channelFormSchema),
   });
 
   const formIsLoading = form.formState.isSubmitting;
-  const formIsValid = form.formState.isValid;
-  const formErrors = form.formState.errors;
 
   const handleOnSubmit = async (formValues: ChannelInputData) => {
     try {
@@ -54,30 +53,27 @@ export const ManageChannelModal = ({ modalMode, channel }: Props) => {
           tableId: params?.tableId,
         });
       }
-      if (isEditModal) {
-        await restApi.patch(
-          ChannelEndpoints.CHANNEL.replace(":channelId", channel?.id ?? ""),
-          {
-            name: formValues.name,
-          }
-        );
-      }
+
+      const result = await restApi.patch(
+        ChannelEndpoints.CHANNEL.replace(":channelId", channelToEdit?.id ?? ""),
+        {
+          name: formValues.name,
+        }
+      );
 
       router.refresh();
-      form.reset();
-      // closeModal();
+      form.reset({ name: result?.data?.name });
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger
-      console.log(`[${modalMode}_CHANNEL_FORM]: `, error);
-    } finally {
+      console.log("[CHANNEL_FORM]: ", error);
     }
   };
 
   return (
-    <AppModalGuard modalUI="manage-channel" modalID={channel?.id}>
+    <AppModalGuardBase>
       <DialogHeader className="">
         <DialogTitle className="text-2xl text-center font-thin text-primary-base">
-          {isCreateModal ? "Create Channel" : `Edit ${channel?.name}`}
+          {isCreateModal ? "Create Channel" : `Edit ${channelToEdit?.name}`}
         </DialogTitle>
         <DialogDescription className="text-center text-secondary-base mt-4">
           {isCreateModal ? "Set a name for" : "Edit the name of"} your channel
@@ -113,6 +109,6 @@ export const ManageChannelModal = ({ modalMode, channel }: Props) => {
           </div>
         </form>
       </Form>
-    </AppModalGuard>
+    </AppModalGuardBase>
   );
 };

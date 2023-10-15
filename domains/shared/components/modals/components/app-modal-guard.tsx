@@ -9,11 +9,12 @@ export interface ModalContainerProps {
 
 export const AppModalGuard = (props: ModalContainerProps) => {
   const modalProps = useModal();
-  const shouldDisplayModal =
-    props.modalUI === modalProps.ui && props.modalID === modalProps.id;
+  const shouldDisplayModal = props.modalUI === modalProps.ui;
+
+  console.log(props.modalUI, modalProps.ui, props.modalID, modalProps.id);
 
   if (React.isValidElement(props.children) && shouldDisplayModal) {
-    React.cloneElement(props.children, modalProps);
+    return React.cloneElement(props.children, modalProps);
   }
 
   return null;

@@ -34,9 +34,14 @@ import { ImageUploader } from "@/domains/shared/components/image-uploader/image-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
-import { ModalProps } from "@/domains/shared/providers/hooks/modal";
+import {
+  ModalProps,
+  WithModalProps,
+} from "@/domains/shared/providers/hooks/modal";
 
-export const CreateTableModal = (props: { modalProps: ModalProps }) => {
+type Props = WithModalProps<{}>;
+
+export const CreateTableModal = (props: Props) => {
   // const { ModalElement, openModal, closeModal } = useGlobalModal();
   const [uploadingImage, setUploadingImage] = useState(false);
   // TODO [PROJECT SPECIFIC FEATURE] : consider lib's hook to use a native 'isUploading'
@@ -59,7 +64,7 @@ export const CreateTableModal = (props: { modalProps: ModalProps }) => {
       await api.post(TableEndpoints.ROOT, {
         name: formValues.name,
       });
-      props.modalProps.close();
+      props.close?.();
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger
       console.log("[TABLES_FORM]: ", error);

@@ -4,6 +4,8 @@ import { Prisma, TableRole } from "@prisma/client";
 
 export enum TableRoutes {
   HOME = "/tables",
+  TABLE = "/tables/:tableId",
+  CHANNEL = "/tables/:tableId/channel/:channelId",
 }
 
 export type TableInputData = z.infer<typeof tableFormSchema>;

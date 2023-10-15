@@ -1,9 +1,9 @@
-import { getInitials } from "@/domains/shared/utils/string-manipulation";
 import { TableRole } from "@prisma/client";
 import { Shield, ShieldCheck } from "lucide-react";
 import { cn } from "../../utils/ui";
 import { ProfileWithMembers } from "@/domains/tables/typing/enums-and-interfaces";
-import { MemberSettingsMenu } from "./member-settings-menu";
+import { MemberSettingsMenu } from "@/domains/shared/components/member-line/member-settings-menu";
+import { MemberAvatar } from "@/domains/shared/components/member-line/member-avatar";
 
 interface MemberLineProps {
   profile: ProfileWithMembers;
@@ -23,9 +23,7 @@ export const MemberLine = ({
 
   return (
     <div className="flex justify-between items-center group">
-      <div className="grid place-items-center w-[35px] h-[35px] rounded-full bg-primary-base text-neutral-white group-hover:bg-secondary-base text-xs mr-2">
-        <span>{getInitials(fullName)}</span>
-      </div>
+      <MemberAvatar fullName={fullName} className="mr-2" />
 
       <div className="overflow-hidden flex-1 max-w-[220px]">
         <p className="overflow-hidden whitespace-nowrap text-ellipsis text-primary-base text-sm flex-1 flex-nowrap">

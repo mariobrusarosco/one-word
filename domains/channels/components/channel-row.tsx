@@ -2,6 +2,7 @@ import { Channel } from "@prisma/client";
 import { Hash } from "lucide-react";
 
 import { ChannelSettingsMenu } from "./channel-settings-menu";
+import { memo } from "react";
 
 interface MemberLineProps {
   channel: Channel;

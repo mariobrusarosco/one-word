@@ -1,17 +1,43 @@
+"use client";
 import { Button } from "@/domains/shared/components/ui/button";
+import { useRouter } from "next/navigation";
+import { memo } from "react";
 
 interface Props {
   params: { tableId: string };
 }
 
 const TableScreen = ({ params }: Props) => {
+  // const { open } = useModal();
+  // const name = useNameTest();
+  // const router = useRouter();
+  // const modalActions = useModalActions();
+
+  // console.log("TableScreen: ", { activeID, name });
+  // const { UI } = useOptmizedModal();
+
   return (
     <main>
       <h2>
         Table:
         {params.tableId}
-        <Button variant="default">Start Round</Button>
-        <Button variant="secondary">Start Round</Button>
+        <Button
+          variant="default"
+          // onClick={() => open({ ui: "create-invite", id: "" })}
+        >
+          Start Round
+        </Button>
+        {/* <Button variant="secondary" onClick={() => modalActions.setID("oba")}>
+          Start Round
+        </Button> */}
+        <Button
+          variant="secondary"
+          // onClick={() =>
+          // router.push("/tables/e4cdaeaf-4781-4d07-ac30-1cb7459b79fb?oba=1")
+          // }
+        >
+          modal
+        </Button>
       </h2>
     </main>
   );

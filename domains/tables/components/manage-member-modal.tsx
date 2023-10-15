@@ -5,18 +5,16 @@ import {
   DialogTitle,
 } from "@/domains/shared/components/ui/dialog";
 import { Separator } from "@/domains/shared/components/ui/separator";
-import { useGlobalModal } from "@/domains/shared/providers/store";
 import { TableWithProfiles } from "../typing/enums-and-interfaces";
 import { TableMembers } from "./table-members";
+import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
 
 interface Props {
   table: TableWithProfiles;
 }
 export const ManageMemberModal = ({ table }: Props) => {
-  const { ModalElement } = useGlobalModal();
-
   return (
-    <ModalElement openModalWithId="manage-members-modal">
+    <AppModalGuardBase>
       <DialogHeader className="">
         <DialogTitle className="text-2xl text-center font-thin text-primary-base">
           Manage Members
@@ -28,6 +26,6 @@ export const ManageMemberModal = ({ table }: Props) => {
       </DialogHeader>
 
       <TableMembers table={table} showMemberEmail showMemberSettings />
-    </ModalElement>
+    </AppModalGuardBase>
   );
 };

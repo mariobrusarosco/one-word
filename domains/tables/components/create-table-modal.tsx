@@ -8,18 +8,14 @@ import {
 } from "@/domains/shared/components/ui/dialog";
 import { Separator } from "@/domains/shared/components/ui/separator";
 import { Input } from "@/domains/shared/components/ui/input";
-import { useGlobalModal } from "@/domains/shared/providers/store";
 import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
-  FormItem,
   FormLabel,
   FormMessage,
 } from "@/domains/shared/components/ui/form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "@/domains/shared/api/rest";
 import { TableEndpoints } from "../endpoints";
@@ -37,9 +33,10 @@ import Image from "next/image";
 import { ImageUploader } from "@/domains/shared/components/image-uploader/image-uploader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
 
 export const CreateTableModal = () => {
-  const { ModalElement, openModal, closeModal } = useGlobalModal();
+  // const { ModalElement, openModal, closeModal } = useGlobalModal();
   const [uploadingImage, setUploadingImage] = useState(false);
   // TODO [PROJECT SPECIFIC FEATURE] : consider lib's hook to use a native 'isUploading'
   // https://docs.uploadthing.com/api-reference/react#useuploadthing
@@ -65,7 +62,7 @@ export const CreateTableModal = () => {
       });
       router.refresh();
       form.reset();
-      closeModal();
+      // closeModal();
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger
       console.log("[TABLES_FORM]: ", error);
@@ -74,7 +71,7 @@ export const CreateTableModal = () => {
   };
 
   return (
-    <ModalElement openModalWithId="create-table-modal">
+    <AppModalGuardBase>
       <DialogHeader className="">
         <DialogTitle className="text-2xl text-center font-thin text-primary-base">
           Customize your Table
@@ -178,6 +175,6 @@ export const CreateTableModal = () => {
           </div>
         </form>
       </Form>
-    </ModalElement>
+    </AppModalGuardBase>
   );
 };

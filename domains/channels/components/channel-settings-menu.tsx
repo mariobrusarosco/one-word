@@ -3,6 +3,10 @@ import { Channel } from "@prisma/client";
 import { useState } from "react";
 import restApi from "../../shared/api/rest";
 import { useRouter } from "next/navigation";
+import { useModal } from "@/domains/shared/providers/hooks/modal";
+import { ManageChannelModal } from "./manage-channel-modal";
+import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
+import { AppModalGuard } from "@/domains/shared/components/modals/components/app-modal-guard";
 
 interface Props {
   channel: Channel;
@@ -13,6 +17,7 @@ export const ChannelSettingsMenu = ({ channel }: Props) => {
   const [isUpdatingOrDeletingChannel, setIsUpdatingOrDeletingChannel] =
     useState(false);
   const router = useRouter();
+  const { open } = useModal();
 
   const handleDeleteChannel = async () => {
     try {
@@ -46,11 +51,23 @@ export const ChannelSettingsMenu = ({ channel }: Props) => {
 
   return (
     <div className="ml-auto flex gap-2">
+      <AppModalGuard modalUI="manage-channel">
+        <ManageChannelModal channel={channel} modalMode="edit" />
+      </AppModalGuard>
+
       {isUpdatingOrDeletingChannel ? (
         <Loader className="h-[15px] w-[15px]" />
       ) : (
         <>
-          <FileEdit className="h-[15px] w-[15px]" />
+          <FileEdit
+            className="h-[15px] w-[15px]"
+            onClick={() =>
+              open({
+                id: channel.id,
+                ui: "manage-channel",
+              })
+            }
+          />
           <Trash className="h-[15px] w-[15px]" />
         </>
       )}

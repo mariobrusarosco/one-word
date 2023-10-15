@@ -8,7 +8,6 @@ import {
 } from "@/domains/shared/components/ui/dialog";
 import { Separator } from "@/domains/shared/components/ui/separator";
 import { Input } from "@/domains/shared/components/ui/input";
-import { useGlobalModal } from "@/domains/shared/providers/store";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -35,12 +34,13 @@ import { ImageUploader } from "@/domains/shared/components/image-uploader/image-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Table } from ".prisma/client";
+import { AppModalGuardBase } from "@/domains/shared/components/modals/components/app-modal-base";
 
 interface Props {
   table: Table;
 }
 export const EditTableModal = ({ table }: Props) => {
-  const { ModalElement, openModal, closeModal } = useGlobalModal();
+  console.log("[EditTableModal]");
   const [uploadingImage, setUploadingImage] = useState(false);
   // TODO [PROJECT SPECIFIC FEATURE] : consider lib's hook to use a native 'isUploading'
   // https://docs.uploadthing.com/api-reference/react#useuploadthing
@@ -63,7 +63,7 @@ export const EditTableModal = ({ table }: Props) => {
       });
       form.reset();
       router.refresh();
-      closeModal();
+      // closeModal();
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger
       console.log("[TABLES_FORM]: ", error);
@@ -72,10 +72,7 @@ export const EditTableModal = ({ table }: Props) => {
   };
 
   return (
-    <ModalElement
-      openModalWithId="edit-table-modal"
-      customOnClose={() => router.refresh()}
-    >
+    <AppModalGuardBase customOnClose={() => form.reset()}>
       <DialogHeader className="">
         <DialogTitle className="text-2xl text-center font-thin text-primary-base">
           Edit Table
@@ -179,6 +176,6 @@ export const EditTableModal = ({ table }: Props) => {
           </div>
         </form>
       </Form>
-    </ModalElement>
+    </AppModalGuardBase>
   );
 };

@@ -14,7 +14,6 @@ import {
   Users2,
 } from "lucide-react";
 import { cn } from "@/domains/shared/utils/ui";
-import { useGlobalModal } from "@/domains/shared/providers/store";
 import { CreateInviteModal } from "./create-invite-modal";
 import { EditTableModal } from "./edit-table-modal";
 import { getPermissionByRole } from "../utils/get-permission-by-role";
@@ -23,6 +22,9 @@ import { getMemberTableProfile } from "../utils/get-member-table-profile";
 import { useUser } from "@clerk/nextjs";
 import { TableProfile } from "@prisma/client";
 import { ManageMemberModal } from "./manage-member-modal";
+import { useParams } from "next/navigation";
+import { useModal } from "@/domains/shared/providers/hooks/modal";
+import { AppModalGuard } from "@/domains/shared/components/modals/components/app-modal-guard";
 
 interface Props {
   table: TableWithProfiles;
@@ -31,7 +33,6 @@ interface Props {
 export const TableHeading = ({ table }: Props) => {
   const rowStyles =
     "rounded-sm flex justify-between align-center text-sm cursor-pointer px-2 py-2 gap-7 hover:bg-neutral-white hover:text-secondary-base";
-  const { openModal, activeModalId } = useGlobalModal();
   const { user } = useUser();
   const profile = getMemberTableProfile(table, user?.id ?? "") as TableProfile;
   const {
@@ -42,15 +43,19 @@ export const TableHeading = ({ table }: Props) => {
     canDeleteTable,
   } = getPermissionByRole(profile.role);
 
+  const { open } = useModal();
+
   return (
     <>
-      {activeModalId === "create-invite-modal" && (
+      <AppModalGuard modalUI="create-invite">
         <CreateInviteModal table={table} />
-      )}
-      {activeModalId === "edit-table-modal" && <EditTableModal table={table} />}
-      {activeModalId === "manage-members-modal" && (
+      </AppModalGuard>
+      <AppModalGuard modalUI="edit-table">
+        <EditTableModal table={table} />
+      </AppModalGuard>
+      <AppModalGuard modalUI="manage-members">
         <ManageMemberModal table={table} />
-      )}
+      </AppModalGuard>
 
       <DropdownMenu>
         <DropdownMenuTrigger className="flex justify-between items-center p-4 font-semibold shadow-bottom z-[1] text-secondary-base cursor-pointer ">
@@ -65,7 +70,7 @@ export const TableHeading = ({ table }: Props) => {
             {canInviteMember && (
               <li
                 className={rowStyles}
-                onClick={() => openModal("create-invite-modal")}
+                onClick={() => open({ ui: "create-invite" })}
               >
                 <p>Invite Friends</p>
                 <UserPlus className="w-[20px]" />
@@ -74,7 +79,7 @@ export const TableHeading = ({ table }: Props) => {
             {canEditTable && (
               <li
                 className={cn(rowStyles)}
-                onClick={() => openModal("edit-table-modal")}
+                onClick={() => open({ ui: "edit-table" })}
               >
                 <p>Table settings</p>
                 <Settings className="w-[20px]" />
@@ -83,7 +88,7 @@ export const TableHeading = ({ table }: Props) => {
             {canManageMembers && (
               <li
                 className={cn(rowStyles)}
-                onClick={() => openModal("manage-members-modal")}
+                onClick={() => open({ ui: "manage-members" })}
               >
                 <p>Manage members</p>
                 <Users2 className="w-[20px]" />

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { channelFormSchema } from "./schemas";
 
-export enum TableRoutes {
+export enum ChannelRoutes {
   HOME = "/channels",
 }
 

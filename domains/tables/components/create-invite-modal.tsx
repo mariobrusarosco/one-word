@@ -43,7 +43,6 @@ export const CreateInviteModal = ({ table }: Props) => {
       const result = await api.patch(
         TableEndpoints.INVITE.replace(":tableId", table.id)
       );
-      console.log({ result });
       router.refresh();
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger

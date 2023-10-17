@@ -48,7 +48,7 @@ export const ManageChannelModal = ({ channels, id, close }: Props) => {
   const handleOnSubmit = async (formValues: ChannelInputData) => {
     try {
       if (isCreateModal) {
-        await restApi.post(ChannelEndpoints.ROOT, {
+        return await restApi.post(ChannelEndpoints.ROOT, {
           name: formValues.name,
           tableId: params?.tableId,
         });
@@ -60,11 +60,12 @@ export const ManageChannelModal = ({ channels, id, close }: Props) => {
       );
 
       form.reset({ name: result?.data?.name });
-      router.refresh();
-      return result;
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger
       console.log("[CHANNEL_FORM]: ", error);
+    } finally {
+      router.refresh();
+      close?.();
     }
   };
 

@@ -18,12 +18,14 @@ export const ChannelRow = ({ channel }: MemberLineProps) => {
   const handleGoToChannelScreen = () => router.push(channelScreenUrl);
 
   return (
-    <div
-      className="flex justify-start items-center gap-1 p-2 rounded cursor-pointer text-sm text-primary-base hover:text-neutral-white hover:bg-primary-base"
-      onClick={handleGoToChannelScreen}
-    >
-      <Hash className="h-[15px] w-[15px" />
-      <p className="">{channel.name}</p>
+    <div className="flex justify-start items-center gap-1 p-2 rounded cursor-pointer text-sm text-primary-base hover:text-neutral-white hover:bg-primary-base">
+      <div
+        onClick={handleGoToChannelScreen}
+        className="flex flex-1 items-center"
+      >
+        <Hash className="h-[15px] w-[15px" />
+        <p>{channel.name}</p>
+      </div>
       <ChannelSettingsMenu channel={channel} />
     </div>
   );

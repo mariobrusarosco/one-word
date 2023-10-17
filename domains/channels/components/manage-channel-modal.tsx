@@ -56,13 +56,12 @@ export const ManageChannelModal = ({ channels, id, close }: Props) => {
 
       const result = await restApi.patch(
         ChannelEndpoints.CHANNEL.replace(":channelId", channelToEdit?.id ?? ""),
-        {
-          name: formValues.name,
-        }
+        { name: formValues.name }
       );
 
-      router.refresh();
       form.reset({ name: result?.data?.name });
+      router.refresh();
+      return result;
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger
       console.log("[CHANNEL_FORM]: ", error);

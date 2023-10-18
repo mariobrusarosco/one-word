@@ -14,6 +14,8 @@ interface Props {
   table: TableWithProfiles;
 }
 export const ManageMemberModal = ({ table }: WithModalProps<Props>) => {
+  const amountOfMembers = table.profiles.length;
+
   return (
     <AppModalGuardBase>
       <DialogHeader className="">
@@ -21,7 +23,7 @@ export const ManageMemberModal = ({ table }: WithModalProps<Props>) => {
           Manage Members
         </DialogTitle>
         <DialogDescription className="text-center text-secondary-base my-1">
-          2 members
+          {amountOfMembers} member{amountOfMembers > 1 && "s"}
         </DialogDescription>
         <Separator className=" bg-primary-base" />
       </DialogHeader>

@@ -48,6 +48,7 @@ export const ChatInput = ({ channel }: Props) => {
       );
 
       router.refresh();
+      form.reset();
       return result;
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger

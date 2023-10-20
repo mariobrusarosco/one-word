@@ -7,6 +7,8 @@ import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 
+import { QueryProvider } from "@/domains/shared/providers/react-query";
+
 const font = Quicksand({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,7 +29,9 @@ export default function RootLayout({
           <ClerkLoading>
             <AppLoaderScreen />
           </ClerkLoading>
-          <ClerkLoaded>{children}</ClerkLoaded>
+          <ClerkLoaded>
+            <QueryProvider>{children}</QueryProvider>
+          </ClerkLoaded>
         </body>
       </html>
     </ClerkProvider>

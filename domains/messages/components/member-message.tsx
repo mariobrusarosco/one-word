@@ -11,7 +11,7 @@ export const MemberMessage = ({ message }: Props) => {
   return (
     <div className="p-3 bg-neutral-white shadow-bottom flex gap-3 items-center">
       <MemberAvatar
-        fullName={"Mario Brusarosco de Almeida"}
+        fullName={message.member.firstName}
         className="bg-secondary-base"
       />
 

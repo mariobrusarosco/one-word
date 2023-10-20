@@ -2,9 +2,7 @@ import { MemberAvatar } from "@/domains/shared/components/member-line/member-ava
 import { Prisma } from "@prisma/client";
 
 interface Props {
-  message: Prisma.MessageGetPayload<{
-    include: { member: { select: { firstName: true } } };
-  }>;
+  message: any;
 }
 
 export const MemberMessage = ({ message }: Props) => {

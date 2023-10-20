@@ -41,7 +41,7 @@ const ChannelScreen = async ({ params }: Props) => {
             This is the beginning of a conversation
           </p>
 
-          <MessageList channelId={channel.id} />
+          {channel && <MessageList channelId={channel.id} />}
         </div>
       </ScrollArea>
 

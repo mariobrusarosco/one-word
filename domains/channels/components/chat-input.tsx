@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
 import { Prisma } from "@prisma/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type ChannelWithMessagesAndMembers = Prisma.ChannelGetPayload<{
   include: {
@@ -40,6 +41,7 @@ export const ChatInput = ({ channel }: Props) => {
 
   const formIsLoading = form.formState.isSubmitting;
   const formIsValid = form.formState.isValid;
+  const queryClient = useQueryClient();
   const handleOnSubmit = async (formValues: MessageInputData) => {
     try {
       const result = await restApi.post(
@@ -49,6 +51,8 @@ export const ChatInput = ({ channel }: Props) => {
 
       router.refresh();
       form.reset();
+      await queryClient.refetchQueries();
+
       return result;
     } catch (error) {
       // TODO [BOILERPLATE] - apply app's logger

@@ -42,7 +42,6 @@ export const MessageList = ({ channelId }: { channelId: string }) => {
       pages: [...data.pages].reverse(),
       pageParams: [...data.pageParams].reverse(),
     }),
-    refetchInterval: 1500,
   });
 
   return (

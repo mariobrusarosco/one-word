@@ -30,14 +30,9 @@ export const MessageList = ({ channelId }: { channelId: string }) => {
     status,
   } = useInfiniteQuery({
     queryKey: ["messages"],
-    queryFn: ({ pageParam }) => {
-      return fetchMessages({ pageParam, channelId });
-    },
+    queryFn: ({ pageParam }) => fetchMessages({ pageParam, channelId }),
     initialPageParam: 0,
-    getPreviousPageParam: (firstPage, pages) => {
-      return firstPage.lastCursor;
-    },
-    getNextPageParam: (lastPage, pages) => lastPage.lastCursor,
+    getNextPageParam: (lastPage) => lastPage.lastCursor,
     select: (data) => ({
       pages: [...data.pages].reverse(),
       pageParams: [...data.pageParams].reverse(),
@@ -52,7 +47,7 @@ export const MessageList = ({ channelId }: { channelId: string }) => {
 
       {data?.pages?.map((group: { messages: Message[] }) => {
         console.log({ group });
-        return group?.messages?.map((message: Message) => (
+        return group?.messages?.reverse().map((message: Message) => (
           <>
             <MemberMessage key={message.id} message={message} />
           </>

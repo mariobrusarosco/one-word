@@ -30,24 +30,25 @@ export async function GET(
 
       messages = await db.message.findMany({
         where: { channelId: params.channelId },
-        take: -take,
-        orderBy: { createdAt: "asc" },
+        take: take,
+        orderBy: { createdAt: "desc" },
         include: { member: { select: { firstName: true } } },
       });
     } else {
       messages = await db.message.findMany({
         where: { channelId: params.channelId },
-        take: -take,
+        take: take,
         skip: 1,
         cursor: {
           id: cursor as string,
         },
-        orderBy: { createdAt: "asc" },
+        orderBy: { createdAt: "desc" },
         include: { member: { select: { firstName: true } } },
       });
     }
 
-    const lastPostInResults = messages[0];
+    // const lastPostInResults = messages[0];
+    const lastPostInResults = messages[take - 1];
     const lastCursor = lastPostInResults?.id;
 
     return NextResponse.json({ messages, lastCursor });

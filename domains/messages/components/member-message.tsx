@@ -18,7 +18,9 @@ export const MemberMessage = ({ message }: Props) => {
           <p className="text-neutral-white py-1 px-2 bg-primary-base rounded-sm ">
             {message.member.firstName}
           </p>
-          <p className="text-primary-base">01/01/23 22:36</p>
+          <p className="text-primary-base">
+            {new Date(message.updatedAt).toLocaleString()}
+          </p>
         </div>
         <p className="text-sm text-secondary-base">{message.content}</p>
       </div>

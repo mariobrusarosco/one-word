@@ -32,13 +32,21 @@ export const MessageList = ({ channelId }: { channelId: string }) => {
     queryKey: ["messages"],
     queryFn: ({ pageParam }) => fetchMessages({ pageParam, channelId }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.lastCursor,
+    getNextPageParam: (lastPage) =>
+      !console.log({ lastPage }) && lastPage.lastCursor,
     select: (data) => ({
-      pages: [...data.pages].reverse(),
-      pageParams: [...data.pageParams].reverse(),
+      pages: [
+        ...data.pages,
+        //   ...data.pages.flatMap((entry) => ({
+        //     lastCursor: entry.lastCursor,
+        //     messages: entry.messages.reverse(),
+        //   })),
+      ].reverse(),
+      pageParams: [...data.pageParams],
     }),
   });
 
+  console.log({ hasNextPage, data });
   return (
     <>
       {hasNextPage && (
@@ -46,8 +54,8 @@ export const MessageList = ({ channelId }: { channelId: string }) => {
       )}
 
       {data?.pages?.map((group: { messages: Message[] }) => {
-        console.log({ group });
-        return group?.messages?.reverse().map((message: Message) => (
+        console.log(group.messages);
+        return group?.messages?.map((message: Message) => (
           <>
             <MemberMessage key={message.id} message={message} />
           </>

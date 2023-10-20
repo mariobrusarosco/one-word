@@ -51,7 +51,7 @@ export const ChatInput = ({ channel }: Props) => {
 
       router.refresh();
       form.reset();
-      await queryClient.refetchQueries();
+      queryClient.refetchQueries();
 
       return result;
     } catch (error) {

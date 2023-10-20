@@ -23,33 +23,34 @@ export async function GET(
 
     let messages = null;
     const cursor = searchParams.get("cursor");
-    const take = Number(searchParams.get("take")) || 5;
+    const take = Number(searchParams.get("take")) || 6;
 
     if (cursor === "0") {
       console.log("----------- first call, cursor 0 ------");
 
       messages = await db.message.findMany({
         where: { channelId: params.channelId },
-        take: take,
-        orderBy: { createdAt: "desc" },
+        take: -take,
+        orderBy: { createdAt: "asc" },
         include: { member: { select: { firstName: true } } },
       });
     } else {
       messages = await db.message.findMany({
         where: { channelId: params.channelId },
-        take: take,
+        take: -take,
         skip: 1,
         cursor: {
           id: cursor as string,
         },
-        orderBy: { createdAt: "desc" },
+        orderBy: { createdAt: "asc" },
         include: { member: { select: { firstName: true } } },
       });
     }
 
-    // const lastPostInResults = messages[0];
-    const lastPostInResults = messages[take - 1];
-    const lastCursor = lastPostInResults?.id;
+    const lastPostInResults = messages[0];
+    const lastCursor = messages.length === take ? lastPostInResults?.id : null;
+
+    console.log("messages ", messages.length, lastCursor);
 
     return NextResponse.json({ messages, lastCursor });
   } catch (error) {

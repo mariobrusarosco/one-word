@@ -2,16 +2,14 @@ import { MemberAvatar } from "@/domains/shared/components/member-line/member-ava
 import { Prisma } from "@prisma/client";
 
 interface Props {
-  message: Prisma.MessageGetPayload<{
-    include: { member: { select: { firstName: true } } };
-  }>;
+  message: any;
 }
 
 export const MemberMessage = ({ message }: Props) => {
   return (
     <div className="p-3 bg-neutral-white shadow-bottom flex gap-3 items-center">
       <MemberAvatar
-        fullName={"Mario Brusarosco de Almeida"}
+        fullName={message.member.firstName}
         className="bg-secondary-base"
       />
 
@@ -20,7 +18,9 @@ export const MemberMessage = ({ message }: Props) => {
           <p className="text-neutral-white py-1 px-2 bg-primary-base rounded-sm ">
             {message.member.firstName}
           </p>
-          <p className="text-primary-base">01/01/23 22:36</p>
+          <p className="text-primary-base">
+            {new Date(message.updatedAt).toLocaleString()}
+          </p>
         </div>
         <p className="text-sm text-secondary-base">{message.content}</p>
       </div>

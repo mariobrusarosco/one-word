@@ -3,6 +3,7 @@ import { ScrollArea } from "@/domains/shared/components/ui/scroll-area";
 import { Separator } from "@/domains/shared/components/ui/separator";
 import { ChatInput } from "@/domains/channels/components/chat-input";
 import { db } from "@/server-side/db/prisma";
+import { MessageList } from "@/domains/messages/components/message-list";
 
 interface Props {
   params: {
@@ -40,11 +41,7 @@ const ChannelScreen = async ({ params }: Props) => {
             This is the beginning of a conversation
           </p>
 
-          <div className="flex flex-col gap-3 rounded-sm">
-            {channel?.messages?.map((message) => {
-              return <MemberMessage key={message.id} message={message} />;
-            })}
-          </div>
+          {channel && <MessageList channelId={channel.id} />}
         </div>
       </ScrollArea>
 

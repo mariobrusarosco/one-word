@@ -5,7 +5,10 @@ export type WithModalProps<T> = T & Partial<ModalProps>;
 
 export const useModal = () => {
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+  const params = new URLSearchParams(
+    searchParams as unknown as URLSearchParams
+  );
+
   const router = useRouter();
 
   const ui = params.get("modal-ui");

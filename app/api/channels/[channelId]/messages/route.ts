@@ -48,7 +48,7 @@ export async function GET(
     const lastPostInResults = messages[0];
     const lastCursor = messages.length === take ? lastPostInResults?.id : null;
 
-    console.log("messages ", messages.length, lastCursor, take);
+    // console.log("messages ", messages.length, lastCursor, take);
 
     return NextResponse.json({ messages, lastCursor });
   } catch (error) {

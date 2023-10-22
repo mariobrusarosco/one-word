@@ -47,7 +47,6 @@ export const MessageList = ({ channelId }: { channelId: string }) => {
       )}
 
       {data?.pages?.map((group: { messages: Message[] }) => {
-        console.log({ group });
         return group?.messages?.map((message: Message) => (
           <>
             <MemberMessage key={message.id} message={message} />

@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/domains/shared/components/ui/button";
+import { useWebSocket } from "@/domains/shared/providers/web-socket";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
 
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const TableScreen = ({ params }: Props) => {
+  const { state } = useWebSocket();
   // const { open } = useModal();
   // const name = useNameTest();
   // const router = useRouter();
@@ -18,6 +20,7 @@ const TableScreen = ({ params }: Props) => {
 
   return (
     <main>
+      {state.connected ? "connected" : "disconnected"}
       <h2>
         Table:
         {params.tableId}

@@ -8,6 +8,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 import { QueryProvider } from "@/domains/shared/providers/react-query";
+import { WebSocketProvider } from "@/domains/shared/providers/web-socket";
 
 const font = Quicksand({ subsets: ["latin"] });
 
@@ -30,7 +31,9 @@ export default function RootLayout({
             <AppLoaderScreen />
           </ClerkLoading>
           <ClerkLoaded>
-            <QueryProvider>{children}</QueryProvider>
+            <QueryProvider>
+              <WebSocketProvider>{children}</WebSocketProvider>
+            </QueryProvider>
           </ClerkLoaded>
         </body>
       </html>

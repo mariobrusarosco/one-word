@@ -21,6 +21,10 @@ This is a side project game and by now, is a Work In Progress
 - Uploadthing to handle file uploading
 - Socket.io to handle instant communication
 
+## API
+
+[Postman](https://documenter.getpostman.com/view/2930329/2s9YRGxUEq)
+
 ## Environments
 
 So far, it works on Vercel's Preview Environments and an unique Production environment

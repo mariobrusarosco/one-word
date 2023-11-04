@@ -1,7 +1,15 @@
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse, delay } from "msw";
 
 export const handlers = [
-  http.get(`${import.meta.env.VITE_BASE_API_URL}/tables`, () => {
+  http.get(`${import.meta.env.VITE_BASE_API_URL}/tables`, async () => {
+    // Slowing down by 5s
+    await delay(5000);
+    // or a more natural approach
+    await delay("real");
+
+    // Simulating a timeout. This request will be handing forever
+    await delay("infinite");
+
     return HttpResponse.json([{ name: "Skol" }]);
   }),
 

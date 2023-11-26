@@ -2,14 +2,6 @@ import { http, HttpResponse, bypass, delay } from "msw";
 
 export const handlers = [
   http.get(`${import.meta.env.VITE_BASE_API_URL}/tables`, async () => {
-    // Slowing down by 5s
-    await delay(5000);
-    // or a more natural approach
-    await delay("real");
-
-    // Simulating a timeout. This request will be handing forever
-    await delay("infinite");
-
     return HttpResponse.json([{ name: "Skol" }]);
   }),
 
@@ -45,14 +37,9 @@ export const handlers = [
   //   return HttpResponse.json("you are not authorized", { status: 401 });
   // }),
 
-  http.get(
-    `${import.meta.env.VITE_BASE_API_URL}/games`,
-    async ({ request }) => {
-      const response = await fetch(bypass(request));
-      const originalGames = await response.json();
-      const fakeGames = [{ name: "Jumanji" }];
+  http.get(`${import.meta.env.VITE_BASE_API_URL}/games`, async () => {
+    const fakeGames = [{ name: "Jumanji" }];
 
-      return HttpResponse.json(originalGames.concat(fakeGames));
-    }
-  ),
+    return HttpResponse.json(fakeGames);
+  }),
 ];

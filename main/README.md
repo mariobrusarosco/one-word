@@ -1,27 +1,28 @@
-# React + TypeScript + Vite
+# One Word
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a side project game and by now, is a Work In Progress
 
-Currently, two official plugins are available:
+## Layout
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Link](https://www.figma.com/file/lTIxelelnjm83MiROxrlTe/One-Word?type=design&node-id=0%3A1&mode=design&t=8IL9mMSoloe1bCnK-1)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Stack
 
-- Configure the top-level `parserOptions` property like this:
+- `Vite` as _build tool_
+- Typescript
+- Tailwind CSS for Styles
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## API
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+[Postman](https://documenter.getpostman.com/view/2930329/2s9YRGxUEq)
+
+## Environments
+
+**Production**
+[https://one-word-game.netlify.app](https://one-word-game.netlify.app)
+
+## Development
+
+// TODO

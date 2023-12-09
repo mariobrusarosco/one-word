@@ -1,5 +1,5 @@
 export const loaderTables = async () => {
-  const result = await fetch(`${import.meta.env.VITE_BASE_API_URL}/tables`);
+  const result = await fetch(`${import.meta.env.VITE_ONE_WORD_API}/tables`);
 
   return await result.json();
 };

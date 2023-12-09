@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run --config ./vitest.config.ts",
     "test:watch": "vitest --config ./vitest.config.ts",
-    "test:ui": "vitest --ui --config ./vitest.config.ts"
+    "test:ui": "vitest --ui --config ./vitest.config.ts",
+    "start-docs": "cd project-docs && yarn start"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.4.3",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.0.5",
+    "@testing-library/react": "^14.1.2",
     "@types/node": "^20.8.9",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
@@ -30,6 +32,7 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "jsdom": "^23.0.1",
     "msw": "^2.0.1",
     "netlify-cli": "^17.0.1",
     "typescript": "^5.0.2",

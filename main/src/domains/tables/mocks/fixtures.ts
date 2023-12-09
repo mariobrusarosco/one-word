@@ -1,6 +1,8 @@
 import { Table } from "../typing/interfaces";
 
-export const createTableFixture = ({ table }: { table?: Table } = {}) => {
+export const createTableFixture = ({
+  table,
+}: { table?: Partial<Table> } = {}) => {
   return {
     id: "1",
     name: "Skol",

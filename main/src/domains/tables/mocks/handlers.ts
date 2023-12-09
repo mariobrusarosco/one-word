@@ -1,27 +1,25 @@
-import { http, HttpResponse, bypass, delay } from "msw";
+import { http, HttpResponse } from "msw";
 import { createTableFixture } from "./fixtures";
+import { mockOneWordApi } from "../../../mocks/helpers";
 
 export const tablesHandlers = [
-  http.get(`${import.meta.env.VITE_BASE_API_URL}/tables`, async () => {
+  http.get(mockOneWordApi("/tables"), async () => {
     const table = createTableFixture(); // Fixing the missing 'table' argument
 
     return HttpResponse.json([table]);
   }),
 
-  http.get(
-    `${import.meta.env.VITE_BASE_API_URL}/tables/:tableId`,
-    ({ params }) => {
-      const tableId = params.tableId;
-      const table = createTableFixture({ table: { name: tableId } });
+  http.get(mockOneWordApi("/tables/:tableId"), ({ params }) => {
+    const tableId = params.tableId as string;
+    const table = createTableFixture({ table: { name: tableId } });
 
-      return HttpResponse.json([table]);
-    }
-  ),
+    return HttpResponse.json([table]);
+  }),
 
-  http.get(`${import.meta.env.VITE_BASE_API_URL}/tables`, ({ request }) => {
+  http.get(mockOneWordApi("/tables"), ({ request }) => {
     const url = new URL(request.url);
-    const activeGame = url.searchParams.get("active_game");
-    const table = createTableFixture({ active_game: activeGame });
+    const name = url.searchParams.get("name") as string;
+    const table = createTableFixture({ table: { name } });
 
     return HttpResponse.json([table]);
   }),

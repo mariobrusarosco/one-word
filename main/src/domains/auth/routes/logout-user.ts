@@ -1,4 +1,4 @@
-export const logoutUser = () => {
+export const logoutUser = async () => {
   alert("logging out");
   return Promise.resolve();
 };

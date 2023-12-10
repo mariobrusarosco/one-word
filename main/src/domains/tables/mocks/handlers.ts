@@ -1,12 +1,12 @@
 import { http, HttpResponse, bypass, delay } from "msw";
 
 export const tablesHandlers = [
-  http.get(`${import.meta.env.VITE_BASE_API_URL}/tables`, async () => {
+  http.get(`${import.meta.env.VITE_ONE_WORD_API}/tables`, async () => {
     return HttpResponse.json([{ name: "Skol" }]);
   }),
 
   http.get(
-    `${import.meta.env.VITE_BASE_API_URL}/tables/:tableId`,
+    `${import.meta.env.VITE_ONE_WORD_API}/tables/:tableId`,
     ({ params }) => {
       const tableId = params.tableId;
 
@@ -14,7 +14,7 @@ export const tablesHandlers = [
     }
   ),
 
-  http.get(`${import.meta.env.VITE_BASE_API_URL}/tables`, ({ request }) => {
+  http.get(`${import.meta.env.VITE_ONE_WORD_API}/tables`, ({ request }) => {
     const url = new URL(request.url);
     const activeGame = url.searchParams.get("active_game");
 

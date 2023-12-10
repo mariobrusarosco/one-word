@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const restApi = axios.create({
-  baseURL: import.meta.env.VITE_BASE_API_URL,
+  baseURL: import.meta.env.VITE_ONE_WORD_API,
   withCredentials: true,
   headers: {
     "X-Version": "test",

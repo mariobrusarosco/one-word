@@ -6,12 +6,19 @@ import { Tables } from "./domains/tables/components/Tables";
 
 const queryClient = new QueryClient();
 
+const AppWithProviders = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+};
+
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <AppWithProviders>
       <Tables />
       <Games />
-    </QueryClientProvider>
+      {/* <Testing /> */}
+    </AppWithProviders>
   );
 }
 

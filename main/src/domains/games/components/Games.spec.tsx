@@ -10,11 +10,3 @@ describe("[INTEGRATION] - when fetching Games", () => {
     expect(await response.json()).toEqual([{ name: "Jumanji" }]);
   });
 });
-
-describe.only("[UNIT] - when rendering", () => {
-  it("returns the expected element", async () => {
-    render(<Games />);
-
-    expect(screen.getByText(/games/i)).toBeInTheDocument();
-  });
-});

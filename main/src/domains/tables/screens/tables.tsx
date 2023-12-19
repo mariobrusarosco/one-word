@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { loaderGames } from "../api/loader";
+import { loaderTables } from "../api/loader";
 
-export const Games = () => {
+export const TablesScreen = () => {
   const { data, error, isFetching } = useQuery({
-    queryKey: ["games"],
-    queryFn: loaderGames,
+    queryKey: ["tables"],
+    queryFn: loaderTables,
   });
 
   if (error) {
@@ -17,10 +17,10 @@ export const Games = () => {
 
   return (
     <>
-      <h2>Games</h2>
+      <h2>tables</h2>
       <ul>
-        {data?.map((game: any) => (
-          <li>{game?.name}</li>
+        {data?.map((table: any) => (
+          <li>{table?.name}</li>
         ))}
       </ul>
     </>

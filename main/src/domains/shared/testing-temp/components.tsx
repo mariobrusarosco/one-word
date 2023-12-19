@@ -27,7 +27,7 @@ export const DynamicListGames = () => {
   });
 
   if (error) {
-    return <div>error</div>;
+    return <div>error: {error.message}</div>;
   }
 
   if (isFetching) {
@@ -36,7 +36,7 @@ export const DynamicListGames = () => {
 
   return (
     <>
-      <h2>Games</h2>
+      <h3>Games</h3>
       <ul>
         {data?.map((game: any) => (
           <li>{game?.name}</li>

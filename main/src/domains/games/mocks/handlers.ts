@@ -1,8 +1,10 @@
 import { HttpResponse, http } from "msw";
+import { createGameFixture } from "./fixtures";
+import { mockOneWordApi } from "../../../mocks/helpers";
 
 export const gamesHandlers = [
-  http.get(`${import.meta.env.VITE_ONE_WORD_API}/games`, async () => {
-    const fakeGames = [{ name: "Jumanji" }];
+  http.get(mockOneWordApi("/games"), async () => {
+    const fakeGames = [createGameFixture()];
 
     return HttpResponse.json(fakeGames);
   }),

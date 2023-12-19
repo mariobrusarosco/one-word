@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderTables } from "../api/loader";
+import { Outlet } from "react-router-dom";
 
 export const TablesScreen = () => {
   const { data, error, isFetching } = useQuery({
@@ -18,11 +19,17 @@ export const TablesScreen = () => {
   return (
     <>
       <h2>tables</h2>
-      <ul>
-        {data?.map((table: any) => (
-          <li>{table?.name}</li>
-        ))}
-      </ul>
+      <div style={{ display: "flex", gap: "100px" }}>
+        <aside>
+          <ul>
+            {data?.map((table: any) => (
+              <li key={table?.name}>{table?.name}</li>
+            ))}
+          </ul>
+        </aside>
+
+        <Outlet />
+      </div>
     </>
   );
 };

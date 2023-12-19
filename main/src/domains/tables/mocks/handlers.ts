@@ -1,9 +1,9 @@
-// import { http, HttpResponse, bypass, delay } from "msw";
+import { http, HttpResponse } from "msw";
 
 export const tablesHandlers = [
-  // http.get(`${import.meta.env.VITE_BASE_API_URL}/tables`, async () => {
-  //   return HttpResponse.json([{ name: "Skol" }]);
-  // }),
+  http.get(`${import.meta.env.VITE_ONE_WORD_API}/tables`, async () => {
+    return HttpResponse.json([{ name: "Skol" }]);
+  }),
   // http.get(
   //   `${import.meta.env.VITE_BASE_API_URL}/tables/:tableId`,
   //   ({ params }) => {

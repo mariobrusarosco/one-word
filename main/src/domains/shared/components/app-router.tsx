@@ -7,6 +7,7 @@ import { PublicLayout } from "./public-layout";
 import { LoginScreen } from "../../auth/screens/login";
 import { logoutUser } from "../../auth/routes/logout-user";
 import { DashboardScreen } from "../../dashboard/screens/dashboard";
+import { TableScreen } from "../../tables/screens/table";
 
 export const AppRouter = () => {
   return (
@@ -23,7 +24,19 @@ export const AppRouter = () => {
                 })
               }
             />
+            {/* Basic Example of Dynamic Segments on the URL
+             */}
             <Route path="tables" element={<TablesScreen />} />
+            <Route path="tables/:tableId" element={<TableScreen />} />
+
+            {/* Leveraging the '/tables' chunk. So, every child <Route >
+              can have a path that starts with '/tables' implicitly.
+              [IMPORTANT] 
+              To render the child <Route >, we need to use the <Outlet /> component.
+           */}
+            {/* <Route path="tables" element={<TablesScreen />}>
+              <Route path=":tableId" element={<TableScreen />} />
+            </Route> */}
             <Route path="games" element={<GamesScreen />} />
           </Route>
           <Route element={<PublicLayout />}>
@@ -35,18 +48,3 @@ export const AppRouter = () => {
     </BrowserRouter>
   );
 };
-
-// export const router = createBrowserRouter([
-//   {
-//     id: "root",
-//     path: "/",
-//     Component: RootLayout,
-//     children: [
-//       { index: true, Component },
-//       { path: "tables", element: <Tables /> },
-//       { path: "games", element: <Games /> },
-//       { path: "login", element: <Login /> },
-//       { path: "logout", action: logoutUser },
-//     ],
-//   },
-// ]);

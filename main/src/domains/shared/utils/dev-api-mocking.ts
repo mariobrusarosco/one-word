@@ -3,7 +3,7 @@ export const devApiMocking = async (
     disable,
   }: {
     disable: boolean;
-  } = { disable: false }
+  } = { disable: false },
 ) => {
   if (disable || process.env.NODE_ENV !== "development") return;
 

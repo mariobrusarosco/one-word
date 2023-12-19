@@ -18,11 +18,7 @@ export const Games = () => {
   return (
     <>
       <h2>Games</h2>
-      <ul>
-        {data?.map((game: any) => (
-          <li>{game?.name}</li>
-        ))}
-      </ul>
+      <ul>{data?.map((game: any) => <li>{game?.name}</li>)}</ul>
     </>
   );
 };

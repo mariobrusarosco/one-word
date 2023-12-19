@@ -18,11 +18,7 @@ export const Tables = () => {
   return (
     <>
       <h2>tables</h2>
-      <ul>
-        {data?.map((table: any) => (
-          <li>{table?.name}</li>
-        ))}
-      </ul>
+      <ul>{data?.map((table: any) => <li>{table?.name}</li>)}</ul>
     </>
   );
 };

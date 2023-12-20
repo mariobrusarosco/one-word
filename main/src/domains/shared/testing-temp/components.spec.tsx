@@ -1,4 +1,9 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import { DynamicListGames, StaticListGames } from "./components";
 import { createReactQueryWrapper } from "../../../testing/utils";
 import { server } from "../../../mocks/server";
@@ -19,10 +24,12 @@ describe("[UNIT] - StaticListGames", () => {
 
 describe("[UNIT] - DynamicListGames", () => {
   describe("when rendering", () => {
-    it("returns the expected games", async () => {
+    it("displays the loading UI and returns the expected games", async () => {
       render(<DynamicListGames />, { wrapper: createReactQueryWrapper() });
 
-      expect(await screen.findByText(/jumanji/i)).toBeInTheDocument();
+      await waitForElementToBeRemoved(() => screen.getByText(/loading.../i));
+
+      expect(screen.getByText(/jumanji/i)).toBeInTheDocument();
 
       // Or
       //   await waitFor(() => {

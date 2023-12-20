@@ -16,6 +16,9 @@ export const NavigationBar = () => {
         <li>
           <NavLink to="/games">Games</NavLink>
         </li>
+        <li>
+          <NavLink to="/test">Test</NavLink>
+        </li>
       </ul>
     </nav>
   );

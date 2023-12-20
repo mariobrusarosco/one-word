@@ -1,8 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderTables } from "../api/loader";
 import { Outlet } from "react-router-dom";
+import { useUser } from "../../auth/components/authenticated-layout";
 
 export const TablesScreen = () => {
+  const user = useUser();
+  console.log("tables:", user);
+
   const { data, error, isFetching } = useQuery({
     queryKey: ["tables"],
     queryFn: loaderTables,
@@ -18,6 +22,7 @@ export const TablesScreen = () => {
 
   return (
     <>
+      <h2>user: {user.name}</h2>
       <h2>tables</h2>
       <div style={{ display: "flex", gap: "100px" }}>
         <aside>

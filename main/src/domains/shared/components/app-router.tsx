@@ -1,4 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import { AuthenticatedLayout } from "../../auth/components/authenticated-layout";
 import RootLayout from "./root-layout";
 import { GamesScreen } from "../../games/screens/games";
@@ -10,41 +16,49 @@ import { DashboardScreen } from "../../dashboard/screens/dashboard";
 import { TableScreen } from "../../tables/screens/table";
 
 export const AppRouter = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<RootLayout />}>
-          <Route element={<AuthenticatedLayout />}>
-            <Route
-              path="dashboard"
-              element={<DashboardScreen />}
-              loader={({ request }) =>
-                fetch("/api/dashboard.json", {
-                  signal: request.signal,
-                })
-              }
-            />
-            {/* Basic Example of Dynamic Segments on the URL
-             */}
-            <Route path="tables" element={<TablesScreen />} />
-            <Route path="tables/:tableId" element={<TableScreen />} />
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootLayout />,
 
-            {/* Leveraging the '/tables' chunk. So, every child <Route >
-              can have a path that starts with '/tables' implicitly.
-              [IMPORTANT] 
-              To render the child <Route >, we need to use the <Outlet /> component.
-           */}
-            {/* <Route path="tables" element={<TablesScreen />}>
-              <Route path=":tableId" element={<TableScreen />} />
-            </Route> */}
-            <Route path="games" element={<GamesScreen />} />
-          </Route>
-          <Route element={<PublicLayout />}>
-            <Route path="login" element={<LoginScreen />} />
-            <Route path="logout" action={logoutUser} />
-          </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+      children: [
+        { index: true, element: <DashboardScreen /> },
+        {
+          element: <AuthenticatedLayout />,
+          loader: async () => {
+            console.log("loading user");
+            const response = await fetch(
+              `${import.meta.env.VITE_ONE_WORD_API}/user`
+            );
+
+            const user = await response.json();
+            return user;
+          },
+          children: [
+            { path: "tables", element: <TablesScreen /> },
+            { path: "tables/:tableId", element: <TableScreen /> },
+            { path: "games", element: <GamesScreen /> },
+            { path: "test", element: <div>testing....</div> },
+            { path: "dashboard", element: <div>dash....</div> },
+          ],
+        },
+        {
+          element: <PublicLayout />,
+          children: [
+            {
+              path: "login",
+              element: <LoginScreen />,
+            },
+            { path: "logout", action: logoutUser },
+          ],
+        },
+      ],
+    },
+  ]);
+
+  // const user = useLoaderData();
+
+  // console.log({ user });
+
+  return <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />;
 };

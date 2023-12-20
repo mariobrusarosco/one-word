@@ -1,0 +1,30 @@
+{
+  "id": "API/setup-an-api",
+  "title": "How to Setup a new API",
+  "description": "Create a doc page with rich content.",
+  "source": "@site/docs/API/setup-an-api.md",
+  "sourceDirName": "API",
+  "slug": "/API/setup-an-api",
+  "permalink": "/API/setup-an-api",
+  "draft": false,
+  "unlisted": false,
+  "tags": [
+    {
+      "label": "api",
+      "permalink": "/tags/api"
+    }
+  ],
+  "version": "current",
+  "frontMatter": {
+    "description": "Create a doc page with rich content.",
+    "title": "How to Setup a new API",
+    "tags": [
+      "api"
+    ]
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Current Decision",
+    "permalink": "/API/current-decision"
+  }
+}

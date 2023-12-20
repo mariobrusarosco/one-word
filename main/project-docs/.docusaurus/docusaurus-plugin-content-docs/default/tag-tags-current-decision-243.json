@@ -1,0 +1,15 @@
+{
+  "label": "current-decision",
+  "permalink": "/tags/current-decision",
+  "allTagsPath": "/tags",
+  "count": 1,
+  "items": [
+    {
+      "id": "API/current-decision",
+      "title": "Current Decision",
+      "description": "Explanation of the reasonaning related to the topic.",
+      "permalink": "/API/current-decision"
+    }
+  ],
+  "unlisted": false
+}

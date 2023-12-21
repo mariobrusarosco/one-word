@@ -14,19 +14,19 @@ import { LoginScreen } from "../../auth/screens/login";
 import { logoutUser } from "../../auth/routes/logout-user";
 import { DashboardScreen } from "../../dashboard/screens/dashboard";
 import { TableScreen } from "../../tables/screens/table";
+import { ErrorScreen } from "../screens/error";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <RootLayout />,
-
+      errorElement: <ErrorScreen />,
       children: [
         { index: true, element: <DashboardScreen /> },
         {
           element: <AuthenticatedLayout />,
           loader: async () => {
-            console.log("loading user");
             const response = await fetch(
               `${import.meta.env.VITE_ONE_WORD_API}/user`
             );

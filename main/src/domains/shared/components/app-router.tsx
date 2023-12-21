@@ -35,8 +35,11 @@ export const AppRouter = () => {
             return user;
           },
           children: [
-            { path: "tables", element: <TablesScreen /> },
-            { path: "tables/:tableId", element: <TableScreen /> },
+            {
+              path: "tables",
+              element: <TablesScreen />,
+              children: [{ path: ":tableId", element: <TableScreen /> }],
+            },
             { path: "games", element: <GamesScreen /> },
             { path: "test", element: <div>testing....</div> },
             { path: "dashboard", element: <div>dash....</div> },

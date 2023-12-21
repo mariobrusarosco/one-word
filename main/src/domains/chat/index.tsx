@@ -27,6 +27,14 @@ export const Chat = () => {
 
   // },[room, namespace]])
 
+  const handleRoomConnection = (event) => {
+    const roomName = event.target.innerText;
+
+    socketState.socketInstance.join(roomName, (data) => {
+      console.log("joined room", data);
+    });
+  };
+
   return (
     <main>
       <h1>Chat: {socketState.connected ? "CONNECTED" : "DISCONNECTED"}</h1>
@@ -50,7 +58,7 @@ export const Chat = () => {
           <aside>
             <h2>Rooms</h2>
             <ul>
-              <li onClick={() => setRoom("general")}>General</li>
+              <li onClick={handleRoomConnection}>General</li>
               <li onClick={() => setRoom("private")}>Private</li>
               <li onClick={() => setRoom("public")}>Public</li>
             </ul>

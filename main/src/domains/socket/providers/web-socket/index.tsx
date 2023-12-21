@@ -38,21 +38,29 @@ const reducer = (state: State, action: Action) => {
 };
 
 export const socketInitializer = async (dispatch: React.Dispatch<Action>) => {
-  const socketInstance = ClientIO("http://localhost:3000");
+  const chatsSocketInstance = ClientIO("http://localhost:3000/chats");
+  const gamesSocketInstance = ClientIO("http://localhost:3000/games");
 
-  socketInstance.on(SocketEvents.CONNECT, () => {
-    dispatch({ type: SocketEvents.CONNECT, payload: socketInstance });
+  chatsSocketInstance.on(SocketEvents.CONNECT, () => {
+    dispatch({ type: SocketEvents.CONNECT, payload: chatsSocketInstance });
   });
 
-  socketInstance.on(SocketEvents.GET_NAMESPACES, (data: any) => {
+  chatsSocketInstance.on(SocketEvents.GET_NAMESPACES, (data: any) => {
     dispatch({ type: SocketEvents.GET_NAMESPACES, payload: data });
   });
 
-  socketInstance.on(SocketEvents.DISCONNECT, () => {
+  chatsSocketInstance.on(SocketEvents.DISCONNECT, () => {
     dispatch({ type: SocketEvents.DISCONNECT, payload: null });
   });
 
-  return () => socketInstance.disconnect();
+  gamesSocketInstance.on("connect", () => {
+    console.log("games connected");
+  });
+
+  return () => {
+    chatsSocketInstance.disconnect();
+    gamesSocketInstance.disconnect();
+  };
 };
 
 const WebSocketProvider = ({ children }: WebSocketProviderProps) => {

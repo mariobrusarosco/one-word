@@ -1,5 +1,7 @@
-export const loaderTables = async () => {
-  const result = await fetch(`${import.meta.env.VITE_ONE_WORD_API}/tables`);
+import { restApi } from "../../../api/rest";
 
-  return await result.json();
+export const loaderTables = async () => {
+  const result = await restApi.get("/tables");
+
+  return await result.data;
 };

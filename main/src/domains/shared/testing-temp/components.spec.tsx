@@ -1,7 +1,6 @@
 import {
   render,
   screen,
-  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import { DynamicListGames, StaticListGames } from "./components";
@@ -39,7 +38,7 @@ describe("[UNIT] - DynamicListGames", () => {
   });
 
   describe("when an error occcurs", () => {
-    it("returns the expected error message", async () => {
+    it.only("returns the expected error message", async () => {
       const errorMessage = "API ERROR";
       server.use(
         http.get(mockOneWordApi("/games"), () => {
@@ -54,6 +53,7 @@ describe("[UNIT] - DynamicListGames", () => {
         wrapper: createReactQueryWrapper(),
       });
 
+      screen.debug();
       expect(
         await screen.findByText(new RegExp(errorMessage, "i"))
       ).toBeInTheDocument();

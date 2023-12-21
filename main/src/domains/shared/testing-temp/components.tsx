@@ -26,6 +26,7 @@ export const DynamicListGames = () => {
     queryFn: loaderGames,
   });
 
+  console.log({ error });
   if (error) {
     return <div>error: {error.message}</div>;
   }

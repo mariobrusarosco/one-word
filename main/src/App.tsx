@@ -1,9 +1,7 @@
 import "./App.css";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Games } from "./domains/games/components/Games";
-import { Tables } from "./domains/tables/components/Tables";
-import { Testing } from "./domains/shared/testing-temp/testing";
+import { AppRouter } from "./domains/shared/components/app-router";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,9 +20,7 @@ const AppWithProviders = ({ children }: { children: React.ReactNode }) => {
 function App() {
   return (
     <AppWithProviders>
-      <Tables />
-      <Games />
-      <Testing />
+      <AppRouter />
     </AppWithProviders>
   );
 }

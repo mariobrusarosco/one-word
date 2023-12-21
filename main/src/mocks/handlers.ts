@@ -1,4 +1,5 @@
 import { tablesHandlers } from "../domains/tables/mocks/handlers";
 import { gamesHandlers } from "../domains/games/mocks/handlers";
+import { authHandlers } from "../domains/auth/mocks/handlers";
 
-export const handlers = [...tablesHandlers, ...gamesHandlers];
+export const handlers = [...tablesHandlers, ...gamesHandlers, ...authHandlers];

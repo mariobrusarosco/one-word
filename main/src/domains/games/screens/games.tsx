@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderGames } from "../api/loader";
 
-export const Games = () => {
+export const GamesScreen = () => {
   const { data, error, isFetching } = useQuery({
     queryKey: ["games"],
     queryFn: loaderGames,

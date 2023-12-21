@@ -1,0 +1,21 @@
+{
+  "label": "api",
+  "permalink": "/tags/api",
+  "allTagsPath": "/tags",
+  "count": 2,
+  "items": [
+    {
+      "id": "API/current-decision",
+      "title": "Current Decision",
+      "description": "Explanation of the reasonaning related to the topic.",
+      "permalink": "/API/current-decision"
+    },
+    {
+      "id": "API/setup-an-api",
+      "title": "How to Setup a new API",
+      "description": "Create a doc page with rich content.",
+      "permalink": "/API/setup-an-api"
+    }
+  ],
+  "unlisted": false
+}

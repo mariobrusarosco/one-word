@@ -6,7 +6,6 @@ export const AuthenticatedLayout = () => {
 
   return (
     <div style={{ border: "1px solid orange" }}>
-      <h1>AuthenticatedLayout</h1>
       <NavigationBar />
       <Outlet context={{ user } satisfies ContextType} />
     </div>

@@ -1,7 +1,14 @@
 import { restApi } from "../../../api/rest";
 
 export const loaderGames = async () => {
-  const result = await restApi.get("/games");
+  const response = await restApi.get("/games");
 
-  return await result.data;
+  console.warn(response);
+
+  // if (!response.status) {
+  //   throw new Error(response.statusText);
+  // }
+
+  const result = await response.data;
+  return result;
 };

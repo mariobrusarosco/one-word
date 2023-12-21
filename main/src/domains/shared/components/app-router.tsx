@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthenticatedLayout } from "../../auth/components/authenticated-layout";
 import RootLayout from "./root-layout";
 import { GamesScreen } from "../../games/screens/games";
@@ -15,6 +9,7 @@ import { logoutUser } from "../../auth/routes/logout-user";
 import { DashboardScreen } from "../../dashboard/screens/dashboard";
 import { TableScreen } from "../../tables/screens/table";
 import { ErrorScreen } from "../screens/error";
+import { Testing } from "../testing-temp/testing";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -41,7 +36,7 @@ export const AppRouter = () => {
               children: [{ path: ":tableId", element: <TableScreen /> }],
             },
             { path: "games", element: <GamesScreen /> },
-            { path: "test", element: <div>testing....</div> },
+            { path: "testing", element: <Testing /> },
             { path: "dashboard", element: <div>dash....</div> },
           ],
         },

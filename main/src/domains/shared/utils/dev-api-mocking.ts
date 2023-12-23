@@ -1,4 +1,4 @@
-export const devApiMocking = async (
+export const setApiMockingWhenInDevMode = async (
   {
     disable,
   }: {

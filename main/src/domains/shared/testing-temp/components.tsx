@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderGames } from "../../games/api/loader";
+import { useToogle } from "./hook";
 
 export const StaticListGames = () => {
   const games = [
@@ -43,6 +44,28 @@ export const DynamicListGames = () => {
           <li>{game?.name}</li>
         ))}
       </ul>
+    </>
+  );
+};
+
+export const Toggle = () => {
+  const { isVisible, toggle } = useToogle();
+
+  return (
+    <>
+      <button onClick={toggle}>Toggle</button>
+      {isVisible && <h1>Hello!</h1>}
+    </>
+  );
+};
+
+export const AsyncToggle = () => {
+  const { isVisible, waitFourSecondsAndToggle } = useToogle();
+
+  return (
+    <>
+      <button onClick={waitFourSecondsAndToggle}>async toggle</button>
+      {isVisible && <h1>Async Hello!</h1>}
     </>
   );
 };

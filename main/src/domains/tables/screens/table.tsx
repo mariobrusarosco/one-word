@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 
 export const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
@@ -6,6 +6,8 @@ export const TableScreen = () => {
   return (
     <>
       <h3>Table: {tableId}</h3>
+
+      <Outlet />
     </>
   );
 };

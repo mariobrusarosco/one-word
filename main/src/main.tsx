@@ -6,8 +6,8 @@ import { devApiMocking } from "./domains/shared/utils/dev-api-mocking.ts";
 
 devApiMocking().then(() => {
   ReactDOM.createRoot(document.querySelector(".root")!).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    // <React.StrictMode>
+    <App />
+    // </React.StrictMode>
   );
 });

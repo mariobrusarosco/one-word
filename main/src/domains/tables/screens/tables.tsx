@@ -10,7 +10,8 @@ export const TablesScreen = () => {
   });
 
   if (error) {
-    return <div>error</div>;
+    console.log({ error });
+    return <div>{error.message}</div>;
   }
 
   if (isFetching) {
@@ -20,7 +21,7 @@ export const TablesScreen = () => {
   return (
     <>
       <h2>Available tables</h2>
-      <div style={{ display: "flex", gap: "100px" }}>
+      <div style={{ display: "flex", gap: "100px", flexWrap: "wrap" }}>
         <aside>
           <ul>
             {data?.map((table: any) => (
@@ -28,7 +29,6 @@ export const TablesScreen = () => {
             ))}
           </ul>
         </aside>
-
         <Outlet />
       </div>
     </>

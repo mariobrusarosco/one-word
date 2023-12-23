@@ -11,6 +11,8 @@ import { TableScreen } from "../../tables/screens/table";
 import { ErrorScreen } from "../screens/error";
 import { Testing } from "../testing-temp/testing";
 import { Chat } from "../../chat";
+import { RoomsScreen } from "../../tables/screens/rooms";
+import { RoomScreen } from "../../tables/screens/room";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -34,7 +36,19 @@ export const AppRouter = () => {
             {
               path: "tables",
               element: <TablesScreen />,
-              children: [{ path: ":tableId", element: <TableScreen /> }],
+              children: [
+                {
+                  path: ":tableId",
+                  element: <TableScreen />,
+                  children: [
+                    {
+                      path: "rooms",
+                      element: <RoomsScreen />,
+                      children: [{ path: ":roomId", element: <RoomScreen /> }],
+                    },
+                  ],
+                },
+              ],
             },
             { path: "games", element: <GamesScreen /> },
             { path: "testing", element: <Testing /> },

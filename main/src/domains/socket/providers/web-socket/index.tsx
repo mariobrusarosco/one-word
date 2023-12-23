@@ -12,7 +12,7 @@ type Action =
   | { type: SocketEvents.DISCONNECT; payload: any }
   | { type: SocketEvents.GET_NAMESPACES; payload: any };
 
-type Dispatch = (action: Action, payload: any) => void;
+type Dispatch = (action: Action) => void;
 type State = {
   connected: boolean;
   socketInstance: any;
@@ -23,7 +23,10 @@ type WebSocketProviderProps = { children: React.ReactNode };
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case "connect": {
-      return { ...state, connected: true, socketInstance: action.payload };
+      const { tableId } = action.payload;
+      const chatsSocketInstance = ClientIO("http://localhost:3000/" + tableId);
+
+      return { ...state, connected: true, socketInstance: chatsSocketInstance };
     }
     case "disconnect": {
       return { ...state, connected: false };
@@ -39,7 +42,6 @@ const reducer = (state: State, action: Action) => {
 
 export const socketInitializer = async (dispatch: React.Dispatch<Action>) => {
   const chatsSocketInstance = ClientIO("http://localhost:3000/chats");
-  const gamesSocketInstance = ClientIO("http://localhost:3000/games");
 
   chatsSocketInstance.on(SocketEvents.CONNECT, () => {
     dispatch({ type: SocketEvents.CONNECT, payload: chatsSocketInstance });
@@ -53,13 +55,13 @@ export const socketInitializer = async (dispatch: React.Dispatch<Action>) => {
     dispatch({ type: SocketEvents.DISCONNECT, payload: null });
   });
 
-  gamesSocketInstance.on("connect", () => {
-    console.log("games connected");
-  });
+  // gamesSocketInstance.on("connect", () => {
+  //   console.log("games connected");
+  // });
 
   return () => {
     chatsSocketInstance.disconnect();
-    gamesSocketInstance.disconnect();
+    // gamesSocketInstance.disconnect();
   };
 };
 
@@ -70,9 +72,9 @@ const WebSocketProvider = ({ children }: WebSocketProviderProps) => {
   });
   const value = { state, dispatch };
 
-  useEffect(() => {
-    socketInitializer(dispatch);
-  }, []);
+  // useEffect(() => {
+  //   socketInitializer(dispatch);
+  // }, []);
 
   return (
     <WebSocketContext.Provider value={value}>

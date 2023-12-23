@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderGames } from "../../games/api/loader";
-import { useToogle } from "./hook";
+import { useToogle } from "./hooks";
 
 export const StaticListGames = () => {
   const games = [

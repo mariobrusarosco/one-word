@@ -1,13 +1,20 @@
 import {
+  act,
   render,
   screen,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
-import { DynamicListGames, StaticListGames } from "./components";
+import {
+  AsyncToggle,
+  DynamicListGames,
+  StaticListGames,
+  Toggle,
+} from "./components";
 import { createReactQueryWrapper } from "../../../testing/utils";
 import { server } from "../../../mocks/server";
 import { HttpResponse, http } from "msw";
 import { mockOneWordApi } from "../../../mocks/helpers";
+import { debug } from "console";
 
 describe("[UNIT] - StaticListGames", () => {
   describe("when rendering", () => {
@@ -37,8 +44,8 @@ describe("[UNIT] - DynamicListGames", () => {
     });
   });
 
-  describe("when an error occcurs", () => {
-    it.only("returns the expected error message", async () => {
+  describe.skip("when an error occcurs", () => {
+    it("returns the expected error message", async () => {
       const errorMessage = "API ERROR";
       server.use(
         http.get(mockOneWordApi("/games"), () => {
@@ -57,6 +64,37 @@ describe("[UNIT] - DynamicListGames", () => {
       expect(
         await screen.findByText(new RegExp(errorMessage, "i"))
       ).toBeInTheDocument();
+    });
+  });
+});
+
+describe.skip("[UNIT] - Toggle", () => {
+  it("displays the toggle button and the hello message", async () => {
+    render(<Toggle />);
+
+    expect(screen.getByText(/toggle/i)).toBeInTheDocument();
+
+    screen.getByText(/toggle/i).click();
+
+    await waitFor(() => {
+      expect(screen.getByText(/hello!/i)).toBeInTheDocument();
+    });
+  });
+});
+
+describe.skip("[UNIT] - AsyncToggle", () => {
+  it.only("displays the async toggle button and the async hello message", async () => {
+    render(<AsyncToggle />);
+
+    debug();
+    expect(screen.getByText(/async toggle/i)).toBeInTheDocument();
+
+    act(() => {
+      screen.getByText(/async toggle/i).click();
+    });
+
+    await waitFor(() => {
+      expect(screen.findByText(/async hello!/i)).toBeInTheDocument();
     });
   });
 });

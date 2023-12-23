@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderGames } from "../../games/api/loader";
 import { useToogle } from "./hooks";
+import { useState } from "react";
 
 export const StaticListGames = () => {
   const games = [
@@ -69,3 +70,26 @@ export const AsyncToggle = () => {
     </>
   );
 };
+
+export function MyTextField() {
+  const [val, setVal] = useState("foo");
+  return (
+    <div
+      onKeyDown={(e) => {
+        console.log("[TEST], DIV  onKeyDown event");
+        // this is supposed to be doing something else,
+        // but it also does...
+        // e.preventDefault();
+      }}
+    >
+      <input
+        value={val}
+        onChange={(e) => {
+          console.log("[TEST], input on change event");
+          setVal(e.target.value);
+        }}
+      />
+      ;
+    </div>
+  );
+}

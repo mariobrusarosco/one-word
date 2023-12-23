@@ -1,12 +1,15 @@
 import {
   act,
+  fireEvent,
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import {
   AsyncToggle,
   DynamicListGames,
+  MyTextField,
   StaticListGames,
   Toggle,
 } from "./components";
@@ -68,7 +71,7 @@ describe("[UNIT] - DynamicListGames", () => {
   });
 });
 
-describe.skip("[UNIT] - Toggle", () => {
+describe.only("[UNIT] - Toggle", () => {
   it("displays the toggle button and the hello message", async () => {
     render(<Toggle />);
 
@@ -97,4 +100,14 @@ describe.skip("[UNIT] - AsyncToggle", () => {
       expect(screen.findByText(/async hello!/i)).toBeInTheDocument();
     });
   });
+});
+
+test.only("change the text field", () => {
+  render(<MyTextField />);
+  const user = userEvent.setup();
+  const input = screen.getByRole("textbox");
+
+  fireEvent.change(input, { target: { value: "bar" } });
+
+  expect(input).toHaveValue("bar");
 });

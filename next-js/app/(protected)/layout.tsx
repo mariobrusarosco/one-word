@@ -8,6 +8,15 @@ import { redirect } from "next/navigation";
 import { MemberQueries } from "@/domains/member/server-side/queries";
 import { AuthRoutes } from "@/domains/auth/typing/enum-and-interfaces";
 import { TableQueries } from "@/domains/tables/server-side/queries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  // title: {
+  // absolute: "sadsadsada",
+  // template: "aaa - %s",
+  // },
+  title: "nao entendi entao",
+};
 
 const ProtectedLayout = async ({ children }: Props) => {
   const member = await MemberQueries.fetchMember();

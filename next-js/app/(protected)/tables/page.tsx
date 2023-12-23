@@ -1,4 +1,13 @@
+import { Metadata } from "next";
 import { Suspense } from "react";
+
+export const metadata: Metadata = {
+  // title: {
+  // absolute: "sadsadsada",
+  // template: "aaa - %s",
+  // },
+  title: "asdsa",
+};
 
 async function loadPosts() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");

@@ -1,8 +1,17 @@
 "use client";
 import { Button } from "@/domains/shared/components/ui/button";
 import { useWebSocket } from "@/domains/shared/providers/web-socket";
+import { Metadata } from "next";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
+
+export const metadata: Metadata = {
+  // title: {
+  // absolute: "sadsadsada",
+  // template: "aaa - %s",
+  // },
+  title: "nao entendi entao",
+};
 
 interface Props {
   params: { tableId: string };
@@ -22,7 +31,7 @@ const TableScreen = ({ params }: Props) => {
     <main>
       {state.connected ? "connected" : "disconnected"}
       <h2>
-        Table:
+        Table: asdasdsa
         {params.tableId}
         <Button
           variant="default"

@@ -4,7 +4,7 @@ interface Props {
 
 const PublicLayout = ({ children }: Props) => {
   return (
-    <div className="">
+    <div className="public-layout">
       {/* <i>under public layout</i> */}
       {children}
     </div>

@@ -1,6 +1,7 @@
 import {
   AsyncToggle,
   DynamicListGames,
+  MyTextField,
   StaticListGames,
   Toggle,
 } from "./components";
@@ -13,6 +14,7 @@ export const Testing = () => {
       <DynamicListGames />
       <Toggle />
       <AsyncToggle />
+      <MyTextField />
     </>
   );
 };

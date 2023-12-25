@@ -1,4 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import userEvent from "@testing-library/user-event";
+import { RenderOptions, render } from "@testing-library/react";
 
 export const MockAppWithProvider = ({
   children,
@@ -31,5 +33,15 @@ export const createReactQueryWrapper = () => {
     return (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
+  };
+};
+
+export const setupAndRender = (
+  jsxElement: React.ReactElement,
+  renderOptions: RenderOptions = {}
+) => {
+  return {
+    user: userEvent.setup(),
+    ...render(jsxElement, renderOptions),
   };
 };

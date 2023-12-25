@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderGames } from "../../games/api/loader";
-import { useToogle } from "./hook";
+import { useToggle } from "./hook";
 
 export const StaticListGames = () => {
   const games = [
@@ -48,8 +48,10 @@ export const DynamicListGames = () => {
   );
 };
 
-export const Toggle = () => {
-  const { isVisible, toggle } = useToogle();
+export const Toggle = (
+  { startVisible }: { startVisible?: boolean } = { startVisible: false }
+) => {
+  const { isVisible, toggle } = useToggle({ startVisible });
 
   return (
     <>
@@ -60,7 +62,7 @@ export const Toggle = () => {
 };
 
 export const AsyncToggle = () => {
-  const { isVisible, waitFourSecondsAndToggle } = useToogle();
+  const { isVisible, waitFourSecondsAndToggle } = useToggle();
 
   return (
     <>

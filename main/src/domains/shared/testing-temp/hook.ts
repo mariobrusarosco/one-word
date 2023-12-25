@@ -1,7 +1,9 @@
 import { useState } from "react";
 
-export const useToogle = () => {
-  const [isVisible, setIsVisible] = useState(false);
+export const useToggle = ({
+  startVisible,
+}: { startVisible?: boolean } = {}) => {
+  const [isVisible, setIsVisible] = useState(startVisible);
 
   const toggle = () => {
     setIsVisible(!isVisible);
@@ -9,6 +11,7 @@ export const useToogle = () => {
 
   const waitFourSecondsAndToggle = () => {
     setTimeout(() => {
+      console.warn("-------- calling waitFourSecondsAndToggle --------");
       toggle();
     }, 4000);
   };

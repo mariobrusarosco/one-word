@@ -1,5 +1,14 @@
-import { screen, waitForElementToBeRemoved } from "@testing-library/react";
-import { DynamicListGames, StaticListGames, Toggle } from "./components";
+import {
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
+import {
+  AsyncToggle,
+  DynamicListGames,
+  StaticListGames,
+  Toggle,
+} from "./components";
 import {
   createReactQueryWrapper,
   setupAndRender,
@@ -69,6 +78,23 @@ describe("[UNIT] - Toggle", () => {
       await user.click(screen.getByText(/toggle/i));
 
       expect(screen.getByText(/hello!/i)).toBeInTheDocument();
+    });
+  });
+});
+
+describe.only("[UNIT] - AsyncToggle", () => {
+  describe("when rendering", () => {
+    it("starts with the content hidden and when clicked it displays the content", async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      const { user } = setupAndRender(<AsyncToggle />);
+
+      await user.click(screen.getByText(/async toggle/i));
+      vi.runOnlyPendingTimers();
+
+      await waitFor(() =>
+        expect(screen.getByText(/async hello!/i)).toBeInTheDocument()
+      );
+      vi.useRealTimers();
     });
   });
 });

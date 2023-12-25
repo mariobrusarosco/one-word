@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useToggle = ({
   startVisible,
@@ -20,5 +20,22 @@ export const useToggle = ({
     isVisible,
     toggle,
     waitFourSecondsAndToggle,
+  };
+};
+
+export const useCustomHook = () => {
+  const [items, setItems] = useState<string[]>([]);
+
+  const addItem = (item: string) => {
+    setItems([...items, item]);
+  };
+
+  useEffect(() => {
+    addItem("hello");
+  }, []);
+
+  return {
+    items,
+    addItem,
   };
 };

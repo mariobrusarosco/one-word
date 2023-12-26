@@ -3,7 +3,7 @@ import { gamesHandlers } from "../domains/games/mocks/handlers";
 import { authHandlers } from "../domains/auth/mocks/handlers";
 
 interface MockingConfig {
-  handlers: any[];
+  handlers: RequestHandler[];
   mockOnBrowser: boolean;
   mockOnTests: boolean;
 }

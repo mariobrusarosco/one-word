@@ -13,7 +13,7 @@ import {
   createReactQueryWrapper,
   setupAndRender,
 } from "../../../testing/utils";
-import { server } from "../../../mocks/server";
+import { server } from "../../../mocks/mocking-on-tests-controller";
 import { HttpResponse, http } from "msw";
 import { mockOneWordApi } from "../../../mocks/helpers";
 

@@ -7,35 +7,50 @@ export const RoomScreen = () => {
   const { roomId, tableId } = useParams<{ roomId: string; tableId: string }>();
   const [messages, setMessages] = useState<string[]>(["Welcome!"]);
   const [text, onChangeText] = useState("");
-  const { dispatch, state } = useWebSocket();
+  // const { dispatch, state } = useWebSocket();
 
-  useEffect(() => {
-    console.log("[CHAT]", { tableId, roomId });
-  }, []);
+  // useEffect(() => {
+  // console.log("[CHAT]", { tableId, roomId });
+  // }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(state.socketInstance);
     console.log({ text });
-    // socketState.socketInstance.emit(SocketEvents.CHAT_MESSAGE_SENDING, {
-    //   text,
-    // });
+
+    state.socketInstance.emit(SocketEvents.CHAT_MESSAGE_SENDING, text);
+
+    setMessages([...messages, text]);
   };
 
-  const connectToChat = () => {
-    dispatch({ type: SocketEvents.CONNECT, payload: { tableId, roomId } });
-
+  const createGame = () => {
+    // dispatch({
+    //   type: SocketEvents.CREATE_GAME,
+    //   payload: { tableId, roomId },
+    // });
     // socketState.socketInstance.emit(SocketEvents.CHAT_CONNECT, {
     //   tableId,
     //   roomId,
     // });
   };
 
+  useEffect(() => {
+    // dispatch({
+    //   type: SocketEvents.CONNECT_TO_SOCKET,
+    //   payload: { tableId, roomId },
+    // });
+  }, []);
+
+  // console.log("[CHAT]", { state });
+
   return (
     <div>
+      <p>
+        Connection Status:{" "}
+        {/* {state.socketInstance?.connected ? "connected" : "disconnected"} */}
+      </p>
       <h3>Room: {roomId}</h3>
 
-      <button onClick={connectToChat}>Connect to Chat</button>
+      <button onClick={createGame}>createGame</button>
 
       <div>
         <form onSubmit={handleSubmit}>
@@ -50,6 +65,10 @@ export const RoomScreen = () => {
           <button>send</button>
         </form>
       </div>
+
+      {messages?.map((message) => (
+        <div>{message}</div>
+      ))}
     </div>
   );
 };

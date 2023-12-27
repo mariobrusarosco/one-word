@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderTables } from "../api/loader";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { useUser } from "../../auth/components/authenticated-layout";
 
 export const TablesScreen = () => {
@@ -25,7 +25,9 @@ export const TablesScreen = () => {
         <aside>
           <ul>
             {data?.map((table: any) => (
-              <li key={table?.name}>{table?.name}</li>
+              <li key={table?.name}>
+                <NavLink to={`/tables/${table?.id}`}>{table?.name}</NavLink>
+              </li>
             ))}
           </ul>
         </aside>

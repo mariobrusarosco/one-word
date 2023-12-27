@@ -13,6 +13,7 @@ import { Testing } from "../testing-temp/testing";
 import { Chat } from "../../chat";
 import { RoomsScreen } from "../../tables/screens/rooms";
 import { RoomScreen } from "../../tables/screens/room";
+import { GameScreen } from "../../games/screens/game";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -46,6 +47,7 @@ export const AppRouter = () => {
                       element: <RoomsScreen />,
                       children: [{ path: ":roomId", element: <RoomScreen /> }],
                     },
+                    { path: "game", element: <GameScreen /> },
                   ],
                 },
               ],

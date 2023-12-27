@@ -1,37 +1,44 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { io as ClientIO } from "socket.io-client";
 import { SocketEvents } from "../../typing/enums";
-import { act } from "react-dom/test-utils";
+import { useParams } from "react-router-dom";
 
 const WebSocketContext = React.createContext<
   { state: State; dispatch: Dispatch } | undefined
 >(undefined);
 
 type Action =
-  | { type: SocketEvents.CONNECT; payload: any }
+  | { type: SocketEvents.CONNECT_TO_SOCKET; payload: any }
   | { type: SocketEvents.DISCONNECT; payload: any }
-  | { type: SocketEvents.GET_NAMESPACES; payload: any };
+  | { type: SocketEvents.CREATE_GAME; payload: any };
 
 type Dispatch = (action: Action) => void;
 type State = {
-  connected: boolean;
   socketInstance: any;
-  namespaces: { id: string; name: string }[];
+  stablishSocketConnection: any;
 };
 type WebSocketProviderProps = { children: React.ReactNode };
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
-    case "connect": {
-      const { tableId } = action.payload;
-      const chatsSocketInstance = ClientIO("http://localhost:3000/" + tableId);
+    case SocketEvents.CONNECT_TO_SOCKET: {
+      const chatsSocketInstance = ClientIO("http://localhost:3000", {
+        query: {
+          tableId: action.payload.tableId,
+          roomId: action.payload.roomId,
+        },
+      });
 
-      return { ...state, connected: true, socketInstance: chatsSocketInstance };
+      return { ...state, socketInstance: chatsSocketInstance };
     }
     case "disconnect": {
-      return { ...state, connected: false };
+      return { ...state };
     }
-    case SocketEvents.GET_NAMESPACES: {
+    case SocketEvents.CREATE_GAME: {
+      state.socketInstance.emit(SocketEvents.CREATE_GAME, {
+        tableId: action.payload.tableId,
+        roomId: action.payload.roomId,
+      });
       return { ...state, namespaces: action.payload };
     }
     default: {
@@ -40,41 +47,59 @@ const reducer = (state: State, action: Action) => {
   }
 };
 
-export const socketInitializer = async (dispatch: React.Dispatch<Action>) => {
-  const chatsSocketInstance = ClientIO("http://localhost:3000/chats");
-
-  chatsSocketInstance.on(SocketEvents.CONNECT, () => {
-    dispatch({ type: SocketEvents.CONNECT, payload: chatsSocketInstance });
-  });
-
-  chatsSocketInstance.on(SocketEvents.GET_NAMESPACES, (data: any) => {
-    dispatch({ type: SocketEvents.GET_NAMESPACES, payload: data });
-  });
-
-  chatsSocketInstance.on(SocketEvents.DISCONNECT, () => {
-    dispatch({ type: SocketEvents.DISCONNECT, payload: null });
-  });
-
-  // gamesSocketInstance.on("connect", () => {
-  //   console.log("games connected");
-  // });
-
-  return () => {
-    chatsSocketInstance.disconnect();
-    // gamesSocketInstance.disconnect();
-  };
-};
+//
 
 const WebSocketProvider = ({ children }: WebSocketProviderProps) => {
-  const [state, dispatch] = useReducer(reducer, {
-    connected: false,
-    socketInstance: null,
-  });
-  const value = { state, dispatch };
+  const [socketInstance, setSocketInstance] = useState(null);
+  const [gameSocketInstance, setGameSocketInstance] = useState(null);
+  const params = useParams();
 
-  // useEffect(() => {
-  //   socketInitializer(dispatch);
-  // }, []);
+  const stablishSocketConnection = () => {
+    const io = ClientIO("http://localhost:3000", { autoConnect: false });
+
+    io.onAny((event, ...args) => {
+      console.log("[SOCKET]", event, args);
+    });
+
+    // io.of("80b384d9-d585-4996-adcf-db11004d31cc").on(
+    //   "chat-message-incoming",
+    //   (message) => {
+    //     alert("opa" + message);
+    //   }
+    // );
+
+    setSocketInstance(io);
+  };
+
+  const setGameSocket = () => {
+    const io = ClientIO("http://localhost:3000");
+
+    io.on("chat-message-incoming", (message) => {
+      alert(message);
+    });
+
+    // io.of("80b384d9-d585-4996-adcf-db11004d31cc").on(
+    //   "chat-message-incoming",
+    //   (message) => {
+    //     alert("opa" + message);
+    //   }
+    // );
+
+    setGameSocketInstance(io);
+  };
+
+  useEffect(() => {
+    if (!socketInstance) {
+      stablishSocketConnection();
+    }
+  }, []);
+
+  const value = {
+    socketInstance,
+    stablishSocketConnection,
+    gameSocketInstance,
+    setGameSocket,
+  };
 
   return (
     <WebSocketContext.Provider value={value}>

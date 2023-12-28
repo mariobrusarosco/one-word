@@ -8,14 +8,12 @@ export const tablesHandlers = [
 
     return HttpResponse.json([table]);
   }),
-
   http.get(mockOneWordApi("/tables/:tableId"), ({ params }) => {
     const tableId = params.tableId as string;
     const table = createTableFixture({ table: { name: tableId } });
 
     return HttpResponse.json([table]);
   }),
-
   http.get(mockOneWordApi("/tables"), ({ request }) => {
     const url = new URL(request.url);
     const name = url.searchParams.get("name") as string;

@@ -1,6 +1,3 @@
-import { render, screen } from "@testing-library/react";
-import { Games } from "./Games";
-
 describe("[INTEGRATION] - when fetching Games", () => {
   it("returns the expected data", async () => {
     const response = await fetch(`${import.meta.env.VITE_ONE_WORD_API}/games`);

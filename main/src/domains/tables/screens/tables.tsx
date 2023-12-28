@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderTables } from "../api/loader";
 import { NavLink, Outlet } from "react-router-dom";
-import { useUser } from "../../auth/components/authenticated-layout";
+import { Table } from "../typing/interfaces";
 
 export const TablesScreen = () => {
-  const { data, error, isFetching } = useQuery({
+  const { data, error, isFetching } = useQuery<Table[]>({
     queryKey: ["tables"],
     queryFn: loaderTables,
   });
@@ -24,7 +24,7 @@ export const TablesScreen = () => {
       <div style={{ display: "flex", gap: "100px", flexWrap: "wrap" }}>
         <aside>
           <ul>
-            {data?.map((table: any) => (
+            {data?.map((table) => (
               <li key={table?.name}>
                 <NavLink to={`/tables/${table?.id}`}>{table?.name}</NavLink>
               </li>

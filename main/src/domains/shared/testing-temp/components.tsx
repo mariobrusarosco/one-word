@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderGames } from "../../games/api/loader";
 import { useFetch, useToggle } from "./hook";
+import { Game } from "../../games/typing/interfaces";
+import { Table } from "../../tables/typing/interfaces";
 
 export const StaticListGames = () => {
   const games = [
@@ -40,7 +42,7 @@ export const DynamicListGames = () => {
     <>
       <h3>Games</h3>
       <ul>
-        {data?.map((game: any) => (
+        {data?.map((game: Game) => (
           <li>{game?.name}</li>
         ))}
       </ul>
@@ -56,7 +58,7 @@ export const DynamicListTables = () => {
     <>
       <h3>Tables = using useFetch</h3>
       <ul>
-        {data?.map((table: any) => (
+        {data?.map((table: Table) => (
           <li>{table?.name}</li>
         ))}
       </ul>

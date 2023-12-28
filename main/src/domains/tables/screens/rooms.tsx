@@ -1,9 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { useWebSocket } from "../../socket/providers/web-socket";
+import socket from "../../socket/providers/web-socket/socket";
 
 export const RoomsScreen = () => {
-  const socket = useWebSocket();
-
   console.log("[Socket] - from RoomsScreen: ", { socket });
 
   return (

@@ -1,5 +1,5 @@
 import { beforeAll, afterEach, afterAll } from "vitest";
-import { server } from "./src/mocks/server";
+import { server } from "./src/mocks/mocking-on-tests-controller";
 
 /* [REASONING]
  * Even thhough we are not using jest, we still need to import the jest-dom

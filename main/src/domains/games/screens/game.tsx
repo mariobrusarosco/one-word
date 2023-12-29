@@ -18,8 +18,11 @@ export const GameScreen = () => {
   const handleMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e?.preventDefault();
     onChangeText(e.target.value);
+  };
 
-    socket.emit("message", e?.target.value);
+  const handleSendMessage = () => {
+    socket.emit("message", text);
+    onChangeText("");
   };
 
   useEffect(() => {
@@ -35,8 +38,6 @@ export const GameScreen = () => {
       setMessages((messages) => [...messages, data]);
     });
   }, []);
-
-  console.log("[Socket]", { users });
 
   return (
     <div>
@@ -66,7 +67,7 @@ export const GameScreen = () => {
       <div>
         <input type="text" value={text} onChange={handleMessage} />
 
-        <button>send</button>
+        <button onClick={handleSendMessage}>send</button>
       </div>
     </div>
   );

@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { AuthenticatedLayout } from "../../auth/components/authenticated-layout";
 import RootLayout from "./root-layout";
 import { GamesScreen } from "../../games/screens/games";
@@ -6,7 +10,6 @@ import { TablesScreen } from "../../tables/screens/tables";
 import { PublicLayout } from "./public-layout";
 import { LoginScreen } from "../../auth/screens/login";
 import { logoutUser } from "../../auth/routes/logout-user";
-import { DashboardScreen } from "../../dashboard/screens/dashboard";
 import { TableScreen } from "../../tables/screens/table";
 import { ErrorScreen } from "../screens/error";
 import { Testing } from "../testing-temp/testing";
@@ -22,17 +25,9 @@ export const AppRouter = () => {
       element: <RootLayout />,
       errorElement: <ErrorScreen />,
       children: [
-        { index: true, element: <DashboardScreen /> },
+        { index: true, element: <Navigate to="tables" /> },
         {
           element: <AuthenticatedLayout />,
-          loader: async () => {
-            const response = await fetch(
-              `${import.meta.env.VITE_ONE_WORD_API}/user`
-            );
-
-            const user = await response.json();
-            return user;
-          },
           children: [
             {
               path: "tables",

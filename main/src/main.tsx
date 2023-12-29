@@ -7,7 +7,7 @@ import { setApiMockingWhenInDevMode } from "./domains/shared/utils/dev-api-mocki
 const runWebApp = async () => {
   await setApiMockingWhenInDevMode();
 
-  ReactDOM.createRoot(document.getElementById("root")!).render(
+  ReactDOM.createRoot(document.querySelector(".root")!).render(
     <React.StrictMode>
       <App />
     </React.StrictMode>

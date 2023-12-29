@@ -5,11 +5,15 @@ export const setApiMockingWhenInDevMode = async (
     disable: boolean;
   } = { disable: false }
 ) => {
-  if (disable || process.env.NODE_ENV !== "development") return;
+  try {
+    if (disable || process.env.NODE_ENV !== "development") return;
 
-  const { worker } = await import(
-    "../../../mocks/mocking-on-browser-controller"
-  );
+    const { worker } = await import(
+      "../../../mocks/mocking-on-browser-controller"
+    );
 
-  await worker.start();
+    await worker.start();
+  } catch (e) {
+    console.error(e);
+  }
 };

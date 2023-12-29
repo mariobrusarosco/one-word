@@ -10,7 +10,7 @@ interface MockingConfig {
 }
 
 export const applicationMockingConfig: MockingConfig[] = [
-  { handlers: tablesHandlers, mockOnBrowser: true, mockOnTests: true },
-  { handlers: gamesHandlers, mockOnBrowser: true, mockOnTests: true },
+  { handlers: tablesHandlers, mockOnBrowser: false, mockOnTests: true },
+  { handlers: gamesHandlers, mockOnBrowser: false, mockOnTests: true },
   { handlers: authHandlers, mockOnBrowser: true, mockOnTests: true },
 ];

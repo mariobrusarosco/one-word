@@ -3,9 +3,6 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import { ClerkLoaded, ClerkLoading, ClerkProvider } from "@clerk/nextjs";
 import { AppLoaderScreen } from "@/domains/shared/components/app-loader-screen/app-loader-screen";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
-import { extractRouterConfig } from "uploadthing/server";
-import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 import { QueryProvider } from "@/domains/shared/providers/react-query";
 import { WebSocketProvider } from "@/domains/shared/providers/web-socket";
@@ -24,9 +21,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en">
         <body className={font.className}>
-          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           <ClerkLoading>
             <AppLoaderScreen />
           </ClerkLoading>

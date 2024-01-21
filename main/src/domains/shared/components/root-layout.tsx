@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
   return (
-    <div style={{ border: "1px solid red" }}>
+    <div data-layout="root">
       <Outlet />
     </div>
   );

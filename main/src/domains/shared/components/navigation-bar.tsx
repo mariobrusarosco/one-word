@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { AppSidebar } from "@mariobrusarosco/design-system";
 
 export const NavigationBar = () => {
   return (
-    <div>
+    <AppSidebar>
       <nav>
         <ul>
           <li>
@@ -16,6 +17,6 @@ export const NavigationBar = () => {
           </li>
         </ul>
       </nav>
-    </div>
+    </AppSidebar>
   );
 };

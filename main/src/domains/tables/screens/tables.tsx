@@ -20,12 +20,12 @@ export const TablesScreen = () => {
 
   return (
     <>
-      <h2>Available tables</h2>
+      <h2 className="font-serif">Available tables</h2>
       <div style={{ display: "flex", gap: "100px", flexWrap: "wrap" }}>
         <aside>
           <ul>
             {data?.map((table) => (
-              <li key={table?.name}>
+              <li key={table?.name} className="font-sans">
                 <NavLink to={`/tables/${table?.id}`}>{table?.name}</NavLink>
               </li>
             ))}

@@ -8,6 +8,12 @@ const ONE_WORD_TAILWIND_CONFIG: Config = {
       tablet: { min: "768px" },
       desktop: { min: "1280px" },
     },
+    extend: {
+      fontFamily: {
+        serif: ["Roboto Slab", "serif"],
+        sans: ["Roboto", "sans-serif"],
+      },
+    },
   },
 };
 

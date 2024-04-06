@@ -1112,7 +1112,7 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
-"@mariobrusarosco/design-system@^1.0.10":
+"@mariobrusarosco/design-system@^1.0.11":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@mariobrusarosco/design-system/-/design-system-1.0.11.tgz#a008eb47d38a7cdc565746a5428b94aa520fb84f"
   integrity sha512-ZBW691GqYXvoGftvNZtXGGDc17KsZit2OXJyqgPuXYGfUdehDzHeo2sXsLGzfU8kk57BLBgecvNcVO2zl3oepg==

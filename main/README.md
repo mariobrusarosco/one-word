@@ -10,9 +10,10 @@ This is a side project game and by now, is a Work In Progress
 
 ## Stack
 
-- `Vite` as _build tool_
+- `Vite` as _Build Tool_
 - Typescript
 - Tailwind CSS for Styles
+- `chadcn` as _Component Library_
 
 ## API
 

@@ -19,7 +19,7 @@ export const TablesScreen = () => {
   }
 
   return (
-    <div className="bg-slate-500 tablet:bg-red-900 desktop:bg-cyan-800">
+    <div className="bg-primary tablet:bg-secondary desktop:bg-cyan-800">
       <h2 className="font-serif">Available tables</h2>
       <div style={{ display: "flex", gap: "100px", flexWrap: "wrap" }}>
         <aside>

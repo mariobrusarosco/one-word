@@ -8,4 +8,8 @@ export const APP_CONTAINER = {
     desktop: "4rem",
   },
   center: true,
+  // Support for chadcn's 2xl screen size
+  screens: {
+    "2xl": "1400px",
+  },
 };

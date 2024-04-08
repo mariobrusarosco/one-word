@@ -9,3 +9,9 @@ of using Tailwind's.
 
 This app will use a custom size for its main "Container" DOM Element.
 Setup was made via `tailwind.config`
+
+## Fonts
+
+// TODO Improve this doc explaning where the config for fonts
+// was made, which fonts are available.
+Setup was made via `tailwind.config`

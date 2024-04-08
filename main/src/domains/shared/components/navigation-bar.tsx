@@ -4,7 +4,7 @@ export const NavigationBar = () => {
   return (
     <nav className="hidden tablet:block">
       <ul>
-        <li>
+        <li className="font-serif">
           <NavLink to="/dashboard">Dashboard</NavLink>
         </li>
         <li>

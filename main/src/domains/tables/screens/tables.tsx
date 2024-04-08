@@ -19,13 +19,16 @@ export const TablesScreen = () => {
   }
 
   return (
-    <>
+    <div className="bg-slate-500 tablet:bg-red-900 desktop:bg-cyan-800">
       <h2 className="font-serif">Available tables</h2>
       <div style={{ display: "flex", gap: "100px", flexWrap: "wrap" }}>
         <aside>
           <ul>
             {data?.map((table) => (
-              <li key={table?.name} className="font-sans">
+              <li
+                key={table?.name}
+                className="font-sans only-m:text-cyan-200 only-t:bg-cyan-200"
+              >
                 <NavLink to={`/tables/${table?.id}`}>{table?.name}</NavLink>
               </li>
             ))}
@@ -33,6 +36,6 @@ export const TablesScreen = () => {
         </aside>
         <Outlet />
       </div>
-    </>
+    </div>
   );
 };

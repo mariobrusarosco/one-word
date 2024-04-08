@@ -2,6 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { loaderTables } from "../api/loader";
 import { NavLink, Outlet } from "react-router-dom";
 import { Table } from "../typing/interfaces";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/domains/ui-system/components/ui/popover";
 
 export const TablesScreen = () => {
   const { data, error, isFetching } = useQuery<Table[]>({
@@ -34,6 +39,12 @@ export const TablesScreen = () => {
             ))}
           </ul>
         </aside>
+
+        <Popover>
+          <PopoverTrigger>Open</PopoverTrigger>
+          <PopoverContent>Place content for the popover here.</PopoverContent>
+        </Popover>
+
         <Outlet />
       </div>
     </div>

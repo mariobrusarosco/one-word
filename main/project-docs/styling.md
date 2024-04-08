@@ -15,3 +15,7 @@ Setup was made via `tailwind.config`
 // TODO Improve this doc explaning where the config for fonts
 // was made, which fonts are available.
 Setup was made via `tailwind.config`
+
+# Components Library
+
+This app will validate the usage of `chadcn`

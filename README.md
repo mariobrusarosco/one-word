@@ -1,13 +1,13 @@
 # One Word
 
-A side project Football App where I intend to:
+A side project App where I intend to:
 
 1. Simulate a real world app, as much as possible. The goal is to validate premises and get a
    closer feeling about the pros anb cons regarding front end patterns, tools and frameworks.
 
 2. Use it as part of my _portfolio_ so I can demonstrate _some_ skills and somethings I learn on my spear time.
 
-## Regarding the "tech stuff" this project intends to have more focus in specific "stuffs"
+## Regarding the "tech stuff" this project intends to have more focus in specific "stuff"
 
 ### Main Focus
 

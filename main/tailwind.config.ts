@@ -13,6 +13,9 @@ const config = {
     screens: APP_BREAKPOINTS,
     container: APP_CONTAINER,
     extend: {
+      boxShadow: {
+        "main-bottom": "0px 4px 4px rgba(0, 0, 0, 0.25)",
+      },
       fontFamily: APP_FONTS.fontFamily,
       colors: {
         ...ONE_WORD_PALETTE,

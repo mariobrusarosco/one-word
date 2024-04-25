@@ -1,7 +1,7 @@
 {
   "name": "one-word",
   "private": true,
-  "version": "0.4.1",
+  "version": "0.4.2",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -14,6 +14,7 @@
   "dependencies": {
     "@mariobrusarosco/design-system": "^1.0.10",
     "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-slot": "^1.0.2",
     "@tanstack/react-query": "^5.4.3",
     "@tanstack/react-query-devtools": "^5.14.6",
     "class-variance-authority": "^0.7.0",

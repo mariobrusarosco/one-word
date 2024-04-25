@@ -1,15 +1,24 @@
 export const ONE_WORD_PALETTE = {
+  pink: {
+    100: "#FFD1CA",
+    500: "#EC185D",
+    800: "#BB2253",
+  },
+  teal: {
+    800: "#254441",
+  },
   primary: {
-    DEFAULT: "#EC185D",
-    light: "#254441",
+    // DEFAULT: "#EC185D",
+    // light: "#254441",
+    light: "#FFFFFF",
     dark: "#EC185D",
-    foreground: "pink",
+    foreground: "#254441",
   },
   secondary: {
     DEFAULT: "#254441",
     light: "#FFD1CA",
     dark: "#BB2253",
-    foreground: "tomato",
+    foreground: "#FF6F59",
   },
   tertiary: {
     DEFAULT: "#FF6F59",
@@ -22,9 +31,9 @@ export const ONE_WORD_PALETTE = {
     dark: "#000000",
   },
   background: {
-    DEFAULT: "#254441",
-    light: "#FFD1CA",
-    dark: "#254441",
+    DEFAULT: "white",
+    light: "orange",
+    dark: "blue",
   },
   surface: {
     DEFAULT: "#254441",
@@ -43,7 +52,6 @@ export const ONE_WORD_PALETTE = {
   border: "hsl(var(--border))",
   input: "hsl(var(--input))",
   ring: "hsl(var(--ring))",
-  // background: "hsl(var(--background))",
   foreground: { DEFAULT: "darkblue" },
   destructive: {
     DEFAULT: "gray",

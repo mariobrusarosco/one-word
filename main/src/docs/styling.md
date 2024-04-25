@@ -14,6 +14,21 @@ This side project aims to validate two things regarding styling for a Web Projec
 
 # Learnings
 
+## Dark/Light Mode
+
+- We have a constraint: using 'dark:' and 'light:' prefixes for the classes.
+- We can avoid this constraint setting 'class' globally, by using the @layer base directive.
+
+```css
+.bg-primary {
+  @apply bg-primary-dark dark:bg-primary-light text-primary-foreground;
+}
+
+.text-primary {
+  @apply dark:text-primary-light text-primary-dark;
+}
+```
+
 ## Pros
 
 ## Cons

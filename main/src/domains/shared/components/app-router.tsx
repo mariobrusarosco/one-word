@@ -52,6 +52,14 @@ export const AppRouter = () => {
             { path: "testing", element: <Testing /> },
             { path: "chat", element: <Chat /> },
             { path: "dashboard", element: <DashboardScreen /> },
+            {
+              path: "account",
+              element: (
+                <div>
+                  <h1>Account</h1>
+                </div>
+              ),
+            },
           ],
         },
         {

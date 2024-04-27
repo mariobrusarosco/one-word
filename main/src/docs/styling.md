@@ -7,12 +7,98 @@ This side project aims to validate two things regarding styling for a Web Projec
 
 # Validation Goals
 
-- [ ] Effort to Create Components and customize them to _match completly different *DESIGN Guidelines*_ from _SHADCN's DESIGN_
-- [ ] Effort to maintain/refactor these Components when the _DESIGN Guidelines_ change.
+- [ ] #1 Effort to Create Components and customize them to _match completly different *DESIGN Guidelines*_ from _SHADCN's DESIGN_
+- [ ] #2 Effort to maintain/refactor these Components when the _DESIGN Guidelines_ change.
 
 ...more coming soon...
 
 # Learnings
+
+## Dark/Light Mode
+
+- We have a constraint: using 'dark:' and 'light:' prefixes for the classes.
+- We can avoid this constraint setting 'class' globally, by using the @layer base directive.
+
+```css
+.bg-primary {
+  @apply bg-primary-dark dark:bg-primary-light text-primary-foreground;
+}
+
+.text-primary {
+  @apply dark:text-primary-light text-primary-dark;
+}
+```
+
+## Validation #1
+
+Effort to Create...
+
+### Approach One
+
+- High level of Customizaion!
+
+By creating custom styles both on Tailwind and Components created by CHADCN UI:
+
+#### First Effort
+
+Create our tokens ans setting them in the tailwind.config.js file.
+
+```js
+export const ONE_WORD_PALETTE = {
+  sun: {
+    100: "#...",
+    500: "#...",
+    900: "#..."
+  }
+}
+
+...
+theme: {
+   ...,
+    extend: {
+      colors: {
+        ...ONE_WORD_PALETTE,
+      },
+    ...
+```
+
+#### Second Effort
+
+Instead of using CHADCN UI generated classes, we can create our own classes. We create a custom color - sun - and set different levels... 100, 200...
+
+We use the Tailwind prefixes in our advantage: bg-, text- and so on.
+
+```tsx
+const buttonVariants = cva(
+  "shadow-main-bottom bg-sun-100 text-sun-900...",
+  ...
+```
+
+### Approach Two
+
+Keep CHADCN UI generated classes, but modify the styles for those classes on our tailwing config.
+
+CHADCN UI classes like bg-primary, text-primary, shadow-primary-bottom, etc.
+
+```tsx
+const buttonVariants = cva(
+  "bg-primary text-primary shadow-primary-bottom",
+  ...
+```
+
+On App's main CSS file, the one responsible for the global styles...\*:
+
+```css
+@layer base {
+  .bg-primary {
+    @apply bg-sun-100 dark:bg-sun-900;
+  }
+
+  .text-primary {
+    @apply bg-sun-400 dark:bg-sun-800;
+  }
+}
+```
 
 ## Pros
 

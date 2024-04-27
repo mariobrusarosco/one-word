@@ -1,3 +1,4 @@
+import { Button } from "@/domains/ui-system/components/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -10,9 +11,9 @@ export const NavigationBar = () => {
   const { setTheme } = useTheme();
 
   return (
-    <nav className="hidden bg-white dark:bg-secondary tablet:block">
-      <ul>
-        <li className="font-serif">
+    <nav className="hidden bg-white dark:bg-black/50 tablet:block">
+      <ul className="flex flex-col gap-3">
+        {/* <li className="font-serif">
           <NavLink to="/dashboard">Dashboard</NavLink>
         </li>
         <li>
@@ -20,17 +21,151 @@ export const NavigationBar = () => {
         </li>
         <li>
           <NavLink to="/games">Games</NavLink>
-        </li>
+        </li> */}
+
         <li>
           <Popover>
-            <PopoverTrigger>toggle theme</PopoverTrigger>
+            <PopoverTrigger>
+              <Button>toggle theme</Button>
+            </PopoverTrigger>
 
-            <PopoverContent>
-              <div onClick={() => setTheme("light")}>Light</div>
-              <div onClick={() => setTheme("dark")}>Dark</div>
-              <div onClick={() => setTheme("system")}>System</div>
-            </PopoverContent>
+            <div onClick={() => setTheme("light")}>Light</div>
+            <div onClick={() => setTheme("dark")}>Dark</div>
+            <div onClick={() => setTheme("system")}>System</div>
+            <PopoverContent></PopoverContent>
           </Popover>
+        </li>
+        <p>PRIMARY</p>
+        <li>
+          <Button variant="primary" size="small">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button variant="primary" size="medium">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button variant="primary" size="large">
+            MB
+          </Button>
+        </li>
+
+        <p>SECONDARY</p>
+        <li>
+          <Button variant="secondary" size="small">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button variant="secondary" size="medium">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button variant="secondary" size="large">
+            MB
+          </Button>
+        </li>
+
+        <p>OUTLINE</p>
+        <div className="bg-pink-800 p-4 flex flex-col gap-3">
+          <li>
+            <Button variant="outline" size="small">
+              MB
+            </Button>
+          </li>
+          <li>
+            <Button variant="outline" size="medium">
+              MB
+            </Button>
+          </li>
+          <li>
+            <Button variant="outline" size="large">
+              MB
+            </Button>
+          </li>
+        </div>
+
+        <p>DANGER</p>
+        <li>
+          <Button variant="danger" size="small">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button variant="danger" size="medium">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button variant="danger" size="large">
+            MB
+          </Button>
+        </li>
+
+        <li>
+          <Button roundness="full" variant="primary" size="small">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button roundness="full" variant="secondary" size="small">
+            MB
+          </Button>
+        </li>
+        <li className="bg-black">
+          <Button roundness="full" variant="outline" size="small">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button roundness="full" variant="danger" size="small">
+            MB
+          </Button>
+        </li>
+
+        <li>
+          <Button roundness="full" variant="primary" size="medium">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button roundness="full" variant="secondary" size="medium">
+            MB
+          </Button>
+        </li>
+        <li className="bg-black">
+          <Button roundness="full" variant="outline" size="medium">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button roundness="full" variant="danger" size="medium">
+            MB
+          </Button>
+        </li>
+
+        <li>
+          <Button roundness="full" variant="primary" size="large">
+            MB
+          </Button>
+        </li>
+        <li>
+          <Button roundness="full" variant="secondary" size="large">
+            MB
+          </Button>
+        </li>
+        <li className="bg-black">
+          <Button roundness="full" variant="outline" size="large">
+            OU
+          </Button>
+        </li>
+        <li>
+          <Button roundness="full" variant="danger" size="large">
+            MB
+          </Button>
         </li>
       </ul>
     </nav>

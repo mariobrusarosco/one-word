@@ -35,6 +35,7 @@ export const NavigationBar = () => {
             <PopoverContent></PopoverContent>
           </Popover>
         </li>
+        <p>PRIMARY</p>
         <li>
           <Button variant="primary" size="small">
             MB
@@ -50,6 +51,8 @@ export const NavigationBar = () => {
             MB
           </Button>
         </li>
+
+        <p>SECONDARY</p>
         <li>
           <Button variant="secondary" size="small">
             MB
@@ -66,22 +69,26 @@ export const NavigationBar = () => {
           </Button>
         </li>
 
-        <li className="bg-black">
-          <Button variant="outline" size="small">
-            MB
-          </Button>
-        </li>
-        <li className="bg-black">
-          <Button variant="outline" size="medium">
-            MB
-          </Button>
-        </li>
-        <li className="bg-black">
-          <Button variant="outline" size="large">
-            MB
-          </Button>
-        </li>
+        <p>OUTLINE</p>
+        <div className="bg-pink-800 p-4 flex flex-col gap-3">
+          <li>
+            <Button variant="outline" size="small">
+              MB
+            </Button>
+          </li>
+          <li>
+            <Button variant="outline" size="medium">
+              MB
+            </Button>
+          </li>
+          <li>
+            <Button variant="outline" size="large">
+              MB
+            </Button>
+          </li>
+        </div>
 
+        <p>DANGER</p>
         <li>
           <Button variant="danger" size="small">
             MB

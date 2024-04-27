@@ -10,13 +10,12 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-pink-500 dark:bg-white text-white dark:text-teal-800 hover:bg-pink-800 dark:hover:bg-pink-100",
+          "bg-pink-500 text-white-100 hover:bg-pink-800 dark:bg-teal-400 dark:text-white  dark:hover:bg-teal-800/50",
         secondary:
-          "bg-teal-800 dark:bg-pink-500 dark:text-white text-white hover:bg-teal-800/80  dark:hover:bg-pink-800",
-        danger:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "bg-teal-800 text-white-100 hover:bg-teal-800/80  dark:bg-white-100 dark:text-teal-800 dark:hover:bg-teal-800 dark:hover:text-white-100",
         outline:
-          "text-white border-white border border-white bg-transparent hover:bg-accent hover:text-accent-foreground shadow-none",
+          "shadow-none bg-transparent text-white-100 border border-white-100 hover:bg-white-100 hover:text-teal-800",
+        danger: "bg-red-400 text-white-100 hover:bg-red-400/80 ",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -28,18 +27,12 @@ const buttonVariants = cva(
         small: "h-8  py-3 px-4 text-sm",
         medium: "h-11  px-4 text-base",
         large: "h-16  px-8 text-2xl",
-        // icon: "h-10 w-10",
       },
     },
     compoundVariants: [
       { roundness: "full", size: "small", class: "w-8" },
       { roundness: "full", size: "medium", class: "w-11" },
       { roundness: "full", size: "large", class: "w-16" },
-      // {
-      //   roundness: "full",
-      //   size: ["small", "medium", "large"],
-      //   class: "w-[45px] h-[45px] p-0 text-lg",
-      // },
     ],
     defaultVariants: {
       variant: "primary",

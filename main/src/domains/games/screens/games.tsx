@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { loaderGames } from "../api/loader";
+import { Game } from "../typing/interfaces";
 
-export const Games = () => {
+export const GamesScreen = () => {
   const { data, error, isFetching } = useQuery({
     queryKey: ["games"],
     queryFn: loaderGames,
@@ -19,7 +20,7 @@ export const Games = () => {
     <>
       <h2>Games</h2>
       <ul>
-        {data?.map((game: any) => (
+        {data?.map((game: Game) => (
           <li>{game?.name}</li>
         ))}
       </ul>

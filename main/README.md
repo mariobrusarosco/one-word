@@ -10,9 +10,10 @@ This is a side project game and by now, is a Work In Progress
 
 ## Stack
 
-- `Vite` as _build tool_
+- `Vite` as _Build Tool_
 - Typescript
 - Tailwind CSS for Styles
+- `chadcn` as _Component Library_
 
 ## API
 
@@ -22,6 +23,8 @@ This is a side project game and by now, is a Work In Progress
 
 **Production**
 [https://one-word-game.netlify.app](https://one-word-game.netlify.app)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/29d29e87-2464-4f15-b6b2-f65937e001b3/deploy-status)](https://app.netlify.com/sites/one-word-game/deploys)
 
 ## Development
 

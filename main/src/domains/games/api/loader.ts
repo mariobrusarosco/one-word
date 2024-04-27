@@ -1,10 +1,14 @@
-export const loaderGames = async () => {
-  const response = await fetch(`${import.meta.env.VITE_ONE_WORD_API}/games`);
+import { restApi } from "../../../api/rest";
 
-  if (!response.ok) {
+export const loaderGames = async () => {
+  const response = await restApi.get("/games");
+
+  console.warn(response);
+
+  if (!response.status) {
     throw new Error(response.statusText);
   }
 
-  const result = await response.json();
+  const result = await response.data;
   return result;
 };

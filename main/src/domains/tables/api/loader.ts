@@ -1,10 +1,13 @@
+import { restApi } from "../../../api/rest";
+
 export const loaderTables = async () => {
-  const response = await fetch(`${import.meta.env.VITE_ONE_WORD_API}/tables`);
+  const response = await restApi.get("/tables");
 
   if (!response.ok) {
     throw new Error(response.statusText);
   }
 
-  const result = await response.json();
-  return result;
+  console.log("[LOADER]", response);
+
+  return await response.data;
 };

@@ -18,6 +18,7 @@ import { RoomsScreen } from "../../tables/screens/rooms";
 import { RoomScreen } from "../../tables/screens/room";
 import { GameScreen } from "../../games/screens/game";
 import { DashboardScreen } from "../../dashboard/screens/dashboard";
+import { ComponentsScreen } from "../screens/components";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -59,6 +60,10 @@ export const AppRouter = () => {
                   <h1>Account</h1>
                 </div>
               ),
+            },
+            {
+              path: "components",
+              element: <ComponentsScreen />,
             },
           ],
         },

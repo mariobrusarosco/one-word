@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { NavigationBar } from "../../shared/components/navigation-bar";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { NavLink } from "react-router-dom";
+import { AutthenticatedFooter } from "./authenticated-footer";
 
 export const AuthenticatedLayout = () => {
   return (
@@ -23,6 +24,8 @@ export const AuthenticatedLayout = () => {
         <div className="app-content">
           <Outlet />
         </div>
+
+        <AutthenticatedFooter />
       </div>
     </div>
   );

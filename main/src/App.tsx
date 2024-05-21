@@ -31,12 +31,12 @@ const AppWithProviders = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-function App() {
+const App = () => {
   return (
     <AppWithProviders>
       <AppRouter />
     </AppWithProviders>
   );
-}
+};
 
-export default App;
+export { App };

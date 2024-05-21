@@ -17,18 +17,15 @@ const queryClient = new QueryClient({
 });
 
 const AppWithProviders = ({ children }: { children: React.ReactNode }) => {
-  const { AppThemeProvider } = useAppTheme();
-
-  // console.log({ ThemeProvider });
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      {AppThemeProvider ? (
+      {/* {AppThemeProvider ? (
         <AppThemeProvider defaultTheme="dark">{children}</AppThemeProvider>
       ) : (
         children
-      )}
-      {/* {children} */}
+      )} */}
+      {children}
     </QueryClientProvider>
   );
 };

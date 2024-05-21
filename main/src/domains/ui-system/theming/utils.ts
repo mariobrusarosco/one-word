@@ -24,14 +24,12 @@ export const updateModeOnLocalStorage = (
 ) => localStorage.setItem(storageKey, theme);
 
 export const initializeTheme = () => {
-  const modeFromLocalStorage = localStorage.getItem(
-    APP_THEME_STORAGE_KEY
-  ) as ThemeMode;
+  const modeFromLocalStorage =
+    (localStorage.getItem(APP_THEME_STORAGE_KEY) as ThemeMode) ||
+    APP_DEFAULT_MODE;
+
   updateModeOnDOM(modeFromLocalStorage);
-  updateModeOnLocalStorage(
-    APP_THEME_STORAGE_KEY,
-    modeFromLocalStorage || APP_DEFAULT_MODE
-  );
+  updateModeOnLocalStorage(APP_THEME_STORAGE_KEY, modeFromLocalStorage);
 
   return modeFromLocalStorage;
 };

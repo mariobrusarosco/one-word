@@ -9,6 +9,7 @@ export const setApiMockingWhenInDevMode = async (
     if (disable || process.env.NODE_ENV !== "development") return;
 
     console.log("Great! This application has mocked data!");
+
     const { worker } = await import(
       "../../../mocks/mocking-on-browser-controller"
     );

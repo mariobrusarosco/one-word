@@ -4,9 +4,9 @@ import {
   updateModeOnDOM,
   initializeTheme,
 } from "../utils";
-import { APP_THEME_STORAGE_KEY, ThemeMode, ThemeProps } from "../typing";
+import { APP_THEME_STORAGE_KEY, ThemeMode, ThemeAdapter } from "../typing";
 
-export const useThemeStore = create<ThemeProps>((set) => ({
+export const useZustandManager = create<ThemeAdapter>((set) => ({
   theme: initializeTheme() as ThemeMode,
   setTheme: (theme: ThemeMode) => {
     updateModeOnDOM(theme);

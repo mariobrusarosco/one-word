@@ -1,8 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { initializeTheme, updateModeOnDOM } from "../utils";
-import { APP_THEME_STORAGE_KEY, ThemeMode, ThemeProps } from "../typing";
+import {
+  initializeTheme,
+  updateModeOnDOM,
+  updateModeOnLocalStorage,
+} from "../utils";
+import { APP_THEME_STORAGE_KEY, ThemeMode, ThemeAdapter } from "../typing";
 
-const ThemeProviderContext = createContext<ThemeProps>({});
+const ThemeProviderContext = createContext<ThemeAdapter>({} as ThemeAdapter);
 
 const ReactContextThemeProvider = ({
   children,
@@ -17,14 +21,12 @@ const ReactContextThemeProvider = ({
 
   useEffect(() => {
     updateModeOnDOM(theme);
+    updateModeOnLocalStorage(APP_THEME_STORAGE_KEY, theme);
   }, [theme]);
 
   const value = {
     theme,
-    setTheme: (theme: ThemeMode) => {
-      localStorage.setItem(APP_THEME_STORAGE_KEY, theme);
-      setTheme(theme);
-    },
+    setTheme: (theme: ThemeMode) => setTheme(theme),
   };
 
   return (
@@ -34,11 +36,11 @@ const ReactContextThemeProvider = ({
   );
 };
 
-export const useTheme = () => {
+export const useReactContextAdapter = () => {
   const context = useContext(ThemeProviderContext);
 
   if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error("useAppTheme must be used within a AppThemeProvider");
 
   return {
     theme: context.theme,

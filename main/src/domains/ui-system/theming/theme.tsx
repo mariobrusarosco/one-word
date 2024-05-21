@@ -1,8 +1,8 @@
-import { useThemeStore } from "./state-managers/zustand";
-import { ThemeProps } from "./typing";
+import { useReactContextAdapter } from "./adapters/react-context";
+import { ThemeAdapter } from "./typing";
 
-export const useAppTheme = (): ThemeProps => {
-  const { setTheme, theme } = useThemeStore();
+export const useAppTheme = (): ThemeAdapter => {
+  const { setTheme, theme, AppThemeProvider } = useReactContextAdapter();
 
-  return { setTheme, theme, AppThemeProvider: undefined };
+  return { setTheme, theme, AppThemeProvider };
 };

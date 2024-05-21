@@ -1,7 +1,7 @@
 {
   "name": "one-word",
   "private": true,
-  "version": "0.4.4",
+  "version": "0.5.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -25,7 +25,8 @@
     "react-router-dom": "^6.18.0",
     "socket.io-client": "^4.7.2",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.0.5",

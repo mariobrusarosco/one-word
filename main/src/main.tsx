@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import { setApiMockingWhenInDevMode } from "./domains/shared/utils/dev-api-mocking.ts";
+import { App } from "./App.tsx";
 
 const runWebApp = async () => {
   await setApiMockingWhenInDevMode();

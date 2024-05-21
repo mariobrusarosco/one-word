@@ -1,23 +1,10 @@
 import { create } from "zustand";
 import {
-  ThemeMode,
   updateModeOnLocalStorage,
   updateModeOnDOM,
-  ThemeProps,
-  APP_THEME_STORAGE_KEY,
+  initializeTheme,
 } from "../utils";
-
-const DEFAULT_MODE = "system";
-const modeFromLocalStorage = localStorage.getItem(
-  APP_THEME_STORAGE_KEY
-) as ThemeMode;
-
-const initializeTheme = () => {
-  updateModeOnDOM(modeFromLocalStorage);
-  updateModeOnLocalStorage(APP_THEME_STORAGE_KEY, modeFromLocalStorage);
-
-  return modeFromLocalStorage || DEFAULT_MODE;
-};
+import { APP_THEME_STORAGE_KEY, ThemeMode, ThemeProps } from "../typing";
 
 export const useThemeStore = create<ThemeProps>((set) => ({
   theme: initializeTheme() as ThemeMode,

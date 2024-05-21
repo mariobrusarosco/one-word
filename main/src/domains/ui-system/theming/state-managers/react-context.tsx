@@ -1,21 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-  APP_THEME_STORAGE_KEY,
-  ThemeMode,
-  ThemeProps,
-  updateModeOnDOM,
-} from "../utils";
+import { initializeTheme, updateModeOnDOM } from "../utils";
+import { APP_THEME_STORAGE_KEY, ThemeMode, ThemeProps } from "../typing";
 
 const ThemeProviderContext = createContext<ThemeProps>({});
 
 const ReactContextThemeProvider = ({
   children,
   defaultTheme = "light",
-  ...props
-}: any) => {
+}: {
+  children: React.ReactNode;
+  defaultTheme: ThemeMode;
+}) => {
   const [theme, setTheme] = useState<ThemeMode>(
-    () =>
-      (localStorage.getItem(APP_THEME_STORAGE_KEY) as ThemeMode) || defaultTheme
+    () => initializeTheme() || defaultTheme
   );
 
   useEffect(() => {
@@ -31,7 +28,7 @@ const ReactContextThemeProvider = ({
   };
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeProviderContext.Provider value={value}>
       {children}
     </ThemeProviderContext.Provider>
   );
@@ -46,6 +43,6 @@ export const useTheme = () => {
   return {
     theme: context.theme,
     setTheme: context.setTheme,
-    Provider: ReactContextThemeProvider,
+    AppThemeProvider: ReactContextThemeProvider,
   };
 };

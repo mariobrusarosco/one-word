@@ -1,10 +1,8 @@
 import { useTheme } from "./state-managers/react-context";
-import { useThemeStore } from "./state-managers/zustand";
-import { ThemeProps } from "./utils";
+import { ThemeProps } from "./typing";
 
 export const useAppTheme = (): ThemeProps => {
-  const { theme, setTheme } = useThemeStore();
-  // const { Provider, setTheme, theme } = useTheme();
+  const { AppThemeProvider, setTheme, theme } = useTheme();
 
-  return { setTheme, theme, Provider: undefined };
+  return { setTheme, theme, AppThemeProvider };
 };

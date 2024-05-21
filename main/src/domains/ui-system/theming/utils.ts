@@ -1,3 +1,5 @@
+import { APP_DEFAULT_MODE, APP_THEME_STORAGE_KEY, ThemeMode } from "./typing";
+
 export const updateModeOnDOM = (theme: ThemeMode) => {
   const root = window.document.documentElement;
 
@@ -21,17 +23,15 @@ export const updateModeOnLocalStorage = (
   theme: ThemeMode
 ) => localStorage.setItem(storageKey, theme);
 
-export type ThemeMode = "dark" | "light" | "system";
+export const initializeTheme = () => {
+  const modeFromLocalStorage = localStorage.getItem(
+    APP_THEME_STORAGE_KEY
+  ) as ThemeMode;
+  updateModeOnDOM(modeFromLocalStorage);
+  updateModeOnLocalStorage(
+    APP_THEME_STORAGE_KEY,
+    modeFromLocalStorage || APP_DEFAULT_MODE
+  );
 
-export type ThemeProps = {
-  Provider?: ({
-    children,
-  }: {
-    children: React.ReactNode;
-    defaultTheme: ThemeMode;
-  }) => JSX.Element;
-  theme: ThemeMode;
-  setTheme: (theme: ThemeMode) => void;
+  return modeFromLocalStorage;
 };
-
-export const APP_THEME_STORAGE_KEY = "ONE_WORD_THEME_MODE";

@@ -24,7 +24,6 @@ const AppWithProviders = ({ children }: { children: React.ReactNode }) => {
       ) : (
         children
       )}
-      {children}
     </QueryClientProvider>
   );
 };

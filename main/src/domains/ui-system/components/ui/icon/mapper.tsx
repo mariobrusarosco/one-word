@@ -5,6 +5,10 @@ import {
   IconChevronDown,
   IconChevronLeft,
   IconChevronRight,
+  IconGridDots,
+  IconDeviceGamepad,
+  IconTablePlus,
+  IconLayoutDashboard,
 } from "@tabler/icons-react";
 
 type names =
@@ -14,7 +18,11 @@ type names =
   | "chevron-left"
   | "close"
   | "icon-plus"
-  | "plus";
+  | "plus"
+  | "grid-dots"
+  | "device-gamepad"
+  | "layout-dashboard"
+  | "table-plus";
 
 export const iconMapper: Record<names, any> = {
   ["chevron-down"]: IconChevronDown,
@@ -24,6 +32,10 @@ export const iconMapper: Record<names, any> = {
   close: IconX,
   "icon-plus": IconPlus,
   plus: IconPlus,
+  "grid-dots": IconGridDots,
+  "device-gamepad": IconDeviceGamepad,
+  "table-plus": IconTablePlus,
+  "layout-dashboard": IconLayoutDashboard,
 };
 
 export type iconSizes = "extra-small" | "small" | "medium" | "large";

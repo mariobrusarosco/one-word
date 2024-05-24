@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { NavigationBar } from "../../shared/components/navigation-bar";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { NavLink } from "react-router-dom";
-import { AuthenticatedMenu } from "./authenticated-menu/authenticated-menu";
+import { AuthenticatedMenu } from "./authenticated-menu/menu";
 
 export const AuthenticatedLayout = () => {
   return (

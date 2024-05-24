@@ -1,4 +1,3 @@
-import { Icon } from "@/domains/shared/components/icon";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,45 +5,37 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/domains/ui-system/components/ui/dropdown-menu";
-import { cn } from "@/domains/ui-system/utils";
-import { ComponentPropsWithoutRef, forwardRef } from "react";
-
-interface MenuItemProps extends ComponentPropsWithoutRef<"span"> {}
-
-const MenuItem = forwardRef<HTMLSpanElement, MenuItemProps>(
-  ({ className, ...props }, ref) => (
-    <span
-      ref={ref}
-      className={cn(
-        "flex flex-col items-center gap-y-1 text-white-100",
-        className
-      )}
-      {...props}
-    />
-  )
-);
-MenuItem.displayName = "MenuItem";
+import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+import {
+  MenuItem,
+  renderInitiallyHiddenMenutems,
+  renderInitiallyVisibleItems,
+} from "./menu-items";
 
 const OpenTrigger = () => {
   return (
     <DropdownMenuTrigger>
       <MenuItem>
-        <Icon name="more" />
-        <span className="text-sm font-regular">more features</span>
+        <Icon name="grid-dots" />
+        <span className="text-sm font-regular">Features</span>
       </MenuItem>
     </DropdownMenuTrigger>
   );
 };
 
 const CloseTrigger = () => {
-  return <DropdownMenuItem className="text-white-100">close</DropdownMenuItem>;
+  return (
+    <DropdownMenuItem>
+      <Icon name="close" className="stroke-white-100" />
+    </DropdownMenuItem>
+  );
 };
 
 export const AuthenticatedMenu = () => {
   return (
     <DropdownMenu>
       <div className="fixed bottom-0 w-full flex justify-center gap-x-4 bg-pink-500 p-4 dark:bg-teal-800">
-        {/* {renderPrimarymenutems()} */}
+        {renderInitiallyVisibleItems()}
 
         <OpenTrigger />
 
@@ -56,7 +47,7 @@ export const AuthenticatedMenu = () => {
           <DropdownMenuSeparator className="" />
 
           <div className="flex flex-col gap-y-9 px-6 pt-14 font-normal text-2xl">
-            {/* {renderSecondaryMenutems()} */}
+            {renderInitiallyHiddenMenutems()}
           </div>
         </DropdownMenuContent>
       </div>

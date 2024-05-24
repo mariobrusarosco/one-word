@@ -1,19 +1,68 @@
+import { loaderTables } from "@/domains/tables/api/loader";
+import { createTable } from "@/domains/tables/api/mutations";
+import { Table } from "@/domains/tables/typing/interfaces";
 import { Button } from "@/domains/ui-system/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/domains/ui-system/components/ui/popover";
-import { useTheme } from "@/domains/ui-system/theming/theme-provider";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { NavLink } from "react-router-dom";
 // import { NavLink } from "react-router-dom";
 
 export const NavigationBar = () => {
-  const { setTheme } = useTheme();
+  const { data, error, isFetching } = useQuery<Table[]>({
+    queryKey: ["tables"],
+    queryFn: loaderTables,
+  });
+
+  const mutation = useMutation({
+    mutationFn: createTable,
+    // onMutate: async () => {
+    //   return {
+    //     createdAt: "2024-05-21T13:55:44.161Z",
+    //     id: "opt-invite-code",
+    //     inviteCode: "opt-invite-code",
+    //     name: "optmiistic-panini-1",
+    //   };
+    // },
+  });
+
+  const handleCreateTable = async () => {
+    await mutation.mutate(Math.random().toString(36).substring(7));
+  };
+
+  console.log("[mutation]", mutation);
 
   return (
-    <nav className="hidden bg-white dark:bg-black/50 tablet:block">
-      <ul className="flex flex-col gap-3">
-        {/* <li className="font-serif">
+    <nav className="hidden bg-white dark:bg-black/50 tablet:block px-2">
+      <section className="new-table-creation flex justify-center p-4 border-b border-b-pink-500 dark:border-b-white-100">
+        {mutation.isPending && <div>creating table...</div>}
+        <Button
+          variant="primary"
+          roundness="full"
+          size="medium"
+          disabled={mutation.isPending}
+          onClick={handleCreateTable}
+        >
+          +
+        </Button>
+      </section>
+
+      <section className="available-tables mt-4">
+        {isFetching && <div>loading tables...</div>}
+
+        {error && <div>{error.message}</div>}
+
+        {data && (
+          <ul>
+            {data.map((table) => (
+              <li key={table?.name}>
+                <NavLink to={`/tables/${table?.id}`}>{table?.name}</NavLink>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <ul className="flex flex-col gap-3 mt-4">
+        <li className="font-serif">
           <NavLink to="/dashboard">Dashboard</NavLink>
         </li>
         <li>
@@ -21,151 +70,6 @@ export const NavigationBar = () => {
         </li>
         <li>
           <NavLink to="/games">Games</NavLink>
-        </li> */}
-
-        <li>
-          <Popover>
-            <PopoverTrigger>
-              <Button>toggle theme</Button>
-            </PopoverTrigger>
-
-            <div onClick={() => setTheme("light")}>Light</div>
-            <div onClick={() => setTheme("dark")}>Dark</div>
-            <div onClick={() => setTheme("system")}>System</div>
-            <PopoverContent></PopoverContent>
-          </Popover>
-        </li>
-        <p>PRIMARY</p>
-        <li>
-          <Button variant="primary" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="primary" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="primary" size="large">
-            MB
-          </Button>
-        </li>
-
-        <p>SECONDARY</p>
-        <li>
-          <Button variant="secondary" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="secondary" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="secondary" size="large">
-            MB
-          </Button>
-        </li>
-
-        <p>OUTLINE</p>
-        <div className="bg-pink-800 p-4 flex flex-col gap-3">
-          <li>
-            <Button variant="outline" size="small">
-              MB
-            </Button>
-          </li>
-          <li>
-            <Button variant="outline" size="medium">
-              MB
-            </Button>
-          </li>
-          <li>
-            <Button variant="outline" size="large">
-              MB
-            </Button>
-          </li>
-        </div>
-
-        <p>DANGER</p>
-        <li>
-          <Button variant="danger" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="danger" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="danger" size="large">
-            MB
-          </Button>
-        </li>
-
-        <li>
-          <Button roundness="full" variant="primary" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="secondary" size="small">
-            MB
-          </Button>
-        </li>
-        <li className="bg-black">
-          <Button roundness="full" variant="outline" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="danger" size="small">
-            MB
-          </Button>
-        </li>
-
-        <li>
-          <Button roundness="full" variant="primary" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="secondary" size="medium">
-            MB
-          </Button>
-        </li>
-        <li className="bg-black">
-          <Button roundness="full" variant="outline" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="danger" size="medium">
-            MB
-          </Button>
-        </li>
-
-        <li>
-          <Button roundness="full" variant="primary" size="large">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="secondary" size="large">
-            MB
-          </Button>
-        </li>
-        <li className="bg-black">
-          <Button roundness="full" variant="outline" size="large">
-            OU
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="danger" size="large">
-            MB
-          </Button>
         </li>
       </ul>
     </nav>

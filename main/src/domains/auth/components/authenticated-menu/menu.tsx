@@ -17,7 +17,7 @@ const OpenTrigger = () => {
     <DropdownMenuTrigger>
       <MenuItem>
         <Icon name="grid-dots" />
-        <span className="text-sm font-regular">Features</span>
+        <span className="text-sm">Features</span>
       </MenuItem>
     </DropdownMenuTrigger>
   );
@@ -34,7 +34,7 @@ const CloseTrigger = () => {
 export const AuthenticatedMenu = () => {
   return (
     <DropdownMenu>
-      <div className="sticky bottom-0 w-full flex items-center justify-center gap-x-4 bg-pink-500 p-4 dark:bg-teal-800  row-start-3 row-end-3 desktop:row-start-1 desktop:row-end-3 desktop:hidden">
+      <div className="sticky bottom-0 w-full flex items-center justify-center gap-x-4 bg-pink-500 p-4 dark:bg-teal-800  row-start-3 row-end-3 font-sans desktop:row-start-1 desktop:row-end-3 desktop:hidden">
         {renderInitiallyVisibleItems()}
 
         <OpenTrigger />
@@ -46,7 +46,7 @@ export const AuthenticatedMenu = () => {
           </div>
           <DropdownMenuSeparator className="" />
 
-          <div className="flex flex-col gap-y-9 px-6 pt-14 font-normal text-2xl">
+          <div className="flex flex-col gap-y-9 px-6 pt-14 text-2xl">
             {renderInitiallyHiddenMenutems()}
           </div>
         </DropdownMenuContent>

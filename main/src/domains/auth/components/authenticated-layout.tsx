@@ -17,7 +17,7 @@ export const AuthenticatedLayout = () => {
           <Button variant="secondary">home</Button>
         </NavLink>
         <NavLink to="/account">
-          <Button variant="outline" roundness="full" className="">
+          <Button variant="outline" roundness="full" className="font-sans">
             MB
           </Button>
         </NavLink>

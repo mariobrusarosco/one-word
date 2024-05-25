@@ -27,7 +27,7 @@ export const AppRouter = () => {
       element: <RootLayout />,
       errorElement: <ErrorScreen />,
       children: [
-        { index: true, element: <Navigate to="tables" /> },
+        { index: true, element: <Navigate to="dashboard" /> },
         {
           element: <AuthenticatedLayout />,
           children: [

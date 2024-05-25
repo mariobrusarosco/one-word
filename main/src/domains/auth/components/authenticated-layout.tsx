@@ -23,7 +23,7 @@ export const AuthenticatedLayout = () => {
         </NavLink>
       </header>
 
-      <div className="app-content desktop:col-start-2  desktop:row-start-2 desktop:row-end-4">
+      <div className="app-content px-4 py-8 bg-white-100 dark:bg-pink-500 desktop:col-start-2  desktop:row-start-2 desktop:row-end-4">
         <Outlet />
       </div>
 

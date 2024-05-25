@@ -9,26 +9,27 @@ import {
 } from "@/domains/ui-system/components/ui/popover";
 
 export const TablesScreen = () => {
-  // const { data, error, isFetching } = useQuery<Table[]>({
-  //   queryKey: ["tables"],
-  //   queryFn: loaderTables,
-  // });
+  const { data, error, isFetching } = useQuery<Table[]>({
+    queryKey: ["tables"],
+    queryFn: loaderTables,
+  });
 
-  // if (error) {
-  //   console.error({ error });
-  //   return <div>{error.message}</div>;
-  // }
+  if (error) {
+    console.error({ error });
+    return <div>{error.message}</div>;
+  }
 
-  // if (isFetching) {
-  //   return <div>loading...</div>;
-  // }
+  if (isFetching) {
+    return <div>loading...</div>;
+  }
 
   return (
-    <div className="bg-primary tablet:bg-secondary desktop:bg-cyan-800 desktop:h-full">
+    <div className="bg-primary tablet:bg-secondary desktop:bg-cyan-800">
       <h2 className="font-serif">Available tables</h2>
-      <aside>
-        <ul>
-          {/* {data?.map((table) => (
+      <div>
+        <aside>
+          <ul>
+            {/* {data?.map((table) => (
               <li
                 key={table?.name}
                 className="font-sans only-m:text-cyan-200 only-t:bg-cyan-200"
@@ -36,9 +37,8 @@ export const TablesScreen = () => {
                 <NavLink to={`/tables/${table?.id}`}>{table?.name}</NavLink>
               </li>
             ))} */}
-        </ul>
-      </aside>
-      <p>
+          </ul>
+        </aside>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe nesciunt
         suscipit eveniet ab officiis earum facilis, accusamus vitae unde eaque
         ipsam! Iste maxime impedit delectus quae possimus, nesciunt id eligendi.
@@ -58,15 +58,12 @@ export const TablesScreen = () => {
         consectetur adipisicing elit. Accusantium, iusto sint possimus beatae
         ducimus quis dolor cumque vitae facere sed iste! Sapiente aut natus
         asperiores dolorem? Numquam totam modi dicta!
-      </p>
-      <Outlet />
+        <Popover>
+          <PopoverTrigger>Open</PopoverTrigger>
+          <PopoverContent>Place content for the popover here.</PopoverContent>
+        </Popover>
+        <Outlet />
+      </div>
     </div>
   );
 };
-
-{
-  /* <Popover>
-          <PopoverTrigger>Open</PopoverTrigger>
-          <PopoverContent>Place content for the popover here.</PopoverContent>
-        </Popover> */
-}

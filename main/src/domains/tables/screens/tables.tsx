@@ -29,14 +29,14 @@ export const TablesScreen = () => {
       <div>
         <aside>
           <ul>
-            {/* {data?.map((table) => (
+            {data?.map((table) => (
               <li
                 key={table?.name}
                 className="font-sans only-m:text-cyan-200 only-t:bg-cyan-200"
               >
                 <NavLink to={`/tables/${table?.id}`}>{table?.name}</NavLink>
               </li>
-            ))} */}
+            ))}
           </ul>
         </aside>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe nesciunt

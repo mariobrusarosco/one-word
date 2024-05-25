@@ -4,10 +4,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/domains/ui-system/components/ui/popover";
-import { useTheme } from "@/domains/ui-system/theming/theme-provider";
+import { useAppTheme } from "@/domains/ui-system/theming/theme";
 
 const ComponentsScreen = () => {
-  const { setTheme } = useTheme();
+  const { setTheme } = useAppTheme();
 
   return (
     <div>

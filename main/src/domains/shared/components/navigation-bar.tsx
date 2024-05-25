@@ -31,7 +31,7 @@ export const NavigationBar = () => {
   console.log("[mutation]", mutation);
 
   return (
-    <nav className="hidden bg-white dark:bg-black/50 tablet:block px-2">
+    <nav className="hidden bg-teal-800 px-2 desktop:block desktop:row-span-3">
       <section className="new-table-creation flex justify-center p-4 border-b border-b-pink-500 dark:border-b-white-100">
         {mutation.isPending && <div>creating table...</div>}
         <Button

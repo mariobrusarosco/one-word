@@ -1,4 +1,34 @@
-# Main Approach
+# Icons
+
+We're using '@tabler/icons-react' as our Icon Library
+
+## How to add a new Icon
+
+1. We need to reach the Lib's doc: [link](https://tabler.io/icons)
+2. Use the site's interface to find the Icon you need.
+3. Click on the icon and grab it's `ID`. It's `hyphenize string`. e.g. "air-conditioning"
+4. React `domains/ui-system/components/ui/icon/mapper.tsx`
+5. Add the `ID` to the **type** `name`
+6. Add another entry for the `iconMapper` object where the` key` is the ID. e.g: `dots` and for the value we need to import the React Component for the icon. e.g
+
+```tsx
+import { IconDots } from "@tabler/icons-react";
+
+export const iconMapper: Record<names, any> = {
+  ...,
+  dots: IconDots,
+};
+```
+
+## How to use an Icon
+
+```tsx
+import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+
+<Icon name="dots" />;
+```
+
+# Philosophy
 
 This side project aims to validate two things regarding styling for a Web Project:
 
@@ -33,15 +63,18 @@ This side project aims to validate two things regarding styling for a Web Projec
 
 Effort to Create...
 
-### Approach One
+### High level of Customization!
 
-- High level of Customizaion!
+The goal here is to simulate a real-world: Customize a CSS Library to fit a Specific and challenging `Design`.
 
-By creating custom styles both on Tailwind and Components created by CHADCN UI:
+Let's start creating custom styles both on:
 
-#### First Effort
+- Tailwind
+- Components created by CHADCN UI
 
-Create our tokens ans setting them in the tailwind.config.js file.
+#### First Effort - Setting Tokens
+
+Create our tokens and setting them in the tailwind.config.js file.
 
 ```js
 export const ONE_WORD_PALETTE = {
@@ -62,7 +95,9 @@ theme: {
     ...
 ```
 
-#### Second Effort
+#### Second Effort - Using Tokens
+
+`Aproach 1`
 
 Instead of using CHADCN UI generated classes, we can create our own classes. We create a custom color - sun - and set different levels... 100, 200...
 
@@ -74,7 +109,7 @@ const buttonVariants = cva(
   ...
 ```
 
-### Approach Two
+`Aproach 2`
 
 Keep CHADCN UI generated classes, but modify the styles for those classes on our tailwing config.
 
@@ -99,6 +134,10 @@ On App's main CSS file, the one responsible for the global styles...\*:
   }
 }
 ```
+
+#### Effort #4
+
+### Effort #5
 
 ## Pros
 

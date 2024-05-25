@@ -5,10 +5,10 @@ export const SCREENS_RANGE = {
   },
   tablet: {
     start: "768px",
-    end: "1399px",
+    end: "1365px",
   },
   desktop: {
-    start: "1400px",
+    start: "1366px",
   },
 };
 

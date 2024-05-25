@@ -3,6 +3,7 @@ import { NavigationBar } from "../../shared/components/navigation-bar";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { NavLink } from "react-router-dom";
 import { AuthenticatedMenu } from "./authenticated-menu/menu";
+import { ThemeModeToggle } from "./authenticated-menu/theme-mode-toggle";
 
 export const AuthenticatedLayout = () => {
   return (
@@ -16,14 +17,19 @@ export const AuthenticatedLayout = () => {
         <NavLink to="/">
           <Button variant="secondary">home</Button>
         </NavLink>
-        <NavLink to="/account">
-          <Button variant="outline" roundness="full" className="font-sans">
-            MB
-          </Button>
-        </NavLink>
+
+        <div className="flex gap-x-8 items-center">
+          <ThemeModeToggle />
+
+          <NavLink to="/account">
+            <Button variant="outline" roundness="full" className="font-sans">
+              MB
+            </Button>
+          </NavLink>
+        </div>
       </header>
 
-      <div className="app-content px-4 py-8 bg-white-100 dark:bg-pink-500 desktop:col-start-2  desktop:row-start-2 desktop:row-end-4">
+      <div className="app-content px-4 py-8 bg-white-100 dark:bg-pink-500 desktop:col-start-2  desktop:row-start-2 desktop:row-end-4 overflow-auto">
         <Outlet />
       </div>
 

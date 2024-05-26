@@ -2,11 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { loaderTables } from "../api/loader";
 import { NavLink, Outlet } from "react-router-dom";
 import { Table } from "../typing/interfaces";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/domains/ui-system/components/ui/popover";
+import { Button } from "@/domains/ui-system/components/ui/button";
 
 export const TablesScreen = () => {
   const { data, error, isFetching } = useQuery<Table[]>({
@@ -15,7 +11,7 @@ export const TablesScreen = () => {
   });
 
   if (error) {
-    console.log({ error });
+    console.error({ error });
     return <div>{error.message}</div>;
   }
 
@@ -24,29 +20,24 @@ export const TablesScreen = () => {
   }
 
   return (
-    <div className="bg-primary tablet:bg-secondary desktop:bg-cyan-800">
-      <h2 className="font-serif">Available tables</h2>
-      <div style={{ display: "flex", gap: "100px", flexWrap: "wrap" }}>
-        <aside>
-          <ul>
-            {data?.map((table) => (
-              <li
-                key={table?.name}
-                className="font-sans only-m:text-cyan-200 only-t:bg-cyan-200"
-              >
+    <div className="">
+      <h2 className="font-serif text-teal-800 dark:text-white-100 text-4xl mb-4">
+        Available tables
+      </h2>
+
+      <aside>
+        <ul className="flex flex-wrap gap-6">
+          {data?.map((table) => (
+            <li key={table?.name} className="font-sans">
+              <Button variant={"primary"}>
                 <NavLink to={`/tables/${table?.id}`}>{table?.name}</NavLink>
-              </li>
-            ))}
-          </ul>
-        </aside>
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </aside>
 
-        <Popover>
-          <PopoverTrigger>Open</PopoverTrigger>
-          <PopoverContent>Place content for the popover here.</PopoverContent>
-        </Popover>
-
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };

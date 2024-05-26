@@ -2,10 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* [CSS Reset/Normalize]
-/* This project uses Tailwind's Preflight https://tailwindcss.com/docs/preflight 
- so, the normalization is already included via "@tailwind base". 
-*/
+/** [CSS Reset/Normalize] This project uses Tailwind's Preflight https://tailwindcss.com/docs/preflight so, the normalization is already included via "@tailwind base". */
 
 /* Custom Normalization */
 * {
@@ -79,8 +76,5 @@
 @layer base {
   * {
     @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }

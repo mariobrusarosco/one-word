@@ -1,4 +1,34 @@
-# Main Approach
+# Icons
+
+We're using '@tabler/icons-react' as our Icon Library
+
+## How to add a new Icon
+
+1. We need to reach the Lib's doc: [link](https://tabler.io/icons)
+2. Use the site's interface to find the Icon you need.
+3. Click on the icon and grab it's `ID`. It's `hyphenize string`. e.g. "air-conditioning"
+4. React `domains/ui-system/components/ui/icon/mapper.tsx`
+5. Add the `ID` to the **type** `name`
+6. Add another entry for the `iconMapper` object where the` key` is the ID. e.g: `dots` and for the value we need to import the React Component for the icon. e.g
+
+```tsx
+import { IconDots } from "@tabler/icons-react";
+
+export const iconMapper: Record<names, any> = {
+  ...,
+  dots: IconDots,
+};
+```
+
+## How to use an Icon
+
+```tsx
+import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+
+<Icon name="dots" />;
+```
+
+# Philosophy
 
 This side project aims to validate two things regarding styling for a Web Project:
 
@@ -7,12 +37,107 @@ This side project aims to validate two things regarding styling for a Web Projec
 
 # Validation Goals
 
-- [ ] Effort to Create Components and customize them to _match completly different *DESIGN Guidelines*_ from _SHADCN's DESIGN_
-- [ ] Effort to maintain/refactor these Components when the _DESIGN Guidelines_ change.
+- [ ] #1 Effort to Create Components and customize them to _match completly different *DESIGN Guidelines*_ from _SHADCN's DESIGN_
+- [ ] #2 Effort to maintain/refactor these Components when the _DESIGN Guidelines_ change.
 
 ...more coming soon...
 
 # Learnings
+
+## Dark/Light Mode
+
+- We have a constraint: using 'dark:' and 'light:' prefixes for the classes.
+- We can avoid this constraint setting 'class' globally, by using the @layer base directive.
+
+```css
+.bg-primary {
+  @apply bg-primary-dark dark:bg-primary-light text-primary-foreground;
+}
+
+.text-primary {
+  @apply dark:text-primary-light text-primary-dark;
+}
+```
+
+## Validation #1
+
+Effort to Create...
+
+### High level of Customization!
+
+The goal here is to simulate a real-world: Customize a CSS Library to fit a Specific and challenging `Design`.
+
+Let's start creating custom styles both on:
+
+- Tailwind
+- Components created by CHADCN UI
+
+#### First Effort - Setting Tokens
+
+Create our tokens and setting them in the tailwind.config.js file.
+
+```js
+export const ONE_WORD_PALETTE = {
+  sun: {
+    100: "#...",
+    500: "#...",
+    900: "#..."
+  }
+}
+
+...
+theme: {
+   ...,
+    extend: {
+      colors: {
+        ...ONE_WORD_PALETTE,
+      },
+    ...
+```
+
+#### Second Effort - Using Tokens
+
+`Aproach 1`
+
+Instead of using CHADCN UI generated classes, we can create our own classes. We create a custom color - sun - and set different levels... 100, 200...
+
+We use the Tailwind prefixes in our advantage: bg-, text- and so on.
+
+```tsx
+const buttonVariants = cva(
+  "shadow-main-bottom bg-sun-100 text-sun-900...",
+  ...
+```
+
+`Aproach 2`
+
+Keep CHADCN UI generated classes, but modify the styles for those classes on our tailwing config.
+
+CHADCN UI classes like bg-primary, text-primary, shadow-primary-bottom, etc.
+
+```tsx
+const buttonVariants = cva(
+  "bg-primary text-primary shadow-primary-bottom",
+  ...
+```
+
+On App's main CSS file, the one responsible for the global styles...\*:
+
+```css
+@layer base {
+  .bg-primary {
+    @apply bg-sun-100 dark:bg-sun-900;
+  }
+
+  .text-primary {
+    @apply bg-sun-400 dark:bg-sun-800;
+  }
+}
+```
+
+#### Effort #4
+
+### Effort #5
 
 ## Pros
 
@@ -22,7 +147,17 @@ This side project aims to validate two things regarding styling for a Web Projec
 
 # Development FAQ
 
-## Create a Component via CLI
+# System UI
+
+## Component Creation
+
+This App uses SHADCN UI as a Component Factory.
+It provides a CLI that creates a variaty of Components directly inside this codebase.
+
+After creating a Component, it's up to us to customize it in a way each domains can use it to match the `APP Design`
+
+**list of available Components**
+`https://ui.shadcn.com/docs/components/accordion`
 
 ```shell
 npx shadcn-ui@latest init # If it's the first time!

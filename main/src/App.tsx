@@ -3,7 +3,7 @@ import "./App.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppRouter } from "./domains/shared/components/app-router";
-import { ThemeProvider } from "./domains/ui-system/theming/theme-provider";
+import { useAppTheme } from "./domains/ui-system/theming/theme";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,20 +15,25 @@ const queryClient = new QueryClient({
 });
 
 const AppWithProviders = ({ children }: { children: React.ReactNode }) => {
+  const { AppThemeProvider } = useAppTheme();
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <ThemeProvider>{children}</ThemeProvider>
+      {AppThemeProvider ? (
+        <AppThemeProvider defaultTheme="dark">{children}</AppThemeProvider>
+      ) : (
+        children
+      )}
     </QueryClientProvider>
   );
 };
 
-function App() {
+const App = () => {
   return (
     <AppWithProviders>
       <AppRouter />
     </AppWithProviders>
   );
-}
+};
 
-export default App;
+export { App };

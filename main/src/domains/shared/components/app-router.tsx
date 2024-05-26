@@ -18,6 +18,7 @@ import { RoomsScreen } from "../../tables/screens/rooms";
 import { RoomScreen } from "../../tables/screens/room";
 import { GameScreen } from "../../games/screens/game";
 import { DashboardScreen } from "../../dashboard/screens/dashboard";
+import { UISystemScreen } from "@/domains/ui-system/screen";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -26,7 +27,7 @@ export const AppRouter = () => {
       element: <RootLayout />,
       errorElement: <ErrorScreen />,
       children: [
-        { index: true, element: <Navigate to="tables" /> },
+        { index: true, element: <Navigate to="dashboard" /> },
         {
           element: <AuthenticatedLayout />,
           children: [
@@ -49,9 +50,18 @@ export const AppRouter = () => {
               ],
             },
             { path: "games", element: <GamesScreen /> },
+            { path: "ui-system", element: <UISystemScreen /> },
             { path: "testing", element: <Testing /> },
             { path: "chat", element: <Chat /> },
             { path: "dashboard", element: <DashboardScreen /> },
+            {
+              path: "account",
+              element: (
+                <div>
+                  <h1>Account</h1>
+                </div>
+              ),
+            },
           ],
         },
         {
@@ -67,10 +77,6 @@ export const AppRouter = () => {
       ],
     },
   ]);
-
-  // const user = useLoaderData();
-
-  // console.log({ user });
 
   return <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />;
 };

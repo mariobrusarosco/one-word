@@ -5,9 +5,9 @@ export const loaderGames = async () => {
 
   console.warn(response);
 
-  // if (!response.status) {
-  //   throw new Error(response.statusText);
-  // }
+  if (!response.status) {
+    throw new Error(response.statusText);
+  }
 
   const result = await response.data;
   return result;

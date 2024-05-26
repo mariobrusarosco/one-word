@@ -7,9 +7,9 @@ import {
 } from "@/domains/ui-system/components/ui/dropdown-menu";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import {
+  InitiallyHiddenItems,
   MenuItem,
-  renderInitiallyHiddenMenutems,
-  renderInitiallyVisibleItems,
+  InitiallyVisibleItems,
 } from "./menu-items";
 
 const OpenTrigger = () => {
@@ -35,7 +35,7 @@ export const AuthenticatedMenu = () => {
   return (
     <DropdownMenu>
       <div className="sticky bottom-0 w-full flex items-center justify-center gap-x-4 bg-pink-500 p-4 dark:bg-teal-800  row-start-3 row-end-3 font-sans desktop:row-start-1 desktop:row-end-3 desktop:hidden">
-        {renderInitiallyVisibleItems()}
+        <InitiallyVisibleItems />
 
         <OpenTrigger />
 
@@ -47,7 +47,7 @@ export const AuthenticatedMenu = () => {
           <DropdownMenuSeparator className="" />
 
           <div className="flex flex-col gap-y-9 px-6 pt-14 text-2xl">
-            {renderInitiallyHiddenMenutems()}
+            <InitiallyHiddenItems />
           </div>
         </DropdownMenuContent>
       </div>

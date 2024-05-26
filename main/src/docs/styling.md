@@ -147,7 +147,17 @@ On App's main CSS file, the one responsible for the global styles...\*:
 
 # Development FAQ
 
-## Create a Component via CLI
+# System UI
+
+## Component Creation
+
+This App uses SHADCN UI as a Component Factory.
+It provides a CLI that creates a variaty of Components directly inside this codebase.
+
+After creating a Component, it's up to us to customize it in a way each domains can use it to match the `APP Design`
+
+**list of available Components**
+`https://ui.shadcn.com/docs/components/accordion`
 
 ```shell
 npx shadcn-ui@latest init # If it's the first time!

@@ -29,7 +29,7 @@ export const AuthenticatedLayout = () => {
         </div>
       </header>
 
-      <div className="app-content px-4 py-8 bg-white-100 dark:bg-pink-500 desktop:col-start-2  desktop:row-start-2 desktop:row-end-4 overflow-auto">
+      <div className="app-content overflow-auto px-4 py-8 bg-white-100 dark:bg-pink-500 desktop:col-start-2  desktop:row-start-2 desktop:row-end-4 desktop:px-12">
         <Outlet />
       </div>
 

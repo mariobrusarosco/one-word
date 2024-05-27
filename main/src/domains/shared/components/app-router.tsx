@@ -41,13 +41,6 @@ export const AppRouter = () => {
                   path: ":tableId",
                   element: <TableScreen />,
                   children: [
-                    {
-                      path: "channels",
-                      element: <ChannelsScreen />,
-                      children: [
-                        { path: ":channelId", element: <ChannelScreen /> },
-                      ],
-                    },
                     // {
                     //   path: "rooms",
                     //   element: <RoomsScreen />,
@@ -55,6 +48,10 @@ export const AppRouter = () => {
                     // },
                     // { path: "game", element: <GameScreen /> },
                   ],
+                },
+                {
+                  path: ":tableId/channel/:channelId",
+                  element: <ChannelScreen />,
                 },
               ],
             },

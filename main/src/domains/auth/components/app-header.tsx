@@ -1,8 +1,8 @@
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { NavLink } from "react-router-dom";
 import { ThemeModeToggle } from "./authenticated-menu/theme-mode-toggle";
-import { useWebSocket } from "@/domains/socket/providers/web-socket";
 import { SocketStatus } from "@/domains/socket/components/socket-status";
+import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 
 const AppHeader = () => {
   const { state } = useWebSocket();

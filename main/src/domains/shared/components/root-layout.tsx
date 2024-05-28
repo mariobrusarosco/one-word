@@ -1,4 +1,4 @@
-import { WebSocketProvider } from "@/domains/socket/providers/web-socket";
+import { WebSocketProvider } from "@/domains/socket/providers/web-socket/provider";
 import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {

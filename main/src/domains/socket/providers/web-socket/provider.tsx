@@ -10,7 +10,7 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, {
     socketInstance: null,
     connected: false,
-    lastActiveTableId: null,
+    lastActiveTableId: undefined,
   });
 
   useEffect(() => {

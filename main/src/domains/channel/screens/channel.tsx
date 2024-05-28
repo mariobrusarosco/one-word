@@ -1,23 +1,11 @@
-import { loaderTables } from "@/domains/tables/api/loader";
-import { Table } from "@/domains/tables/typing/interfaces";
-import { Button } from "@/domains/ui-system/components/ui/button";
 import { Separator } from "@radix-ui/react-dropdown-menu";
-import { useQuery } from "@tanstack/react-query";
-import { NavLink, useParams } from "react-router-dom";
-import { loaderChannels } from "../api/loaders";
-import { IChannel, IChannelWithMessages } from "../typing/interfaces";
+import { useParams } from "react-router-dom";
 
 const ChannelScreen = () => {
   const { channelId, tableId } = useParams<{
     channelId: string;
     tableId: string;
   }>();
-
-  const { data } = useQuery<IChannelWithMessages>({
-    queryKey: ["channel", { channelId }],
-    queryFn: () => loaderChannels(channelId ?? ""),
-    enabled: true,
-  });
 
   if (!channelId) return null;
 
@@ -40,15 +28,7 @@ const ChannelScreen = () => {
           This is the beginning of a conversation
         </p>
 
-        <section className="channel-participants">
-          <ul className="flex gap-2 flex-col">
-            {data?.messages?.map((message) => (
-              <li key={message.id} className="font-sans">
-                {message.content}
-              </li>
-            ))}
-          </ul>
-        </section>
+        <section className="channel-participants"></section>
       </div>
     </div>
   );

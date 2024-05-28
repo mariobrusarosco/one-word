@@ -17,7 +17,6 @@ import { Chat } from "../../chat";
 import { DashboardScreen } from "../../dashboard/screens/dashboard";
 import { UISystemScreen } from "@/domains/ui-system/screen";
 import { ChannelScreen } from "@/domains/channel/screens/channel";
-import { ChannelsScreen } from "@/domains/channel/screens/channels";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -38,13 +37,6 @@ export const AppRouter = () => {
                   path: ":tableId",
                   element: <TableScreen />,
                   children: [
-                    {
-                      path: "channels",
-                      element: <ChannelsScreen />,
-                      children: [
-                        { path: ":channelId", element: <ChannelScreen /> },
-                      ],
-                    },
                     // {
                     //   path: "rooms",
                     //   element: <RoomsScreen />,
@@ -52,6 +44,10 @@ export const AppRouter = () => {
                     // },
                     // { path: "game", element: <GameScreen /> },
                   ],
+                },
+                {
+                  path: ":tableId/channel/:channelId",
+                  element: <ChannelScreen />,
                 },
               ],
             },

@@ -8,7 +8,7 @@ const AppHeader = () => {
   const { state } = useWebSocket();
 
   return (
-    <header className="sticky top-0 flex justify-between bg-pink-500 p-6 tablet:py-6 tablet:px-8 desktop:row-start-1 desktop:row-end-1 desktop:col-start-2 desktop:col-end-2  desktop:px-12 dark:bg-teal-800">
+    <header className="sticky top-0 flex justify-between bg-pink-500 p-6 tablet:py-6 tablet:px-8 desktop:row-start-1 desktop:row-end-1 desktop:col-start-2 desktop:col-end-2  desktop:px-12 dark:bg-teal-800 shadow-xl">
       <NavLink to="/">
         <Button variant="secondary">home</Button>
       </NavLink>

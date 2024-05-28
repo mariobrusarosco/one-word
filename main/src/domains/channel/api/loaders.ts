@@ -1,9 +1,10 @@
 import { restApi } from "../../../api/rest";
+import { IChannelWithMessages } from "../typing/interfaces";
 
-export const loaderChannels = async () => {
-  const result = await restApi.get("/tables");
+export const loaderChannels = async (channelId: string) => {
+  const result = await restApi.get("/channels/" + channelId);
 
-  console.log("[LOADER]", result);
+  console.log("[LOADER] - [CHANNEL]", result);
 
-  return await result.data;
+  return (await result.data) as IChannelWithMessages;
 };

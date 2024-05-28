@@ -10,7 +10,7 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, {
     socketInstance: null,
     connected: false,
-    lastActiveTableId: null,
+    lastActiveTableId: undefined,
   });
 
   useEffect(() => {
@@ -22,9 +22,9 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
       socketInstance.auth = { id: socketInstance.id, username };
       socketInstance.connect();
 
-      socketInstance.onAny((event, ...args) => {
-        console.log("[SOCKET] onAny ", event, args);
-      });
+      // socketInstance.onAny((event, ...args) => {
+      //   console.log("[SOCKET] onAny ", event, args);
+      // });
 
       socketInstance?.on("connect", () => {
         dispatch({ type: SocketEvents.CONNECTED, payload: socketInstance });

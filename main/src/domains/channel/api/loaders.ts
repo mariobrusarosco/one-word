@@ -1,9 +1,9 @@
 import { restApi } from "../../../api/rest";
 
-export const loaderTables = async () => {
+export const loaderChannels = async () => {
   const result = await restApi.get("/tables");
 
-  console.log("[LOADER]-[TABLES]", result);
+  console.log("[LOADER]", result);
 
   return await result.data;
 };

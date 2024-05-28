@@ -14,11 +14,10 @@ import { TableScreen } from "../../tables/screens/table";
 import { ErrorScreen } from "../screens/error";
 import { Testing } from "../testing-temp/testing";
 import { Chat } from "../../chat";
-import { RoomsScreen } from "../../tables/screens/rooms";
-import { RoomScreen } from "../../tables/screens/room";
-import { GameScreen } from "../../games/screens/game";
 import { DashboardScreen } from "../../dashboard/screens/dashboard";
 import { UISystemScreen } from "@/domains/ui-system/screen";
+import { ChannelScreen } from "@/domains/channel/screens/channel";
+import { ChannelsScreen } from "@/domains/channel/screens/channels";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -40,11 +39,18 @@ export const AppRouter = () => {
                   element: <TableScreen />,
                   children: [
                     {
-                      path: "rooms",
-                      element: <RoomsScreen />,
-                      children: [{ path: ":roomId", element: <RoomScreen /> }],
+                      path: "channels",
+                      element: <ChannelsScreen />,
+                      children: [
+                        { path: ":channelId", element: <ChannelScreen /> },
+                      ],
                     },
-                    { path: "game", element: <GameScreen /> },
+                    // {
+                    //   path: "rooms",
+                    //   element: <RoomsScreen />,
+                    //   children: [{ path: ":roomId", element: <RoomScreen /> }],
+                    // },
+                    // { path: "game", element: <GameScreen /> },
                   ],
                 },
               ],

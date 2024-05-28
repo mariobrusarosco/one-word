@@ -2,6 +2,18 @@
 // import { io as ClientIO } from "socket.io-client";
 // import { SocketEvents } from "../../typing/enums";
 // import { useParams } from "react-router-dom";
+import { Socket, io } from "socket.io-client";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
+import { useParams } from "react-router-dom";
+import { SocketEvents } from "../../typing/enums";
+import { S } from "vitest/dist/reporters-5f784f42.js";
+import { connect } from "http2";
 
 // const WebSocketContext = React.createContext<
 //   { state: State; dispatch: Dispatch } | undefined
@@ -107,13 +119,126 @@
 //   );
 // };
 
-// const useWebSocket = () => {
-//   const context = React.useContext(WebSocketContext);
-
-//   if (context === undefined) {
-//     throw new Error("useWebSocket must be used within a WebSocketContext");
-//   }
-//   return context;
-// };
-
 // export { WebSocketProvider, useWebSocket };
+type Action = { type: SocketEvents; payload: any };
+// | { type: SocketEvents.DISCONNECTED; payload: any }
+// | { type: SocketEvents.CREATE_GAME; payload: any };
+
+type Dispatch = (action: Action) => void;
+
+// type SocketInstance = Socket<any, any>;
+
+type SocketState = {
+  socketInstance: any;
+  connected: boolean;
+  lastActiveTableId: string | null;
+};
+
+const reducer = (state: SocketState, action: Action) => {
+  const { payload, type } = action;
+  switch (type) {
+    case SocketEvents.CONNECTED: {
+      console.log(
+        "[SOCKET] REDUCER " + SocketEvents.CONNECTED + "}",
+        payload.connected
+      );
+      return {
+        ...state,
+        socketInstance: payload,
+        connected: payload.connected,
+      };
+    }
+    case SocketEvents.DISCONNECTED: {
+      console.log("[SOCKET] REDUCER " + SocketEvents.DISCONNECTED + "}");
+      return { ...state, socketInstance: null };
+    }
+    case SocketEvents.JOIN_TABLE: {
+      console.log("[SOCKET] REDUCER " + SocketEvents.JOIN_TABLE + "}");
+      state.socketInstance?.emit(SocketEvents.JOIN_TABLE, payload.tableId);
+
+      return { ...state, lastActiveTableId: payload.tableId };
+    }
+    case SocketEvents.LEAVE_TABLE: {
+      console.log("[SOCKET] REDUCER " + SocketEvents.JOIN_TABLE + "}");
+      state.socketInstance?.emit(SocketEvents.LEAVE_TABLE, payload.tableId);
+
+      return { ...state };
+    }
+
+    case SocketEvents.CREATE_GAME: {
+      console.log("[SOCKET] REDUCER " + SocketEvents.CREATE_GAME + "}");
+      return { ...state };
+    }
+    default: {
+      throw new Error(`Unhandled action type: ${action["type"]}`);
+    }
+  }
+};
+
+const WebSocketContext = createContext<
+  { state: SocketState; dispatch: Dispatch } | undefined
+>(undefined);
+
+type WebSocketProviderProps = { children: React.ReactNode };
+
+const WebSocketProvider = ({ children }: WebSocketProviderProps) => {
+  // const { tableId } = useParams<{ tableId: string }>();
+  const [state, dispatch] = useReducer(reducer, {
+    socketInstance: null,
+    connected: false,
+    lastActiveTableId: null,
+  });
+
+  useEffect(() => {
+    // if (!tableId) {
+    //   return console.error(
+    //     "------[SOCKET]-----TableId is required to connect to the socket"
+    //   );
+    // }
+
+    try {
+      const username = localStorage?.getItem("username");
+      const socketInstance = io(import.meta.env.VITE_ONE_WORD_SOCKET_URL, {
+        autoConnect: false,
+      });
+      socketInstance.auth = { id: socketInstance.id, username };
+      socketInstance.connect();
+
+      // socketInstance.onAny((event, ...args) => {
+      //   console.log("[SOCKET] onAny ", event, args);
+      // });
+
+      socketInstance?.on("connect", () => {
+        dispatch({ type: SocketEvents.CONNECTED, payload: socketInstance });
+      });
+
+      socketInstance?.on("disconnect", () => {
+        dispatch({ type: SocketEvents.DISCONNECTED, payload: null });
+      });
+
+      return () => socketInstance.disconnect();
+    } catch (error) {
+      console.error(
+        "TRYNG TO CONNECT TO SOCKET -[SOCKET CONNECTION] - [ERROR]",
+        error
+      );
+    }
+  }, []);
+
+  return (
+    <WebSocketContext.Provider value={{ dispatch, state }}>
+      {children}
+    </WebSocketContext.Provider>
+  );
+};
+
+const useWebSocket = () => {
+  const context = useContext(WebSocketContext);
+
+  if (context === undefined) {
+    throw new Error("useWebSocket must be used within a WebSocketContext");
+  }
+  return context;
+};
+
+export { WebSocketProvider, useWebSocket };

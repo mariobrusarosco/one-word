@@ -31,7 +31,11 @@ export const InitiallyVisibleItems = () => {
   const navigate = useNavigate();
 
   return primaryMenuItems.map((item) => (
-    <MenuItem className="flex gap-x-6" onClick={() => navigate(item.path)}>
+    <MenuItem
+      className="flex gap-x-6"
+      onClick={() => navigate(item.path)}
+      key={item.path}
+    >
       {item.icon}
       <span className="text-sm font-regular">{item.title}</span>
     </MenuItem>

@@ -14,7 +14,7 @@ const AppSidebar = () => {
   const { data, error, isFetching } = useQuery<Table[]>({
     queryKey: ["tables"],
     queryFn: loaderTables,
-    enabled: false,
+    enabled: true,
   });
 
   const mutation = useMutation({
@@ -33,7 +33,7 @@ const AppSidebar = () => {
     await mutation.mutate(Math.random().toString(36).substring(7));
   };
 
-  // console.log("[mutation]", mutation);
+  console.log("[data]", data);
 
   return (
     <nav className="hidden desktop:block desktop:row-span-3">

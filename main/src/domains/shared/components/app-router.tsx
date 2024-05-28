@@ -17,7 +17,6 @@ import { Chat } from "../../chat";
 import { DashboardScreen } from "../../dashboard/screens/dashboard";
 import { UISystemScreen } from "@/domains/ui-system/screen";
 import { ChannelScreen } from "@/domains/channel/screens/channel";
-import { ChannelsScreen } from "@/domains/channel/screens/channels";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([

@@ -3,7 +3,10 @@ import { Socket } from "socket.io-client";
 
 export type Action =
   | { type: SocketEvents.DISCONNECTED; payload: null }
-  | { type: SocketEvents.JOIN_TABLE; payload: { tableId: string } }
+  | {
+      type: SocketEvents.JOIN_TABLE;
+      payload: { tableId: string; socketInstance: SocketInstance };
+    }
   | { type: SocketEvents.LEAVE_TABLE; payload: { tableId: string } }
   | { type: SocketEvents.CONNECTED; payload: SocketInstance };
 

@@ -6,7 +6,7 @@ export const reducer = (state: SocketState, action: Action) => {
   switch (type) {
     case SocketEvents.CONNECTED: {
       console.log(
-        "[SOCKET] REDUCER " + SocketEvents.CONNECTED + "}",
+        "[SOCKET] REDUCER " + SocketEvents.CONNECTED + "+",
         payload.connected
       );
       return {
@@ -16,11 +16,12 @@ export const reducer = (state: SocketState, action: Action) => {
       };
     }
     case SocketEvents.DISCONNECTED: {
-      console.log("[SOCKET] REDUCER " + SocketEvents.DISCONNECTED + "}");
+      console.log("[SOCKET] REDUCER " + SocketEvents.DISCONNECTED + "-");
       return { ...state, socketInstance: null };
     }
     case SocketEvents.JOIN_TABLE: {
-      console.log("[SOCKET] REDUCER " + SocketEvents.JOIN_TABLE + "}");
+      console.log("[SOCKET] REDUCER " + SocketEvents.JOIN_TABLE + "/", payload);
+
       state.socketInstance?.emit(SocketEvents.JOIN_TABLE, payload.tableId);
 
       return { ...state, lastActiveTableId: payload.tableId };

@@ -4,14 +4,16 @@ import { loaderTables } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SocketEvents } from "@/domains/socket/typing/enums";
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 
 export const TableScreen = () => {
+  const [tableParticipants, setTableParticipants] = useState<string[]>([]);
   const { tableId } = useParams<{ tableId: string }>();
   const { dispatch, state } = useWebSocket();
-  const [tableParticipants, setTableParticipants] = useState<string[]>([]);
+  const currentTableId = tableId;
+  const lastActiveTableId = state?.lastActiveTableId;
 
   const { data, error, isFetching } = useQuery<ITable[]>({
     queryKey: ["tables"],
@@ -19,57 +21,43 @@ export const TableScreen = () => {
     enabled: false,
   });
 
-  useEffect(() => {
-    if (state?.connected) {
-      // console.log("[SOCKET] - state has changed!!!!", state?.socketInstance);
-      state?.socketInstance?.on("update_list_of_users", (data) => {
-        console.log("[SOCKET] - NEW USERS to socket", { data });
-        setTableParticipants(
-          data.map((user: { username: string }) => user.username)
-        );
-      });
-    }
-  }, [state?.connected]);
+  const joinTable = useCallback(() => {
+    dispatch({
+      type: SocketEvents.JOIN_TABLE,
+      payload: {
+        tableId: currentTableId,
+      },
+    });
+  }, [currentTableId, dispatch]);
+
+  const leaveTable = useCallback(() => {
+    dispatch({
+      type: SocketEvents.LEAVE_TABLE,
+      payload: {
+        tableId: lastActiveTableId,
+      },
+    });
+  }, [lastActiveTableId, dispatch]);
+
+  const watchForNewParticipants = useCallback(() => {
+    state?.socketInstance?.on("update_list_of_users", (data) =>
+      setTableParticipants(
+        data.map((user: { username: string }) => user.username)
+      )
+    );
+  }, [state?.socketInstance]);
 
   // Watch for changes on 1) Socket Connection and 2) tableId on URL
   useEffect(() => {
     if (!tableId || !state?.socketInstance) return;
     console.log("[SOCKET] - MOUNT TABLE");
 
-    const currentTableId = tableId;
-    const lastActiveTableId = state?.lastActiveTableId;
-
-    const joinTable = () => {
-      dispatch({
-        type: SocketEvents.JOIN_TABLE,
-        payload: {
-          tableId: currentTableId,
-          socketInstance: state?.socketInstance,
-        },
-      });
-    };
-    const leaveTable = () => {
-      dispatch({
-        type: SocketEvents.LEAVE_TABLE,
-        payload: {
-          tableId: lastActiveTableId,
-          username: localStorage?.getItem("username"),
-        },
-      });
-    };
-
     if (lastActiveTableId) {
-      // console.log("[SOCKET] - MOUNT TABLE", "leaving the last table");
       leaveTable();
     }
 
     joinTable();
-
-    // console.log(
-    //   "[SOCKET] - MOUNT TABLE",
-    //   "joining a new table",
-    //   currentTableId
-    // );
+    watchForNewParticipants();
   }, [tableId, state?.socketInstance]);
 
   if (error) {
@@ -84,20 +72,6 @@ export const TableScreen = () => {
   if (!data) return null;
 
   const activeTable = data.find((table) => table.id === tableId) as ITable;
-
-  // const handleNewGame = () => {
-  //   dispatch({
-  //     type: SocketEvents.JOIN_TABLE,
-  //     payload: state?.socketInstance,
-  //   });
-  // };
-
-  // const handleLeaveTable = () => {
-  //   dispatch({
-  //     type: SocketEvents.LEAVE_TABLE,
-  //     payload: state?.socketInstance,
-  //   });
-  // };
 
   return (
     <div className="table w-full">
@@ -152,8 +126,6 @@ export const TableScreen = () => {
             Start a game
           </Button>
         </div>
-
-        {/* <Separator className="bg-teal-800 mt-3" /> */}
 
         <Outlet />
       </div>

@@ -5,9 +5,9 @@ export type Action =
   | { type: SocketEvents.DISCONNECTED; payload: null }
   | {
       type: SocketEvents.JOIN_TABLE;
-      payload: { tableId: string; socketInstance: SocketInstance };
+      payload: { tableId: string | undefined };
     }
-  | { type: SocketEvents.LEAVE_TABLE; payload: { tableId: string } }
+  | { type: SocketEvents.LEAVE_TABLE; payload: { tableId: string | null } }
   | { type: SocketEvents.CONNECTED; payload: SocketInstance };
 
 export type Dispatch = (action: Action) => void;

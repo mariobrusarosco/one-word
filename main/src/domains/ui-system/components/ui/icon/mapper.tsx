@@ -10,6 +10,7 @@ import {
   IconTablePlus,
   IconLayoutDashboard,
   IconSunMoon,
+  IconHome2,
 } from "@tabler/icons-react";
 
 type names =
@@ -24,6 +25,7 @@ type names =
   | "device-gamepad"
   | "layout-dashboard"
   | "table-plus"
+  | "home"
   | "sun-moon";
 
 export const iconMapper: Record<names, any> = {
@@ -39,6 +41,7 @@ export const iconMapper: Record<names, any> = {
   "table-plus": IconTablePlus,
   "layout-dashboard": IconLayoutDashboard,
   "sun-moon": IconSunMoon,
+  home: IconHome2,
 };
 
 export type iconSizes = "extra-small" | "small" | "medium" | "large";

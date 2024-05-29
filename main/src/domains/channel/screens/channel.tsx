@@ -5,6 +5,10 @@ import { loaderPaginatedMessages } from "@/domains/message/api/loaders";
 import { MessageList } from "@/domains/message/components/message-list";
 import { ChatInput } from "@/domains/message/components/chat-input";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
+import {
+  ScrollBar,
+  ScrollArea,
+} from "@/domains/ui-system/components/ui/scroll-area";
 
 const ChannelScreen = () => {
   const queryClient = useQueryClient();
@@ -22,29 +26,32 @@ const ChannelScreen = () => {
   )?.name;
 
   return (
-    <div className="channel w-full h-full">
-      <div className="heading flex justify-between items-center font-sans ">
-        <p className="text-pink-500 dark:text-teal-800 text-5xl">Channel</p>
-        <p className="table-name font-sans font-thin text-6xl text-teal-800 dark:text-white-100 ">
-          {channelName}
-        </p>
+    <div className="channel h-full flex flex-col">
+      <div className="heading">
+        <div className="flex justify-between items-center font-sans ">
+          <p className="text-pink-500 dark:text-teal-800 text-3xl">Channel</p>
+          <p className="table-name font-sans font-thin text-3xl text-teal-800 dark:text-white-100 ">
+            General
+          </p>
+        </div>
+
+        <Separator className="bg-pink-500 my-4" />
       </div>
 
-      <Separator className="bg-pink-500 my-4" />
+      {/* <div className="chat bg-amber-500 flex-1 overflow-hidden"> */}
 
-      <div className="chat h-full py-8">
-        <p className="text-5xl text-teal-800">
+      <ScrollArea className="chat-messages flex-1 mb-5">
+        <p className="text-3xl text-teal-800">
           Welcome to <span className="font-semibold text-3xl">#General</span>
         </p>
-        <p className="text-xl font-light text-pink-500">
+        <p className="text-sm text-pink-500">
           This is the beginning of a conversation
         </p>
-
         <MessageList channelId={channelId} />
-        <div className="mt-10 mb-6 rounded-sm p-4 flex items-center gap-3 bg-primary-base">
-          {channelId && <ChatInput channelId={channelId} />}
-        </div>
-      </div>
+      </ScrollArea>
+
+      {channelId && <ChatInput channelId={channelId} />}
+      {/* </div> */}
     </div>
   );
 };

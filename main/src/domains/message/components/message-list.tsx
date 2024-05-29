@@ -64,6 +64,12 @@ const MessageList = ({ channelId }: { channelId: string }) => {
         <Message key={message.id} message={message} />
         <Message key={message.id} message={message} />
         <Message key={message.id} message={message} />
+        <Message key={message.id} message={message} />
+        <Message key={message.id} message={message} />
+        <Message key={message.id} message={message} />
+        <Message key={message.id} message={message} />
+        <Message key={message.id} message={message} />
+        <Message key={message.id} message={message} />
       </ul>
     </div>
   );

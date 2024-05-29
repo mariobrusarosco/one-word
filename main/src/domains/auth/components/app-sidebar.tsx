@@ -11,7 +11,6 @@ import {
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { NavLink } from "react-router-dom";
-// import { NavLink } from "react-router-dom";
 
 const AppSidebar = () => {
   const { data, error, isFetching } = useQuery<Table[]>({
@@ -39,24 +38,27 @@ const AppSidebar = () => {
   console.log("[data]", data);
 
   return (
-    <ScrollArea className="row-start-2 row-end-2">
-      <div className="flex gap-4 item-center p-4 w-full">
-        <section className="new-table-creation flex justify-center  dark:border-b-white-100">
+    <ScrollArea className="desktop:row-start-1 desktop:row-end-3 shadow-main-right">
+      <div className="bg-white-100 flex flex-col gap-4 item-center p-4 dark:bg-teal-800">
+        <section className="new-table-creation flex justify-center  dark:border-b-white-100 ">
           {mutation.isPending && <div>creating table...</div>}
           <Button
-            variant="primary"
+            variant="secondary"
             roundness="full"
             size="large"
             disabled={mutation.isPending}
             onClick={handleCreateTable}
           >
-            <Icon name="plus" className="stroke-white-100 flex w-8" />
+            <Icon
+              name="plus"
+              className="stroke-white-100 flex w-8 dark:stroke-teal-800"
+            />
           </Button>
         </section>
 
-        <Separator className="my-8" orientation="vertical" />
+        <Separator className="my-4 dark:bg-white-100" />
 
-        <ul className="flex gap-x-4 items-center">
+        <ul className="flex gap-x-4 items-center flex-1 desktop:flex-col desktop:gap-y-4">
           {data?.map((table) => (
             <li key={table?.name}>
               <Button roundness="full" size="large">
@@ -68,7 +70,6 @@ const AppSidebar = () => {
           ))}
         </ul>
       </div>
-      <ScrollBar orientation="horizontal" />
     </ScrollArea>
   );
 };

@@ -32,8 +32,6 @@ const ChannelScreen = () => {
         <Separator className="bg-pink-500 my-4" />
       </div>
 
-      {/* <div className="chat bg-amber-500 flex-1 overflow-hidden"> */}
-
       <ScrollArea className="chat-messages flex-1 mb-5">
         <p className="text-3xl text-teal-800">
           Welcome to <span className="font-semibold text-3xl">#General</span>
@@ -45,7 +43,6 @@ const ChannelScreen = () => {
       </ScrollArea>
 
       {channelId && <ChatInput channelId={channelId} />}
-      {/* </div> */}
     </div>
   );
 };

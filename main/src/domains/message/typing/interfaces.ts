@@ -7,3 +7,8 @@ export type IMessage = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type PageWithIMessages = {
+  messages: IMessage[];
+  lastCursor: number | 0;
+};

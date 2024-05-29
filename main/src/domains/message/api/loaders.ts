@@ -1,0 +1,25 @@
+import { restApi } from "../../../api/rest";
+import { IMessage } from "../typing/interfaces";
+
+export const loaderPaginatedMessages = async ({
+  pageParam,
+  channelId,
+  take,
+}: {
+  pageParam: number;
+  channelId?: string;
+  take: number;
+}) => {
+  if (!channelId) return;
+
+  const result = await restApi.get(`/messages/${channelId}`, {
+    params: {
+      take,
+      cursor: pageParam,
+    },
+  });
+
+  console.log("[LOADER] - [MESSAGES]", result);
+
+  return (await result.data) as IMessage[];
+};

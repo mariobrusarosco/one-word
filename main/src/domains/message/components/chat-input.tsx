@@ -1,31 +1,39 @@
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { createMessage } from "../api/mutations";
 
 const ChatInput = ({ channelId }: { channelId: string }) => {
   const [inputMessage, setInputMessage] = useState("");
-  // Uncomment to use the useMutation hook
-  // const queryClient = useQueryClient();
-  // const mutation = useMutation({
-  //   mutationFn: () => createMessage({ content: inputMessage, channelId }),
-  //   onSuccess: () => {
-  //     setInputMessage("");
-  //     queryClient.invalidateQueries({
-  //       queryKey: ["channel-messages", { channelId }],
-  //     });
-  //   },
-  // });
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: () => createMessage({ content: inputMessage, channelId }),
+    onSuccess: () => {
+      setInputMessage("");
+      queryClient.invalidateQueries({
+        queryKey: ["channel-messages", { channelId }],
+      });
+    },
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    //   const result = await mutation.mutate();
-    console.log({ e, channelId, inputMessage });
+
+    if (!inputMessage) return false;
+    await mutation.mutate();
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="chat-input bg-pink-500 max-h-[72px] rounded-md p-4 flex items-center flex-1 gap-3 text-white-100">
-        <Button type="submit" variant="secondary" roundness="full" size="small">
+        <Button
+          type="submit"
+          variant="secondary"
+          roundness="full"
+          size="small"
+          disabled={mutation.isPending || inputMessage.length === 0}
+        >
           <Icon name="plus" size="small" className="stroke-white-100 " />
         </Button>
         <input

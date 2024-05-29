@@ -1,7 +1,7 @@
 import { IMessage } from "../typing/interfaces";
 import { Message } from "./message";
 
-const MessageList = ({ channelId }: { channelId: string }) => {
+const MessageList = ({ channelId }: { channelId?: string }) => {
   const message: IMessage = {
     id: "1",
     content: "Hello world",
@@ -37,6 +37,7 @@ const MessageList = ({ channelId }: { channelId: string }) => {
   //   }),
   // });
 
+  console.log({ channelId });
   return (
     <div className="message-list mt-8">
       {/* Uncomment to see Integration with the useInfiniteQuery hook */}

@@ -1,29 +1,23 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { loaderChannels } from "../api/loaders";
-import { loaderPaginatedMessages } from "@/domains/message/api/loaders";
 import { MessageList } from "@/domains/message/components/message-list";
 import { ChatInput } from "@/domains/message/components/chat-input";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import {
-  ScrollBar,
-  ScrollArea,
-} from "@/domains/ui-system/components/ui/scroll-area";
+import { ScrollArea } from "@/domains/ui-system/components/ui/scroll-area";
 
 const ChannelScreen = () => {
-  const queryClient = useQueryClient();
-  const { channelId, tableId } = useParams<{
+  // const queryClient = useQueryClient();
+  const { channelId } = useParams<{
     channelId: string;
     tableId: string;
   }>();
 
-  const table = queryClient
-    .getQueryData(["tables"])
-    ?.find((table) => table.id === tableId);
+  // const table = queryClient
+  //   .getQueryData(["tables"])
+  //   ?.find((table) => table.id === tableId);
 
-  const channelName = table?.channels.find(
-    (channel) => channel.id === channelId
-  )?.name;
+  // const channelName = table?.channels.find(
+  //   (channel) => channel.id === channelId
+  // )?.name;
 
   return (
     <div className="channel h-full flex flex-col">

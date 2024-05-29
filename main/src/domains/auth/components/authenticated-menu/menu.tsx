@@ -34,7 +34,7 @@ const CloseTrigger = () => {
 export const AuthenticatedMenu = () => {
   return (
     <DropdownMenu>
-      <div className="sticky bottom-0 w-full flex items-center justify-center gap-x-4 bg-pink-500 p-4 dark:bg-teal-800  row-start-3 row-end-3 font-sans desktop:row-start-1 desktop:row-end-3 desktop:hidden">
+      <div className="sticky bottom-0 w-full flex items-center justify-center gap-x-4 bg-pink-500 p-4 dark:bg-teal-800 font-sans desktop:row-start-1 desktop:row-end-3 desktop:hidden">
         <InitiallyVisibleItems />
 
         <OpenTrigger />

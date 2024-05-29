@@ -91,11 +91,12 @@ export const TableScreen = () => {
             <ul className="flex flex-wrap gap-6">
               {activeTable?.channels?.map((channel) => (
                 <li key={channel?.name} className="font-sans">
-                  <Button variant={"primary"}>
-                    <NavLink to={`/tables/${tableId}/channel/${channel?.id}`}>
-                      {channel?.name}
-                    </NavLink>
-                  </Button>
+                  <NavLink
+                    className="flex"
+                    to={`/tables/${tableId}/channel/${channel?.id}`}
+                  >
+                    <Button variant="primary">{channel?.name}</Button>
+                  </NavLink>
                 </li>
               ))}
             </ul>
@@ -118,7 +119,7 @@ export const TableScreen = () => {
             If you are ready...
           </p>
           <Button
-            className="max-w-[180px] font-semibold"
+            className="max-w-[180px] font-semibold flex"
             variant="primary"
             size="large"
             onClick={() => null}

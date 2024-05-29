@@ -1,35 +1,51 @@
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import { useParams } from "react-router-dom";
+import { MessageList } from "@/domains/message/components/message-list";
+import { ChatInput } from "@/domains/message/components/chat-input";
+import { Separator } from "@/domains/ui-system/components/ui/separator";
+import { ScrollArea } from "@/domains/ui-system/components/ui/scroll-area";
 
 const ChannelScreen = () => {
-  const { channelId, tableId } = useParams<{
+  // const queryClient = useQueryClient();
+  const { channelId } = useParams<{
     channelId: string;
     tableId: string;
   }>();
 
-  if (!channelId) return null;
+  // const table = queryClient
+  //   .getQueryData(["tables"])
+  //   ?.find((table) => table.id === tableId);
 
-  console.log("ChannelScreen", { channelId, tableId });
+  // const channelName = table?.channels.find(
+  //   (channel) => channel.id === channelId
+  // )?.name;
 
   return (
-    <div className="channel w-full h-full">
-      <div className="heading flex justify-between items-center font-sans ">
-        <p className="text-pink-500 dark:text-teal-800 text-5xl">Channel</p>
-        <p className="table-name font-semibold uppercase text-2xl text-teal-800 dark:text-white-100 ">
-          {channelId}
-        </p>
+    <div className="channel h-full flex flex-col">
+      <div className="heading">
+        <div className="flex justify-between items-center font-sans ">
+          <p className="text-pink-500 dark:text-teal-800 text-3xl">Channel</p>
+          <p className="table-name font-sans font-thin text-3xl text-teal-800 dark:text-white-100 ">
+            General
+          </p>
+        </div>
+
+        <Separator className="bg-pink-500 my-4" />
       </div>
 
-      <Separator className="bg-teal-800 mt-3" />
+      {/* <div className="chat bg-amber-500 flex-1 overflow-hidden"> */}
 
-      <div className="chat h-full">
-        <p className="text-5xl">Welcome to </p>
-        <p className="text-xl text-primary-base mb-8">
+      <ScrollArea className="chat-messages flex-1 mb-5">
+        <p className="text-3xl text-teal-800">
+          Welcome to <span className="font-semibold text-3xl">#General</span>
+        </p>
+        <p className="text-sm text-pink-500">
           This is the beginning of a conversation
         </p>
+        <MessageList channelId={channelId} />
+      </ScrollArea>
 
-        <section className="channel-participants"></section>
-      </div>
+      {channelId && <ChatInput channelId={channelId} />}
+      {/* </div> */}
     </div>
   );
 };

@@ -2,10 +2,9 @@ import { useParams } from "react-router-dom";
 import { MessageList } from "@/domains/message/components/message-list";
 import { ChatInput } from "@/domains/message/components/chat-input";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { ScrollArea } from "@/domains/ui-system/components/ui/scroll-area";
+import { useIsFetching } from "@tanstack/react-query";
 
 const ChannelScreen = () => {
-  // const queryClient = useQueryClient();
   const { channelId } = useParams<{
     channelId: string;
     tableId: string;
@@ -19,11 +18,16 @@ const ChannelScreen = () => {
   //   (channel) => channel.id === channelId
   // )?.name;
 
+  const fetchingChannelMessages = useIsFetching({
+    queryKey: ["channel-messages", { channelId }],
+  });
+
   return (
     <div className="channel h-full flex flex-col">
       <div className="heading">
         <div className="flex justify-between items-center font-sans ">
           <p className="text-pink-500 dark:text-teal-800 text-3xl">Channel</p>
+          {fetchingChannelMessages ? <p>Loading...</p> : null}
           <p className="table-name font-sans font-thin text-3xl text-teal-800 dark:text-white-100 ">
             General
           </p>
@@ -32,17 +36,9 @@ const ChannelScreen = () => {
         <Separator className="bg-pink-500 my-4" />
       </div>
 
-      <ScrollArea className="chat-messages flex-1 mb-5">
-        <p className="text-3xl text-teal-800">
-          Welcome to <span className="font-semibold text-3xl">#General</span>
-        </p>
-        <p className="text-sm text-pink-500">
-          This is the beginning of a conversation
-        </p>
-        <MessageList channelId={channelId} />
-      </ScrollArea>
+      <MessageList channelId={channelId} />
 
-      {channelId && <ChatInput channelId={channelId} />}
+      {channelId ? <ChatInput channelId={channelId} /> : null}
     </div>
   );
 };

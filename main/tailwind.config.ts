@@ -15,7 +15,7 @@ const config = {
     extend: {
       boxShadow: {
         "main-bottom": "0px 4px 4px rgba(0, 0, 0, 0.25)",
-        "main-right": "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        "main-right": "4px 0px 10px rgba(135, 128, 128, 0.25)",
       },
       fontFamily: APP_FONTS.fontFamily,
       colors: {

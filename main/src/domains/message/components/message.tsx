@@ -24,7 +24,10 @@ const Message: React.FC<Props> = ({ message }) => {
           <div className="bg-pink-500 py-1 px-2 font-light text-white-100 rounded-md shadow-main-bottom text-xs">
             Mario Brusarosco
           </div>
-          <div className="text-pink-500 text-xs">{message.createdAt}</div>
+          <div className="text-pink-500 text-xs">
+            {new Date(message.createdAt).toLocaleDateString()}{" "}
+            {new Date(message.createdAt).toLocaleTimeString()}
+          </div>
         </div>
         <p className="text-teal-800 text-sm">{message.content}</p>
       </div>

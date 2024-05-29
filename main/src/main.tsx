@@ -7,9 +7,9 @@ const runWebApp = async () => {
   await setApiMockingWhenInDevMode();
 
   ReactDOM.createRoot(document.querySelector(".root")!).render(
-    // <React.StrictMode>
-    <App />
-    // </React.StrictMode>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
   );
 };
 

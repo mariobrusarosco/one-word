@@ -1,5 +1,5 @@
 import { restApi } from "../../../api/rest";
-import { IMessage } from "../typing/interfaces";
+import { PageWithIMessages } from "../typing/interfaces";
 
 export const loaderPaginatedMessages = async ({
   pageParam,
@@ -21,5 +21,5 @@ export const loaderPaginatedMessages = async ({
 
   console.log("[LOADER] - [MESSAGES]", result);
 
-  return (await result.data) as IMessage[];
+  return (await result.data) as PageWithIMessages;
 };

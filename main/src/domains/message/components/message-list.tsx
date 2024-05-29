@@ -5,7 +5,6 @@ import { loaderPaginatedMessages } from "../api/loaders";
 import { Button } from "@/domains/ui-system/components/ui/button";
 
 const MessageList = ({ channelId }: { channelId?: string }) => {
-  // Uncomment to see Integration with the useInfiniteQuery hook
   const {
     data,
     error,
@@ -13,7 +12,6 @@ const MessageList = ({ channelId }: { channelId?: string }) => {
     hasNextPage,
     isFetching,
     isFetchingNextPage,
-    status,
   } = useInfiniteQuery({
     queryKey: ["channel-messages", { channelId }],
     queryFn: ({ pageParam }) =>
@@ -23,13 +21,25 @@ const MessageList = ({ channelId }: { channelId?: string }) => {
         take: 10,
       }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.lastCursor,
+    getNextPageParam: (lastPage) => lastPage?.lastCursor,
     select: (data) => ({
       pages: [...data.pages].reverse(),
       pageParams: [...data.pageParams].reverse(),
     }),
     enabled: !!channelId,
   });
+
+  console.log("[MESSAGES INTEGRATION] data", { data });
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (isFetching) {
+    return (
+      <div className="message-lists-skeleton mt-8">...loading messages...</div>
+    );
+  }
 
   console.log("[MESSAGES INTEGRATION]", { channelId });
   return (
@@ -47,12 +57,11 @@ const MessageList = ({ channelId }: { channelId?: string }) => {
       )}
 
       <ul className="grid gap-y-4 py-2 pl-1 pr-4">
-        {data?.pages?.map((page: { messages: IMessage[] }) => {
-          console.log({ page });
-          return page.messages.map((message: IMessage) => {
-            return <Message key={message.id} message={message} />;
-          });
-        })}
+        {data?.pages.map((page) =>
+          page?.messages.map((message: IMessage) => (
+            <Message key={message.id} message={message} />
+          ))
+        )}
       </ul>
     </div>
   );

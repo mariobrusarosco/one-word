@@ -1,7 +1,7 @@
 {
   "name": "one-word",
   "private": true,
-  "version": "0.10.1",
+  "version": "0.11.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

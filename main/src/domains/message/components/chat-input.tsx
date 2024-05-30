@@ -3,14 +3,26 @@ import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { createMessage } from "../api/mutations";
+import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
+import { SocketEvents } from "@/domains/socket/typing/enums";
+import { useParams } from "react-router-dom";
 
-const ChatInput = ({ channelId }: { channelId: string }) => {
+const ChatInput = () => {
+  const { channelId = "", tableId = "" } = useParams<{
+    channelId: string;
+    tableId: string;
+  }>();
+  const { dispatch } = useWebSocket();
   const [inputMessage, setInputMessage] = useState("");
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: () => createMessage({ content: inputMessage, channelId }),
     onSuccess: () => {
       setInputMessage("");
+      dispatch({
+        type: SocketEvents.NEW_CHAT_MESSAGE,
+        payload: { message: inputMessage, tableId },
+      });
       queryClient.invalidateQueries({
         queryKey: ["channel-messages", { channelId }],
       });

@@ -14,6 +14,10 @@ export type Action =
   | {
       type: SocketEvents.LEAVE_TABLE;
       payload: { tableId: string | undefined };
+    }
+  | {
+      type: SocketEvents.NEW_CHAT_MESSAGE;
+      payload: { message: string; tableId: string | undefined };
     };
 
 export type Dispatch = (action: Action) => void;

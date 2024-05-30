@@ -6,7 +6,6 @@ import { Button } from "@/domains/ui-system/components/ui/button";
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
-import { Socket } from "socket.io-client";
 import { SocketEvents } from "@/domains/socket/typing/enums";
 
 const MessageList = () => {

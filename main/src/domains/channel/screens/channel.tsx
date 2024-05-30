@@ -6,7 +6,7 @@ import { useIsFetching } from "@tanstack/react-query";
 import { useTables } from "@/domains/tables/hooks/use-tables";
 
 const ChannelScreen = () => {
-  useTables();
+  // useTables();
 
   const { channelId } = useParams<{
     channelId: string;

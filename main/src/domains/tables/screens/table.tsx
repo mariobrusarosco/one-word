@@ -5,10 +5,11 @@ import { ITable } from "../typing/interfaces";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { useTables } from "../hooks/use-tables";
+import { TableSidebar } from "../components/table-sidebar";
 
 export const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
-  const { tableParticipants } = useTables();
+  // const { tableParticipants } = useTables();
 
   const { data, error, isFetching } = useQuery<ITable[]>({
     queryKey: ["tables"],
@@ -31,61 +32,26 @@ export const TableScreen = () => {
 
   return (
     <div className="table w-full">
+      <TableHeading table={activeTable} />
+
+      <Outlet />
+    </div>
+  );
+};
+
+const TableHeading = ({ table }: { table: ITable }) => {
+  if (table === undefined) return null;
+
+  return (
+    <>
       <div className="heading flex justify-between items-center font-sans ">
         <p className="text-pink-500 dark:text-teal-800 text-5xl">Table</p>
         <p className="table-name font-semibold uppercase text-2xl text-teal-800 dark:text-white-100 ">
-          {activeTable.name}
+          {table.name}
         </p>
       </div>
 
       <Separator className="bg-teal-800 mt-3" />
-
-      <div className="grid grid-cols-2">
-        <div className="flex gap-4">
-          <section className="list-of-channels">
-            <h4>Channels</h4>
-            <ul className="flex flex-wrap gap-6">
-              {activeTable?.channels?.map((channel) => (
-                <li key={channel?.name} className="font-sans">
-                  <NavLink
-                    className="flex"
-                    to={`/tables/${tableId}/channel/${channel?.id}`}
-                  >
-                    <Button variant="primary">{channel?.name}</Button>
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <div className="table- participants">
-            <h4 className="text-3xl font-semibold text-teal-800 dark:text-white-100 mb-8">
-              Participants
-            </h4>
-            <ul className="flex flex-col gap-4">
-              {tableParticipants?.map((participant) => (
-                <li key={participant}>{participant}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-y-1">
-          <p className="font-sans text-xl text-teal-800 dark:text-white-100">
-            If you are ready...
-          </p>
-          <Button
-            className="max-w-[180px] font-semibold flex"
-            variant="primary"
-            size="large"
-            onClick={() => null}
-          >
-            Start a game
-          </Button>
-        </div>
-
-        <Outlet />
-      </div>
-    </div>
+    </>
   );
 };

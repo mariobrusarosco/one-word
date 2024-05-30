@@ -4,61 +4,17 @@ import { loaderTables } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { useCallback, useEffect, useState } from "react";
-import { SocketEvents } from "@/domains/socket/typing/enums";
-import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
+import { useTables } from "../hooks/use-tables";
 
 export const TableScreen = () => {
-  const [tableParticipants, setTableParticipants] = useState<string[]>([]);
   const { tableId } = useParams<{ tableId: string }>();
-  const { dispatch, state } = useWebSocket();
-  const currentTableId = tableId;
-  const lastActiveTableId = state?.lastActiveTableId;
+  const { tableParticipants } = useTables();
 
   const { data, error, isFetching } = useQuery<ITable[]>({
     queryKey: ["tables"],
     queryFn: loaderTables,
     enabled: false,
   });
-
-  const joinTable = useCallback(() => {
-    dispatch({
-      type: SocketEvents.JOIN_TABLE,
-      payload: {
-        tableId: currentTableId,
-      },
-    });
-  }, [currentTableId, dispatch]);
-
-  const leaveTable = useCallback(() => {
-    dispatch({
-      type: SocketEvents.LEAVE_TABLE,
-      payload: {
-        tableId: lastActiveTableId,
-      },
-    });
-  }, [lastActiveTableId, dispatch]);
-
-  const watchForNewParticipants = useCallback(() => {
-    state?.socketInstance?.on("update_list_of_users", (data) =>
-      setTableParticipants(
-        data.map((user: { username: string }) => user.username)
-      )
-    );
-  }, [state?.socketInstance]);
-
-  // Watch for changes on 1) Socket Connection and 2) tableId on URL
-  useEffect(() => {
-    if (!tableId || !state?.socketInstance) return;
-    console.log("[SOCKET] - MOUNT TABLE");
-
-    if (lastActiveTableId) {
-      leaveTable();
-    }
-
-    joinTable();
-    watchForNewParticipants();
-  }, [tableId, state?.socketInstance]);
 
   if (error) {
     console.error({ error });

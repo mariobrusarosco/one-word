@@ -1,24 +1,26 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { IMessage } from "../typing/interfaces";
 import { Message } from "./message";
 import { loaderPaginatedMessages } from "../api/loaders";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
+import { Socket } from "socket.io-client";
+import { SocketEvents } from "@/domains/socket/typing/enums";
 
-const MessageList = ({ channelId }: { channelId?: string }) => {
-  // const ref = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   ref?.current?.scroll({ top: 10 });
-  // }, [channelId]);
-
-  // console.log({ ref }, ref?.current?.scrollHeight);
+const MessageList = () => {
+  const { channelId } = useParams<{
+    channelId: string;
+  }>();
+  const queryClient = useQueryClient();
   const ref = useRef<HTMLDivElement>(null);
   const scrollListToBottom = () =>
     ref?.current?.scrollTo({
       top: ref.current.scrollHeight,
     });
 
+  const { state } = useWebSocket();
   const {
     data,
     error,
@@ -46,6 +48,14 @@ const MessageList = ({ channelId }: { channelId?: string }) => {
   useEffect(() => {
     scrollListToBottom();
   }, [isFetching]);
+
+  useEffect(() => {
+    state?.socketInstance?.on(SocketEvents.UPDATE_CHAT_MESSAGES, () => {
+      queryClient.invalidateQueries({
+        queryKey: ["channel-messages", { channelId }],
+      });
+    });
+  }, [state?.socketInstance]);
 
   if (error) {
     return <div>Error: {error.message}</div>;

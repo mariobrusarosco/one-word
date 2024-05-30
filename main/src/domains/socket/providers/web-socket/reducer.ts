@@ -17,6 +17,15 @@ export const reducer = (state: SocketState, action: Action) => {
         socketInstance: null,
       };
     }
+    case SocketEvents.NEW_CHAT_MESSAGE: {
+      state?.socketInstance?.emit(
+        SocketEvents.NEW_CHAT_MESSAGE,
+        payload.tableId,
+        payload.message
+      );
+
+      return state;
+    }
     case SocketEvents.JOIN_TABLE: {
       state.socketInstance?.emit(SocketEvents.JOIN_TABLE, payload.tableId);
 

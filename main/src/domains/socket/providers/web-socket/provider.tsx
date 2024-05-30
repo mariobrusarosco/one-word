@@ -30,6 +30,10 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
         dispatch({ type: SocketEvents.CONNECTED, payload: socketInstance });
       });
 
+      // socketInstance?.on("update-chat-messages", () => {
+      //   alert("global pega!");
+      // });
+
       socketInstance?.on("disconnect", () => {
         dispatch({ type: SocketEvents.DISCONNECTED, payload: null });
       });

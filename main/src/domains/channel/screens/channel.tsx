@@ -3,8 +3,11 @@ import { MessageList } from "@/domains/message/components/message-list";
 import { ChatInput } from "@/domains/message/components/chat-input";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { useIsFetching } from "@tanstack/react-query";
+import { useTables } from "@/domains/tables/hooks/use-tables";
 
 const ChannelScreen = () => {
+  useTables();
+
   const { channelId } = useParams<{
     channelId: string;
     tableId: string;
@@ -36,9 +39,9 @@ const ChannelScreen = () => {
         <Separator className="bg-pink-500 my-4" />
       </div>
 
-      <MessageList channelId={channelId} />
+      <MessageList />
 
-      {channelId ? <ChatInput channelId={channelId} /> : null}
+      {channelId ? <ChatInput /> : null}
     </div>
   );
 };

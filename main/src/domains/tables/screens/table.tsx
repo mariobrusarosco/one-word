@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { loaderTables } from "../api/loader";
 import { ITable } from "../typing/interfaces";
-import { Button } from "@/domains/ui-system/components/ui/button";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { useTables } from "../hooks/use-tables";
 
 export const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
-  const { tableParticipants } = useTables();
+  // const { tableParticipants } = useTables();
 
   const { data, error, isFetching } = useQuery<ITable[]>({
     queryKey: ["tables"],
@@ -40,52 +38,7 @@ export const TableScreen = () => {
 
       <Separator className="bg-teal-800 mt-3" />
 
-      <div className="grid grid-cols-2">
-        <div className="flex gap-4">
-          <section className="list-of-channels">
-            <h4>Channels</h4>
-            <ul className="flex flex-wrap gap-6">
-              {activeTable?.channels?.map((channel) => (
-                <li key={channel?.name} className="font-sans">
-                  <NavLink
-                    className="flex"
-                    to={`/tables/${tableId}/channel/${channel?.id}`}
-                  >
-                    <Button variant="primary">{channel?.name}</Button>
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <div className="table- participants">
-            <h4 className="text-3xl font-semibold text-teal-800 dark:text-white-100 mb-8">
-              Participants
-            </h4>
-            <ul className="flex flex-col gap-4">
-              {tableParticipants?.map((participant) => (
-                <li key={participant}>{participant}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-y-1">
-          <p className="font-sans text-xl text-teal-800 dark:text-white-100">
-            If you are ready...
-          </p>
-          <Button
-            className="max-w-[180px] font-semibold flex"
-            variant="primary"
-            size="large"
-            onClick={() => null}
-          >
-            Start a game
-          </Button>
-        </div>
-
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };

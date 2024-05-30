@@ -7,7 +7,7 @@ export const Icon = (props: IconProps) => {
   const IconComponent = iconMapper[name];
   const className = cn(sizeMapper[size], props.className);
 
-  return <IconComponent className={className} {...rest} />;
+  return <IconComponent {...rest} className={className} />;
 };
 
 export type IconProps = {

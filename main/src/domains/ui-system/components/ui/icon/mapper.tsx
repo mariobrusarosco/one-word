@@ -11,6 +11,7 @@ import {
   IconLayoutDashboard,
   IconSunMoon,
   IconHome2,
+  IconHash,
 } from "@tabler/icons-react";
 
 type names =
@@ -26,6 +27,7 @@ type names =
   | "layout-dashboard"
   | "table-plus"
   | "home"
+  | "hashtag"
   | "sun-moon";
 
 export const iconMapper: Record<names, any> = {
@@ -42,6 +44,7 @@ export const iconMapper: Record<names, any> = {
   "layout-dashboard": IconLayoutDashboard,
   "sun-moon": IconSunMoon,
   home: IconHome2,
+  hashtag: IconHash,
 };
 
 export type iconSizes = "extra-small" | "small" | "medium" | "large";

@@ -15,9 +15,9 @@ export const TablesScreen = () => {
   });
 
   return (
-    <div className="grid desktop:grid-cols-[120px,224px,1fr] desktop: h-full overflow-hidden">
+    <div className="grid desktop:grid-cols-[120px,224px,1fr] desktop: h-full">
       <AppSidebar />
-      {/* <TableSidebar /> */}
+      <TableSidebar />
       <Outlet />
     </div>
   );

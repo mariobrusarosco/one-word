@@ -5,10 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { loaderTables } from "../api/loader";
 import { Table } from "../typing/interfaces";
 
-//  desktop:grid-rows-[88px,1fr] grid desktop:grid-cols-[128px,1fr]
-
 export const TablesScreen = () => {
-  const { data } = useQuery<Table[]>({
+  useQuery<Table[]>({
     queryKey: ["tables"],
     queryFn: loaderTables,
     enabled: true,

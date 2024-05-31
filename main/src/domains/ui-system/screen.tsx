@@ -168,4 +168,4 @@ const UISystemScreen = () => {
   );
 };
 
-export { UISystemScreen };
+export default UISystemScreen;

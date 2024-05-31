@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { loaderGames } from "../api/loader";
 import { Game } from "../typing/interfaces";
 
-export const GamesScreen = () => {
+const GamesScreen = () => {
   const { data, error, isFetching } = useQuery({
     queryKey: ["games"],
     queryFn: loaderGames,
@@ -27,3 +27,5 @@ export const GamesScreen = () => {
     </>
   );
 };
+
+export default GamesScreen;

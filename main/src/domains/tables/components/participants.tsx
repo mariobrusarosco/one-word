@@ -1,5 +1,5 @@
-import { getInitials } from "@/domains/shared/utils/string-manipulation";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 
 const Participant = () => {
   return (

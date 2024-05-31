@@ -6,7 +6,7 @@ import {
   Toggle,
 } from "./components";
 
-export const Testing = () => {
+const Testing = () => {
   return (
     <>
       <h2>Testing</h2>
@@ -18,3 +18,5 @@ export const Testing = () => {
     </>
   );
 };
+
+export default Testing;

@@ -1,6 +1,6 @@
 import { Button } from "@/domains/ui-system/components/ui/button";
 
-export const DashboardScreen = () => {
+const DashboardScreen = () => {
   return (
     <div className="h-full ">
       <h2 className="heading text-6xl font-serif text-white-100">Dashboard</h2>
@@ -61,3 +61,5 @@ export const DashboardScreen = () => {
     </div>
   );
 };
+
+export default DashboardScreen;

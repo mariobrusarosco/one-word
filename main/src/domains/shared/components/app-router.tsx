@@ -5,18 +5,18 @@ import {
 } from "react-router-dom";
 import { AuthenticatedLayout } from "../../auth/components/authenticated-layout";
 import RootLayout from "./root-layout";
-import { GamesScreen } from "../../games/screens/games";
-import { TablesScreen } from "../../tables/screens/tables";
-import { PublicLayout } from "./public-layout";
-import { LoginScreen } from "../../auth/screens/login";
-import { logoutUser } from "../../auth/routes/logout-user";
-import { TableScreen } from "../../tables/screens/table";
-import { ErrorScreen } from "../screens/error";
-import { Testing } from "../testing-temp/testing";
-import { Chat } from "../../chat";
-import { DashboardScreen } from "../../dashboard/screens/dashboard";
-import { UISystemScreen } from "@/domains/ui-system/screen";
-import { ChannelScreen } from "@/domains/channel/screens/channel";
+import GamesScreen from "../../games/screens/games";
+import TablesScreen from "../../tables/screens/tables";
+import PublicLayout from "./public-layout";
+import LoginScreen from "../../auth/screens/login";
+import logoutUser from "../../auth/routes/logout-user";
+import TableScreen from "../../tables/screens/table";
+import ErrorScreen from "../screens/error";
+import Testing from "../testing-temp/testing";
+import Chat from "../../chat";
+import DashboardScreen from "../../dashboard/screens/dashboard";
+import UISystemScreen from "@/domains/ui-system/screen";
+import ChannelScreen from "@/domains/channel/screens/channel";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([

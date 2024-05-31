@@ -11,7 +11,7 @@ export const setApiMockingWhenInDevMode = async (
     console.log("Great! This application has mocked data!");
 
     const { worker } = await import(
-      "../../../mocks/mocking-on-browser-controller"
+      "../../mocks/mocking-on-browser-controller"
     );
 
     await worker.start();

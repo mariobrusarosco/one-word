@@ -1,7 +1,7 @@
 // import React from "react";
 // import { useState } from "react";
 
-export const Chat = () => {
+const Chat = () => {
   return <div>Chat</div>;
 };
 
@@ -86,3 +86,5 @@ export const Chat = () => {
 //     </main>
 //   );
 // };
+
+export default Chat;

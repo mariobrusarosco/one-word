@@ -4,7 +4,7 @@ import { loaderTables } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 
-export const TableScreen = () => {
+const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
   // const { tableParticipants } = useTables();
 
@@ -42,3 +42,5 @@ export const TableScreen = () => {
     </div>
   );
 };
+
+export default TableScreen;

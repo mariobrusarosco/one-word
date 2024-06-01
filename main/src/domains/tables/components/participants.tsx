@@ -1,7 +1,13 @@
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
+import { useTablesContext } from "../provider";
 
-const Participant = () => {
+export interface IPartipant {
+  userId: string;
+  username: string;
+}
+
+const Participant = ({ participant }: { participant: IPartipant }) => {
   return (
     <div className="participant flex items-center gap-2 px-3 py-3 cursor-pointer rounded-md hover:bg-pink-500 group">
       <div className="participant-avatar bg-pink-500 w-7 h-7 rounded-full flex justify-center items-center group-hover:bg-teal-800">
@@ -10,13 +16,15 @@ const Participant = () => {
         </span>
       </div>
       <span className="text-pink-500 text-sm group-hover:text-white-100">
-        Mario Brusarosco
+        {participant.username}
       </span>
     </div>
   );
 };
 
 export const ParticpantsList = () => {
+  const tablesContext = useTablesContext();
+
   return (
     <div className="table-participants px-4 pt-4 pb-10 overflow-hidden max-h-[500px]">
       <div className="flex justify-between mb-3">
@@ -25,28 +33,9 @@ export const ParticpantsList = () => {
       </div>
 
       <ul className="grid overflow-auto h-full pb-10">
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
-        <Participant />
+        {tablesContext.fakeParticipants.map((participant) => (
+          <Participant participant={participant} key={participant.userId} />
+        ))}
       </ul>
     </div>
   );

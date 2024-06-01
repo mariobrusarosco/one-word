@@ -5,4 +5,5 @@ export enum SocketEvents {
   JOIN_TABLE = "join-table",
   NEW_CHAT_MESSAGE = "new-chat-message",
   UPDATE_CHAT_MESSAGES = "update-chat-messages",
+  UPDATE_TABLE_PARTICIPANTS = "update-table-participants",
 }

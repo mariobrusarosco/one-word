@@ -27,7 +27,6 @@ export type SocketInstance = Socket;
 export type SocketState = {
   socketInstance: SocketInstance | null;
   connected: boolean;
-  lastActiveTableId: string | undefined;
 };
 
 export type ContextProps =

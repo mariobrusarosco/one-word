@@ -8,7 +8,7 @@ const GameScreen = () => {
       <h2>Game</h2>
 
       <ul className="grid overflow-auto h-full pb-10">
-        {tablesContext.fakeParticipants.map((participant) => (
+        {tablesContext.tables.tableParticipants.map((participant) => (
           <li key={participant.userId}>{participant.username}</li>
         ))}
       </ul>

@@ -1,11 +1,7 @@
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 import { useTablesContext } from "../provider";
-
-export interface IPartipant {
-  userId: string;
-  username: string;
-}
+import { IPartipant } from "../hooks/use-tables";
 
 const Participant = ({ participant }: { participant: IPartipant }) => {
   return (
@@ -23,7 +19,9 @@ const Participant = ({ participant }: { participant: IPartipant }) => {
 };
 
 export const ParticpantsList = () => {
-  // const tablesContext = useTablesContext();
+  const tablesContext = useTablesContext();
+
+  console.log("[DEBUG]", tablesContext.tables.tableParticipants);
 
   return (
     <div className="table-participants px-4 pt-4 pb-10 overflow-hidden max-h-[500px]">
@@ -33,9 +31,9 @@ export const ParticpantsList = () => {
       </div>
 
       <ul className="grid overflow-auto h-full pb-10">
-        {/* {tablesContext.fakeParticipants.map((participant) => (
+        {tablesContext.tables.tableParticipants.map((participant) => (
           <Participant participant={participant} key={participant.userId} />
-        ))} */}
+        ))}
       </ul>
     </div>
   );

@@ -32,7 +32,6 @@ export const reducer = (state: SocketState, action: Action) => {
 
       return {
         ...state,
-        lastActiveTableId: payload.tableId,
       };
     }
     case SocketEvents.LEAVE_TABLE: {

@@ -1,14 +1,21 @@
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { SocketEvents } from "@/domains/socket/typing/enums";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+
+export interface IPartipant {
+  userId: string;
+  username: string;
+}
 
 const useTables = () => {
   const { tableId: currentTableId } = useParams<{ tableId: string }>();
   const { dispatch, state } = useWebSocket();
-  const [tableParticipants, setTableParticipants] = useState<string[]>([]);
+  const [tableParticipants, setTableParticipants] = useState<IPartipant[]>([]);
 
-  const isUserSwitchingTables = state?.lastActiveTableId !== currentTableId;
+  const tablesRef = useRef();
+  const isUserSwitchingTables =
+    tablesRef.current && tablesRef.current !== currentTableId;
 
   const joinNewTable = useCallback(() => {
     dispatch({
@@ -17,30 +24,35 @@ const useTables = () => {
         tableId: currentTableId,
       },
     });
+
+    tablesRef.current = currentTableId;
   }, [isUserSwitchingTables, dispatch]);
 
   const leaveCurrentTable = useCallback(() => {
     dispatch({
       type: SocketEvents.LEAVE_TABLE,
       payload: {
-        tableId: state?.lastActiveTableId,
+        tableId: tablesRef.current,
       },
     });
-  }, [isUserSwitchingTables, dispatch]);
+  }, [tablesRef.current]);
 
-  const watchForNewParticipants = useCallback(() => {
-    console.log("[DEBUG] - watchForNewParticipants");
-    state.socketInstance?.on("update_list_of_users", (data) =>
-      setTableParticipants(
-        data.map((user: { username: string }) => user.username)
-      )
+  useEffect(() => {
+    console.log(
+      "[DEBUG] - watchForNewParticipants",
+      state.socketInstance,
+      state.connected
     );
 
-    watchForNewParticipants();
+    if (state.connected) {
+      state.socketInstance?.on(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) =>
+        setTableParticipants(data)
+      );
+    }
   }, [state.connected]);
 
   useEffect(() => {
-    if (!currentTableId || !state?.socketInstance) return;
+    if (!state?.connected) return;
     // console.log("[SOCKET] - MOUNT TABLE - on", label);
 
     if (isUserSwitchingTables) {
@@ -49,7 +61,7 @@ const useTables = () => {
 
     joinNewTable();
     // watchForNewParticipants();
-  }, [currentTableId, state?.socketInstance]);
+  }, [currentTableId, !state?.connected]);
 
   return { tableParticipants };
 };

@@ -4,6 +4,7 @@ import { TableSidebar } from "../components/table-sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { loaderTables } from "../api/loader";
 import { Table } from "../typing/interfaces";
+import { TablesProvider } from "../provider";
 // import { Suspense } from "react";
 
 const TablesScreen = () => {
@@ -24,4 +25,12 @@ const TablesScreen = () => {
   );
 };
 
-export default TablesScreen;
+const TablesWithContext = () => {
+  return (
+    <TablesProvider>
+      <TablesScreen />
+    </TablesProvider>
+  );
+};
+
+export default TablesWithContext;

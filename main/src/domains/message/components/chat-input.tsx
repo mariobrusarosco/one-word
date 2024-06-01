@@ -12,17 +12,19 @@ const ChatInput = () => {
     channelId: string;
     tableId: string;
   }>();
-  const { dispatch } = useWebSocket();
+  const { emit } = useWebSocket();
   const [inputMessage, setInputMessage] = useState("");
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: () => createMessage({ content: inputMessage, channelId }),
     onSuccess: () => {
       setInputMessage("");
-      dispatch({
-        type: SocketEvents.NEW_CHAT_MESSAGE,
-        payload: { message: inputMessage, tableId },
-      });
+      emit(SocketEvents.NEW_CHAT_MESSAGE, { message: inputMessage, tableId });
+
+      // dispatch({
+      //   type: SocketEvents.NEW_CHAT_MESSAGE,
+      //   payload: { message: inputMessage, tableId },
+      // });
       queryClient.invalidateQueries({
         queryKey: ["channel-messages", { channelId }],
       });

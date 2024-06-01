@@ -6,7 +6,6 @@ import { Separator } from "@/domains/ui-system/components/ui/separator";
 
 const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
-  // const { tableParticipants } = useTables();
 
   const { data, error, isFetching } = useQuery<ITable[]>({
     queryKey: ["tables"],

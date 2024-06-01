@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 import { AuthenticatedLayout } from "../../auth/components/authenticated-layout";
 import RootLayout from "./root-layout";
-import GamesScreen from "../../games/screens/games";
 import TablesScreen from "../../tables/screens/tables";
 import PublicLayout from "./public-layout";
 import LoginScreen from "../../auth/screens/login";
@@ -17,6 +16,7 @@ import Chat from "../../chat";
 import DashboardScreen from "../../dashboard/screens/dashboard";
 import UISystemScreen from "@/domains/ui-system/screen";
 import ChannelScreen from "@/domains/channel/screens/channel";
+import GameScreen from "@/domains/games/screens/game";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -42,7 +42,7 @@ export const AppRouter = () => {
                     //   element: <RoomsScreen />,
                     //   children: [{ path: ":roomId", element: <RoomScreen /> }],
                     // },
-                    // { path: "game", element: <GameScreen /> },
+                    { path: "game", element: <GameScreen /> },
                   ],
                 },
                 {
@@ -51,7 +51,6 @@ export const AppRouter = () => {
                 },
               ],
             },
-            { path: "games", element: <GamesScreen /> },
             { path: "ui-system", element: <UISystemScreen /> },
             { path: "testing", element: <Testing /> },
             { path: "chat", element: <Chat /> },

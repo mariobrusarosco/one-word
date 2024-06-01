@@ -34,13 +34,13 @@ const TableSidebar = () => {
         <Separator />
       </div>
 
-      <TableChannels />
+      <ParticpantsList />
 
       <div className="my-3">
         <Separator />
       </div>
 
-      <ParticpantsList />
+      <TableChannels />
     </div>
   );
 };

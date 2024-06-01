@@ -3,11 +3,9 @@ import { Outlet, useParams } from "react-router-dom";
 import { loaderTables } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { useTablesContext } from "../provider";
 
 const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
-  const { fakeParticipants } = useTablesContext();
 
   const { data, error, isFetching } = useQuery<ITable[]>({
     queryKey: ["tables"],

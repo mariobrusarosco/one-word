@@ -1,14 +1,6 @@
 import { Socket, io } from "socket.io-client";
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { SocketEvents } from "../../typing/enums";
-import { reducer } from "./reducer";
-import { c } from "vitest/dist/reporters-5f784f42.js";
 
 export type SocketInstance = Socket;
 
@@ -30,7 +22,7 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [socket, setSocket] = useState<SocketInstance | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
 
-  const onEvent = (event, callback) => {
+  const onEvent = (event: SocketEvents, callback: any) => {
     console.log(
       "[DEBUG] 1.0 - onEvent useCallback",
       event,

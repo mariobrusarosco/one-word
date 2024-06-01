@@ -19,7 +19,7 @@ const MessageList = () => {
       top: ref.current.scrollHeight,
     });
 
-  const { state } = useWebSocket();
+  const { socket } = useWebSocket();
   const {
     data,
     error,
@@ -49,12 +49,12 @@ const MessageList = () => {
   }, [isFetching]);
 
   useEffect(() => {
-    state?.socketInstance?.on(SocketEvents.UPDATE_CHAT_MESSAGES, () => {
+    socket?.on(SocketEvents.UPDATE_CHAT_MESSAGES, () => {
       queryClient.invalidateQueries({
         queryKey: ["channel-messages", { channelId }],
       });
     });
-  }, [state?.socketInstance]);
+  }, [channelId, queryClient, socket]);
 
   if (error) {
     return <div>Error: {error.message}</div>;

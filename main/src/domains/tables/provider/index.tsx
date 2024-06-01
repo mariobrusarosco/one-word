@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect } from "react";
-import { IPartipant } from "../components/participants";
-import { useTables } from "../hooks/use-tables";
+import { IPartipant, useTables } from "../hooks/use-tables";
 
 type TablesContextType = {
   fakeParticipants: IPartipant[];

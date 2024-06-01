@@ -1,4 +1,4 @@
-const SocketStatus = ({ connected }: { connected: boolean | null }) => {
+const SocketStatus = ({ connected }: { connected: boolean }) => {
   return (
     <div className="flex items-center gap-x-2">
       {connected ? (

@@ -21,7 +21,7 @@ const Participant = ({ participant }: { participant: IPartipant }) => {
 export const ParticpantsList = () => {
   const tablesContext = useTablesContext();
 
-  console.log("[DEBUG]", tablesContext.tables.tableParticipants);
+  // console.log("[DEBUG]", tablesContext.tables.tableParticipants);
 
   return (
     <div className="table-participants px-4 pt-4 pb-10 overflow-hidden max-h-[500px]">

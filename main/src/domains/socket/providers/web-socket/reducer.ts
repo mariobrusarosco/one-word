@@ -28,7 +28,7 @@ export const reducer = (state: SocketState, action: Action) => {
     }
     case SocketEvents.JOIN_TABLE: {
       console.log("eita", state.socketInstance);
-      state.socketInstance?.emit(SocketEvents.JOIN_TABLE, payload.tableId);
+      // state.socketInstance?.emit(SocketEvents.JOIN_TABLE, payload.tableId);
 
       return {
         ...state,

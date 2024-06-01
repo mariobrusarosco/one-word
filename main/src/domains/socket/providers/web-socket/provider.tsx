@@ -1,16 +1,68 @@
-import { io } from "socket.io-client";
-import { createContext, useEffect, useReducer } from "react";
+import { Socket, io } from "socket.io-client";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { SocketEvents } from "../../typing/enums";
-import { ContextProps } from "../../typing/interfaces";
 import { reducer } from "./reducer";
+import { c } from "vitest/dist/reporters-5f784f42.js";
 
-const WebSocketContext = createContext<ContextProps>(undefined);
+export type SocketInstance = Socket;
+
+export type SocketState = {
+  on: OnEvent;
+  emit: EmitEvent;
+  socket: SocketInstance | null;
+  connected: boolean;
+};
+
+type OnEvent = <T>(event: SocketEvents, callback?: (args: T) => void) => void;
+type EmitEvent = <T>(event: SocketEvents, data?: T) => void;
+
+export type WebSocketContextProps = SocketState | undefined;
+
+const WebSocketContext = createContext<WebSocketContextProps>(undefined);
 
 const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(reducer, {
-    socketInstance: null,
-    connected: false,
-  });
+  const [socket, setSocket] = useState<SocketInstance | null>(null);
+  const [connected, setConnected] = useState<boolean>(false);
+
+  const onEvent = (event, callback) => {
+    console.log(
+      "[DEBUG] 1.0 - onEvent useCallback",
+      event,
+      "connected:",
+      connected
+    );
+    if (connected) {
+      console.log(
+        "[DEBUG] - we do have a state to call the on()  - e: ",
+        event
+      );
+      socket?.on(event, callback);
+    } else {
+      console.log(
+        "[DEBUG] - we DONT have a state to call the on() - e: ",
+        event
+      );
+    }
+  };
+
+  const emitEvent = useCallback(
+    (event, data) => {
+      if (connected) {
+        console.log(
+          "[DEBUG] - we do have a state to call the emit() - e: ",
+          event
+        );
+        socket?.emit(event, data);
+      }
+    },
+    [connected, socket]
+  ) satisfies EmitEvent;
 
   useEffect(() => {
     const handleInitialConnection = async () => {
@@ -21,20 +73,14 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
       socketInstance.auth = { id: socketInstance.id, username };
       socketInstance.connect();
 
-      // socketInstance.onAny((event, ...args) => {
-      //   console.log("[SOCKET] onAny ", event, args);
-      // });
-
       socketInstance?.on("connect", () => {
-        dispatch({ type: SocketEvents.CONNECTED, payload: socketInstance });
+        setSocket(socketInstance);
+        setConnected(true);
       });
 
-      // socketInstance?.on("update-chat-messages", () => {
-      //   alert("global pega!");
-      // });
-
       socketInstance?.on("disconnect", () => {
-        dispatch({ type: SocketEvents.DISCONNECTED, payload: null });
+        setSocket(null);
+        setConnected(false);
       });
 
       return () => socketInstance.disconnect();
@@ -44,14 +90,29 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
       handleInitialConnection();
     } catch (error) {
       console.error(
-        "TRYNG TO CONNECT TO SOCKET -[SOCKET CONNECTION] - [ERROR]",
+        "COULD NOT CONNECT TO SOCKET - [SOCKET CONNECTION] - [ERROR]",
         error
       );
     }
   }, []);
 
+  // const value: ContextProps = {
+  //   state,
+  //   dispatch,
+  //   on: onEvent,
+  //   emit: emitEvent,
+  //   socket,
+  // };
+
   return (
-    <WebSocketContext.Provider value={{ dispatch, state }}>
+    <WebSocketContext.Provider
+      value={{
+        on: onEvent,
+        emit: emitEvent,
+        socket,
+        connected,
+      }}
+    >
       {children}
     </WebSocketContext.Provider>
   );

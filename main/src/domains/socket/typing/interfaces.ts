@@ -28,7 +28,3 @@ export type SocketState = {
   socketInstance: SocketInstance | null;
   connected: boolean;
 };
-
-export type ContextProps =
-  | { state: SocketState; dispatch: Dispatch }
-  | undefined;

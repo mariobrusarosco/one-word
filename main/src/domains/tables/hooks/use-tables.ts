@@ -9,59 +9,71 @@ export interface IPartipant {
 }
 
 const useTables = () => {
-  const { tableId: currentTableId } = useParams<{ tableId: string }>();
-  const { dispatch, state } = useWebSocket();
+  const { tableId } = useParams<{ tableId: string }>();
+  const { on, emit, socket, connected } = useWebSocket();
   const [tableParticipants, setTableParticipants] = useState<IPartipant[]>([]);
 
   const tablesRef = useRef();
   const isUserSwitchingTables =
-    tablesRef.current && tablesRef.current !== currentTableId;
+    tablesRef.current && tablesRef.current !== tableId;
 
-  const joinNewTable = useCallback(() => {
-    dispatch({
-      type: SocketEvents.JOIN_TABLE,
-      payload: {
-        tableId: currentTableId,
-      },
+  const joinNewTable = () => {
+    console.log("[DEBUG] 1.0 - joinNewTable", tableId);
+    emit(SocketEvents.JOIN_TABLE, tableId);
+    tablesRef.current = tableId;
+  };
+  // }, [tableId]);
+
+  const leaveCurrentTable = () => {
+    emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
+  };
+
+  const watchForNewParticipants = () => {
+    //   console.log("[DEBUG] - currentTableId has changed! We need a new on()");
+
+    on<IPartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
+      console.log("[DEBUG] - PARTICIPANTS from socket ", data.length);
+      setTableParticipants(data);
     });
-
-    tablesRef.current = currentTableId;
-  }, [isUserSwitchingTables, dispatch]);
-
-  const leaveCurrentTable = useCallback(() => {
-    dispatch({
-      type: SocketEvents.LEAVE_TABLE,
-      payload: {
-        tableId: tablesRef.current,
-      },
-    });
-  }, [tablesRef.current]);
+  };
 
   useEffect(() => {
     console.log(
-      "[DEBUG] - watchForNewParticipants",
-      state.socketInstance,
-      state.connected
+      "[DEBUG] 1.0 - currentTableId has changed! ",
+      "currentTableId",
+      tableId,
+      "connection status",
+      connected,
+      "isUserSwitchingTables",
+      isUserSwitchingTables
     );
 
-    if (state.connected) {
-      state.socketInstance?.on(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) =>
-        setTableParticipants(data)
-      );
-    }
-  }, [state.connected]);
+    if (!connected) return;
 
-  useEffect(() => {
-    if (!state?.connected) return;
-    // console.log("[SOCKET] - MOUNT TABLE - on", label);
+    console.log("[DEBUG] 1.0 - connected! Let's continue");
 
     if (isUserSwitchingTables) {
+      console.log(
+        "[DEBUG] 1.0 - isUserSwitchingTables! ",
+        " from:",
+        tablesRef.current,
+        "to: ",
+        tableId
+      );
       leaveCurrentTable();
     }
 
     joinNewTable();
-    // watchForNewParticipants();
-  }, [currentTableId, !state?.connected]);
+
+    on<IPartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
+      console.log("[DEBUG] 1.0 - PARTICIPANTS from socket ", data.length);
+      setTableParticipants(data);
+    });
+
+    socket?.on("update-table-participants", (data) => {
+      console.log("[DEBUG] 1.0- update-table-participants", data.length);
+    });
+  }, [tableId, connected]);
 
   return { tableParticipants };
 };

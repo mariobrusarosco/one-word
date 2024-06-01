@@ -23,7 +23,7 @@ const Participant = ({ participant }: { participant: IPartipant }) => {
 };
 
 export const ParticpantsList = () => {
-  const tablesContext = useTablesContext();
+  // const tablesContext = useTablesContext();
 
   return (
     <div className="table-participants px-4 pt-4 pb-10 overflow-hidden max-h-[500px]">
@@ -33,9 +33,9 @@ export const ParticpantsList = () => {
       </div>
 
       <ul className="grid overflow-auto h-full pb-10">
-        {tablesContext.fakeParticipants.map((participant) => (
+        {/* {tablesContext.fakeParticipants.map((participant) => (
           <Participant participant={participant} key={participant.userId} />
-        ))}
+        ))} */}
       </ul>
     </div>
   );

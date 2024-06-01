@@ -29,12 +29,15 @@ const useTables = () => {
   }, [isUserSwitchingTables, dispatch]);
 
   const watchForNewParticipants = useCallback(() => {
-    state?.socketInstance?.on("update_list_of_users", (data) =>
+    console.log("[DEBUG] - watchForNewParticipants");
+    state.socketInstance?.on("update_list_of_users", (data) =>
       setTableParticipants(
         data.map((user: { username: string }) => user.username)
       )
     );
-  }, [state?.socketInstance]);
+
+    watchForNewParticipants();
+  }, [state.connected]);
 
   useEffect(() => {
     if (!currentTableId || !state?.socketInstance) return;
@@ -45,7 +48,7 @@ const useTables = () => {
     }
 
     joinNewTable();
-    watchForNewParticipants();
+    // watchForNewParticipants();
   }, [currentTableId, state?.socketInstance]);
 
   return { tableParticipants };

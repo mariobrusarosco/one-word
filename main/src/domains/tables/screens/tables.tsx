@@ -2,7 +2,7 @@ import { AppSidebar } from "@/domains/auth/components/app-sidebar";
 import { Outlet } from "react-router-dom";
 import { TableSidebar } from "../components/table-sidebar";
 import { useQuery } from "@tanstack/react-query";
-import { loaderTables } from "../api/loader";
+import { tablesLoader } from "../api/loader";
 import { Table } from "../typing/interfaces";
 import { TablesProvider } from "../provider";
 // import { Suspense } from "react";
@@ -10,7 +10,7 @@ import { TablesProvider } from "../provider";
 const TablesScreen = () => {
   useQuery<Table[]>({
     queryKey: ["tables"],
-    queryFn: loaderTables,
+    queryFn: tablesLoader,
     enabled: true,
   });
 

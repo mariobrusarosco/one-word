@@ -1,5 +1,5 @@
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
-import { loaderTables } from "@/domains/tables/api/loader";
+import { tablesLoader } from "@/domains/tables/api/loader";
 import { CreateTable } from "@/domains/tables/components/modals/create-table";
 import { Table } from "@/domains/tables/typing/interfaces";
 import { Button } from "@/domains/ui-system/components/ui/button";
@@ -10,8 +10,8 @@ import { NavLink } from "react-router-dom";
 const AppSidebar = () => {
   const { data } = useQuery<Table[]>({
     queryKey: ["tables"],
-    queryFn: loaderTables,
-    enabled: false,
+    queryFn: tablesLoader,
+    enabled: true,
   });
 
   return (

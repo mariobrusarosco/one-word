@@ -1,12 +1,26 @@
-const SocketStatus = ({ connected }: { connected: boolean }) => {
+import { cn } from "@/domains/ui-system/utils";
+
+const SocketStatus = ({ connected }: { connected: boolean | null }) => {
   return (
     <div className="flex items-center gap-x-2">
-      {connected ? (
-        <span className="relative flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white-100 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-white-100"></span>
-        </span>
-      ) : null}
+      <span className={"relative flex h-3 w-3"}>
+        <span
+          className={cn(
+            "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
+            {
+              "bg-teal-300": connected,
+              hidden: !connected,
+            }
+          )}
+        ></span>
+        <span
+          className={cn("relative inline-flex rounded-full h-3 w-3", {
+            "bg-teal-300": connected,
+            "bg-red-900": !connected,
+          })}
+        ></span>
+      </span>
+
       <p className="text-white-100 text-xs uppercase font-semibold">
         {connected ? "connected" : "disconnected"}
       </p>

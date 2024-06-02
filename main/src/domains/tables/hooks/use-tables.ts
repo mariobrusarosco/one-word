@@ -10,7 +10,7 @@ export interface IPartipant {
 
 const useTables = () => {
   const { tableId } = useParams<{ tableId: string }>();
-  const { on, emit, socket, connected } = useWebSocket();
+  const { on, emit, connected } = useWebSocket();
   const [tableParticipants, setTableParticipants] = useState<IPartipant[]>([]);
 
   const tablesRef = useRef<string>();
@@ -33,7 +33,7 @@ const useTables = () => {
       console.log("[DEBUG] 1.0 - PARTICIPANTS from socket ", data.length);
       setTableParticipants(data);
     });
-  }, [connected, tableId]);
+  }, [connected, tableId, on]);
 
   useEffect(() => {
     console.log(

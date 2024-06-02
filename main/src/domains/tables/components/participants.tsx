@@ -21,17 +21,10 @@ const Participant = ({ participant }: { participant: IPartipant }) => {
 export const ParticpantsList = () => {
   const tablesContext = useTablesContext();
 
-  // console.log("[DEBUG]", tablesContext.tables.tableParticipants);
-
   return (
-    <div className="table-participants px-4 pt-4 pb-[300px] overflow-hidden max-h-[500px]">
+    <div className="table-participants px-4 pt-4 pb-10 overflow-hidden max-h-[500px]">
       <div className="flex justify-between mb-3">
-        <p
-          className="uppercase  font-light text-pink-500 pb-4"
-          // onClick={() => console.log("[SOCKET DEBUG]", tablesManager.label)}
-        >
-          participants
-        </p>
+        <p className="uppercase  font-light text-pink-500 pb-4">participants</p>
         <Icon name="plus" className="stroke-pink-500" />
       </div>
 

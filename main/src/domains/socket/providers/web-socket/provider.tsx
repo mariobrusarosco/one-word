@@ -1,7 +1,6 @@
 import { Socket, io } from "socket.io-client";
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { SocketEvents } from "../../typing/enums";
-import { c } from "vitest/dist/reporters-5f784f42.js";
 
 export type SocketInstance = Socket;
 

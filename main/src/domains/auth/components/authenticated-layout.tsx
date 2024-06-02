@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { AuthenticatedMenu } from "./authenticated-menu/menu";
 import { AppHeader } from "./app-header";
-import { Toaster } from "@/domains/ui-system/components/ui/toaster";
 
 export const AuthenticatedLayout = () => {
   return (
@@ -13,7 +12,6 @@ export const AuthenticatedLayout = () => {
       </div>
 
       <AuthenticatedMenu />
-      <Toaster />
     </div>
   );
 };

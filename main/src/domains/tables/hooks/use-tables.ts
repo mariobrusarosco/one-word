@@ -28,14 +28,12 @@ const useTables = () => {
     emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
   }, [emit, isUserSwitchingTables]);
 
-  // const watchForNewParticipants = () => {
-  //   //   console.log("[DEBUG] - currentTableId has changed! We need a new on()");
-
-  //   on<IPartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
-  //     console.log("[DEBUG] - PARTICIPANTS from socket ", data.length);
-  //     setTableParticipants(data);
-  //   });
-  // };
+  const watchForNewParticipants = useCallback(() => {
+    on<IPartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
+      console.log("[DEBUG] 1.0 - PARTICIPANTS from socket ", data.length);
+      setTableParticipants(data);
+    });
+  }, [connected, tableId]);
 
   useEffect(() => {
     console.log(
@@ -69,10 +67,7 @@ const useTables = () => {
 
     joinNewTable();
 
-    on<IPartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
-      console.log("[DEBUG] 1.0 - PARTICIPANTS from socket ", data.length);
-      setTableParticipants(data);
-    });
+    watchForNewParticipants();
 
     // socket?.on("update-table-participants", (data) => {
     //   console.log("[DEBUG] 1.0- update-table-participants", data.length);

@@ -8,7 +8,7 @@ const Participant = ({ participant }: { participant: IPartipant }) => {
     <div className="participant flex items-center gap-2 px-3 py-3 cursor-pointer rounded-md hover:bg-pink-500 group">
       <div className="participant-avatar bg-pink-500 w-7 h-7 rounded-full flex justify-center items-center group-hover:bg-teal-800">
         <span className="text-white-100 text-xs">
-          {getInitials("Mario Brusarosco de Almeida")}
+          {getInitials(participant.username)}
         </span>
       </div>
       <span className="text-pink-500 text-sm group-hover:text-white-100">
@@ -20,8 +20,6 @@ const Participant = ({ participant }: { participant: IPartipant }) => {
 
 export const ParticpantsList = () => {
   const tablesContext = useTablesContext();
-
-  // console.log("[DEBUG]", tablesContext.tables.tableParticipants);
 
   return (
     <div className="table-participants px-4 pt-4 pb-10 overflow-hidden max-h-[500px]">

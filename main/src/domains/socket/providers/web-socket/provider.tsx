@@ -1,6 +1,7 @@
 import { Socket, io } from "socket.io-client";
-import { createContext, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { SocketEvents } from "../../typing/enums";
+import { c } from "vitest/dist/reporters-5f784f42.js";
 
 export type SocketInstance = Socket;
 
@@ -21,35 +22,21 @@ const WebSocketContext = createContext<WebSocketContextProps>(undefined);
 const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [socket, setSocket] = useState<SocketInstance | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
+  const isMounted = useRef(false);
 
-  const onEvent = (event: SocketEvents, callback: any) => {
-    console.log(
-      "[DEBUG] 1.0 - onEvent useCallback",
-      event,
-      "connected:",
-      connected
-    );
-    if (connected) {
-      console.log(
-        "[DEBUG] - we do have a state to call the on()  - e: ",
-        event
-      );
-      socket?.on(event, callback);
-    } else {
-      console.log(
-        "[DEBUG] - we DONT have a state to call the on() - e: ",
-        event
-      );
-    }
-  };
+  const onEvent = useCallback(
+    (event: SocketEvents, callback: any) => {
+      if (connected) {
+        socket?.on(event, callback);
+      }
+    },
+    [connected, socket]
+  ) satisfies OnEvent;
 
   const emitEvent = useCallback(
     (event, data) => {
+      console.log("[DEBUG] 1.0 - emitEvent()", connected);
       if (connected) {
-        console.log(
-          "[DEBUG] - we do have a state to call the emit() - e: ",
-          event
-        );
         socket?.emit(event, data);
       }
     },
@@ -57,7 +44,17 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
   ) satisfies EmitEvent;
 
   useEffect(() => {
+    console.log("[DEBUG] Checking...", isMounted.current);
+
+    if (isMounted.current) return;
+
+    console.log("[DEBUG] Not mounted...", isMounted.current);
+
     const handleInitialConnection = async () => {
+      console.log(
+        "[DEBUG] Handling Initial Connect mounted...",
+        isMounted.current
+      );
       const username = localStorage?.getItem("username");
       const socketInstance = io(import.meta.env.VITE_ONE_WORD_SOCKET_URL, {
         autoConnect: false,
@@ -80,6 +77,7 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       handleInitialConnection();
+      isMounted.current = true;
     } catch (error) {
       console.error(
         "COULD NOT CONNECT TO SOCKET - [SOCKET CONNECTION] - [ERROR]",
@@ -87,14 +85,6 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
       );
     }
   }, []);
-
-  // const value: ContextProps = {
-  //   state,
-  //   dispatch,
-  //   on: onEvent,
-  //   emit: emitEvent,
-  //   socket,
-  // };
 
   return (
     <WebSocketContext.Provider

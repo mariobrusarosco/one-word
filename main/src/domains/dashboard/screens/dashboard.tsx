@@ -1,4 +1,5 @@
 import { Button } from "@/domains/ui-system/components/ui/button";
+import { NavLink } from "react-router-dom";
 
 const DashboardScreen = () => {
   return (
@@ -55,7 +56,7 @@ const DashboardScreen = () => {
         </div>
 
         <Button variant="secondary" size="large">
-          Start
+          <NavLink to="/tables">Start</NavLink>
         </Button>
       </section>
     </div>

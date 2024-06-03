@@ -1,6 +1,6 @@
 import { Button } from "@/domains/ui-system/components/ui/button";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { useModal } from "@/domains/ui-system/hooks/use-modal";
 import {
@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/domains/ui-system/components/ui/dialog";
 import { useState } from "react";
-import { userDemoMutation } from "../../api/mutations";
+import { userDemoMutation } from "../../../api/mutations";
 
 export const CreateDemoUser = () => {
   const { closeModal, openModal, isOpen } = useModal("create-demo-user");

@@ -6,19 +6,15 @@ import { useAuth } from "../hooks/use-auth";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const { data, isSuccess, isLoading, isFetching } = useAuth();
-
-  console.log("[DEBUG] 3.0 auth", data, isSuccess, isFetching);
+  const { data, isFetching } = useAuth();
 
   if (isFetching) {
     return <div>Loading User...</div>;
   }
 
-  console.log("[DEBUG] 3.0 auth", data, isSuccess, isFetching);
-
-  // if (!data) {
-  //   return <Navigate to="/login" state={{ from: location }} replace />;
-  // }
+  if (!data) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
   return (
     <div data-layout="auth" className="auth-layout">

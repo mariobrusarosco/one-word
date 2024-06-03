@@ -36,14 +36,7 @@ export const AppRouter = () => {
                 {
                   path: ":tableId",
                   element: <TableScreen />,
-                  children: [
-                    // {
-                    //   path: "rooms",
-                    //   element: <RoomsScreen />,
-                    //   children: [{ path: ":roomId", element: <RoomScreen /> }],
-                    // },
-                    { path: "game", element: <GameScreen /> },
-                  ],
+                  children: [{ path: "game", element: <GameScreen /> }],
                 },
                 {
                   path: ":tableId/channels/:channelId",
@@ -52,9 +45,15 @@ export const AppRouter = () => {
               ],
             },
             { path: "ui-system", element: <UISystemScreen /> },
-            { path: "testing", element: <Testing /> },
-            { path: "chat", element: <Chat /> },
-            { path: "dashboard", element: <DashboardScreen /> },
+            {
+              path: "dashboard",
+              async lazy() {
+                const { DashboardScreen } = await import(
+                  "../../dashboard/screens/dashboard"
+                );
+                return { Component: DashboardScreen };
+              },
+            },
             {
               path: "account",
               element: (

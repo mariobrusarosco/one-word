@@ -4,6 +4,7 @@ import { ThemeModeToggle } from "./authenticated-menu/theme-mode-toggle";
 import { SocketStatus } from "@/domains/socket/components/socket-status";
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+import { CreateDemoUser } from "./modals/create-demo-user";
 
 const AppHeader = () => {
   const { connected } = useWebSocket();
@@ -13,6 +14,7 @@ const AppHeader = () => {
       <NavLink to="/">
         <Icon name="home" className="w-7 h-7 stroke-white-100" />
       </NavLink>
+      <CreateDemoUser />
 
       <div className="flex gap-x-6 items-center ml-auto">
         <SocketStatus connected={connected} />

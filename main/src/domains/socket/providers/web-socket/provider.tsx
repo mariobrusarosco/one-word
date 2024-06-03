@@ -1,6 +1,7 @@
 import { Socket, io } from "socket.io-client";
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { SocketEvents } from "../../typing/enums";
+import { useAuth } from "@/domains/auth/hooks/use-auth";
 
 export type SocketInstance = Socket;
 
@@ -19,6 +20,7 @@ export type WebSocketContextProps = SocketState | undefined;
 const WebSocketContext = createContext<WebSocketContextProps>(undefined);
 
 const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
+  const { data: authenticatedUser } = useAuth();
   const [socket, setSocket] = useState<SocketInstance | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
   const isMounted = useRef(false);
@@ -34,7 +36,6 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
 
   const emitEvent = useCallback(
     (event, data) => {
-      console.log("[DEBUG] 1.0 - emitEvent()", connected);
       if (connected) {
         socket?.emit(event, data);
       }
@@ -43,22 +44,17 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
   ) satisfies EmitEvent;
 
   useEffect(() => {
-    console.log("[DEBUG] Checking...", isMounted.current);
-
     if (isMounted.current) return;
 
-    console.log("[DEBUG] Not mounted...", isMounted.current);
-
     const handleInitialConnection = async () => {
-      console.log(
-        "[DEBUG] Handling Initial Connect mounted...",
-        isMounted.current
-      );
-      const username = localStorage?.getItem("username");
+      const username = `${authenticatedUser?.firstName} ${authenticatedUser?.lastName}`;
       const socketInstance = io(import.meta.env.VITE_ONE_WORD_SOCKET_URL, {
         autoConnect: false,
       });
-      socketInstance.auth = { id: socketInstance.id, username };
+      socketInstance.auth = {
+        id: socketInstance.id,
+        username,
+      };
       socketInstance.connect();
 
       socketInstance?.on("connect", () => {
@@ -83,7 +79,7 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
         error
       );
     }
-  }, []);
+  }, [authenticatedUser]);
 
   return (
     <WebSocketContext.Provider

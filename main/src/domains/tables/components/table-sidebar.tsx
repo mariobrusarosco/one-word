@@ -24,7 +24,7 @@ const TableSidebar = () => {
   const { data, error, isLoading } = useQuery<ITable>({
     queryKey: ["tables", { tableId }],
     queryFn: tableLoader,
-    enabled: true,
+    enabled: !!tableId,
   });
 
   if (error) {

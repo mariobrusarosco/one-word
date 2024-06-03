@@ -8,12 +8,6 @@ import { TablesProvider } from "../provider";
 // import { Suspense } from "react";
 
 const TablesScreen = () => {
-  useQuery<Table[]>({
-    queryKey: ["tables"],
-    queryFn: tablesLoader,
-    enabled: true,
-  });
-
   return (
     // <Suspense fallback={<div>...Loading...</div>}>
     <div className="grid desktop:grid-cols-[120px,224px,1fr] desktop: h-full">

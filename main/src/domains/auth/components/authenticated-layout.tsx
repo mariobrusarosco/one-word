@@ -6,13 +6,15 @@ import { useAuth } from "../hooks/use-auth";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const { data, isFetching } = useAuth();
+  const { data: authenticatedUser, isFetching } = useAuth({
+    fetchOnMount: true,
+  });
 
   if (isFetching) {
     return <div>Loading User...</div>;
   }
 
-  if (!data) {
+  if (!authenticatedUser) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

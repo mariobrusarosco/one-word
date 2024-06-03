@@ -34,6 +34,8 @@ const TableScreen = () => {
 
       <Separator className="bg-teal-800 mt-3" />
 
+      <p>Invite code: {data.inviteCode}</p>
+
       <Outlet />
     </div>
   );

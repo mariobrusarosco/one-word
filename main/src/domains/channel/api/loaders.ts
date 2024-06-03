@@ -1,10 +1,10 @@
+import { QueryKey } from "@tanstack/react-query";
 import { restApi } from "../../../api/rest";
-import { IChannelWithMessages } from "../typing/interfaces";
+import { IChannel } from "../typing/interfaces";
 
-export const loaderChannels = async (channelId: string) => {
+export const channelLoader = async ({ queryKey }: { queryKey: QueryKey }) => {
+  const [, { channelId }] = queryKey as [string, { channelId: string }];
   const result = await restApi.get("/channels/" + channelId);
 
-  console.log("[LOADER] - [CHANNEL]", result);
-
-  return (await result.data) as IChannelWithMessages;
+  return (await result.data) as IChannel;
 };

@@ -63,4 +63,4 @@ const DashboardScreen = () => {
   );
 };
 
-export default DashboardScreen;
+export { DashboardScreen };

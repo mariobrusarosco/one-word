@@ -11,9 +11,6 @@ import LoginScreen from "../../auth/screens/login";
 import logoutUser from "../../auth/routes/logout-user";
 import TableScreen from "../../tables/screens/table";
 import ErrorScreen from "../screens/error";
-import Testing from "../testing-temp/testing";
-import Chat from "../../chat";
-import DashboardScreen from "../../dashboard/screens/dashboard";
 import UISystemScreen from "@/domains/ui-system/screen";
 import ChannelScreen from "@/domains/channel/screens/channel";
 import GameScreen from "@/domains/games/screens/game";
@@ -36,14 +33,7 @@ export const AppRouter = () => {
                 {
                   path: ":tableId",
                   element: <TableScreen />,
-                  children: [
-                    // {
-                    //   path: "rooms",
-                    //   element: <RoomsScreen />,
-                    //   children: [{ path: ":roomId", element: <RoomScreen /> }],
-                    // },
-                    { path: "game", element: <GameScreen /> },
-                  ],
+                  children: [{ path: "game", element: <GameScreen /> }],
                 },
                 {
                   path: ":tableId/channels/:channelId",
@@ -52,9 +42,15 @@ export const AppRouter = () => {
               ],
             },
             { path: "ui-system", element: <UISystemScreen /> },
-            { path: "testing", element: <Testing /> },
-            { path: "chat", element: <Chat /> },
-            { path: "dashboard", element: <DashboardScreen /> },
+            {
+              path: "dashboard",
+              async lazy() {
+                const { DashboardScreen } = await import(
+                  "../../dashboard/screens/dashboard"
+                );
+                return { Component: DashboardScreen };
+              },
+            },
             {
               path: "account",
               element: (

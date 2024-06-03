@@ -21,10 +21,6 @@ const ChatInput = () => {
       setInputMessage("");
       emit(SocketEvents.NEW_CHAT_MESSAGE, { message: inputMessage, tableId });
 
-      // dispatch({
-      //   type: SocketEvents.NEW_CHAT_MESSAGE,
-      //   payload: { message: inputMessage, tableId },
-      // });
       queryClient.invalidateQueries({
         queryKey: ["channel-messages", { channelId }],
       });

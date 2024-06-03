@@ -66,7 +66,7 @@ const TableSidebar = () => {
         <Separator />
       </div>
 
-      <TableChannels />
+      <TableChannels channels={data.channels} />
     </div>
   );
 };

@@ -46,7 +46,7 @@ export const AppRouter = () => {
                   ],
                 },
                 {
-                  path: ":tableId/channel/:channelId",
+                  path: ":tableId/channels/:channelId",
                   element: <ChannelScreen />,
                 },
               ],

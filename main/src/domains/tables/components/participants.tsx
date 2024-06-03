@@ -5,7 +5,7 @@ import { IPartipant } from "../hooks/use-tables";
 
 const Participant = ({ participant }: { participant: IPartipant }) => {
   return (
-    <div className="participant flex items-center gap-2 px-3 py-3 cursor-pointer rounded-md hover:bg-pink-500 group">
+    <div className="participant flex items-center gap-2 px-3 py-3  cursor-pointer rounded-md hover:bg-pink-500 group">
       <div className="participant-avatar bg-pink-500 w-7 h-7 rounded-full flex justify-center items-center group-hover:bg-teal-800">
         <span className="text-white-100 text-xs">
           {getInitials(participant.username)}
@@ -28,7 +28,7 @@ export const ParticpantsList = () => {
         <Icon name="plus" className="stroke-pink-500" />
       </div>
 
-      <ul className="grid overflow-auto h-full pb-10">
+      <ul className="flex flex-col gap-y-2 overflow-auto h-full pb-10">
         {tablesContext.tables.tableParticipants.map((participant) => (
           <Participant participant={participant} key={participant.userId} />
         ))}

@@ -1,8 +1,7 @@
-import { createContext, useContext, useEffect } from "react";
-import { IPartipant, useTables } from "../hooks/use-tables";
+import { createContext, useContext } from "react";
+import { useTables } from "../hooks/use-tables";
 
 type TablesContextType = {
-  fakeParticipants: IPartipant[];
   tables: ReturnType<typeof useTables>;
 };
 
@@ -11,19 +10,9 @@ const TablesContext = createContext<TablesContextType | undefined>(undefined);
 const TablesProvider = ({ children }: { children: React.ReactNode }) => {
   const tables = useTables();
   const state: TablesContextType = {
-    fakeParticipants: [
-      { userId: "1", username: "Mario de Almeida" },
-      { userId: "2", username: "Luigi de Almeida" },
-    ],
     tables,
   };
 
-  useEffect(() => {
-    console.log("[DEBUG] - TablesProvider mounted");
-    return () => {
-      console.log("TablesProvider unmounted");
-    };
-  }, []);
   return (
     <TablesContext.Provider value={state}>{children}</TablesContext.Provider>
   );

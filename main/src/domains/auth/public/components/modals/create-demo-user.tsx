@@ -14,19 +14,30 @@ import {
 } from "@/domains/ui-system/components/ui/dialog";
 import { useState } from "react";
 import { userDemoMutation } from "../../../api/mutations";
+import { useToast } from "@/domains/ui-system/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 export const CreateDemoUser = () => {
   const { closeModal, openModal, isOpen } = useModal("create-demo-user");
   const [userDemo, setuserDemo] = useState("");
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: userDemoMutation,
     onError: (error) => {
-      alert(error);
+      toast({
+        title: "Ops! Something went wrong when creating your demo user",
+      });
+      console.error(error);
     },
     onSuccess: async () => {
-      alert("user created");
+      toast({
+        variant: "success",
+        title: "user created",
+      });
       closeModal();
+      navigate("/tables");
     },
   });
 

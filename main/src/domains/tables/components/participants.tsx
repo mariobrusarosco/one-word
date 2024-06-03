@@ -28,7 +28,7 @@ export const ParticpantsList = () => {
         <Icon name="plus" className="stroke-pink-500" />
       </div>
 
-      <ul className="flex flex-col gap-y-2 overflow-auto h-full pb-10">
+      <ul className="flex flex-col overflow-auto h-full pb-10">
         {tablesContext.tables.tableParticipants.map((participant) => (
           <Participant participant={participant} key={participant.userId} />
         ))}

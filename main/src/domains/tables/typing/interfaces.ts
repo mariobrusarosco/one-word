@@ -15,5 +15,6 @@ export interface Table {
 export interface ITable {
   id: string;
   name: string;
+  inviteCode: string;
   channels: IChannel[];
 }

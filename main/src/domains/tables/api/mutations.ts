@@ -6,4 +6,16 @@ const createTableMutation = async (name: string) => {
   return await result.data;
 };
 
-export { createTableMutation };
+const inviteFriendMutation = async ({
+  email,
+  tableId,
+}: {
+  tableId: string;
+  email: string;
+}) => {
+  const result = await restApi.put(`/tables/${tableId}/seat`, { email });
+
+  return await result.data;
+};
+
+export { createTableMutation, inviteFriendMutation };

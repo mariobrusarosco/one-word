@@ -4,6 +4,7 @@ import {
   AvatarImage,
 } from "@/domains/ui-system/components/ui/avatar";
 import { IMessage } from "../typing/interfaces";
+import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 
 interface Props {
   message: IMessage;
@@ -15,14 +16,14 @@ const Message: React.FC<Props> = ({ message }) => {
       <Avatar className="shadow-main-bottom">
         <AvatarImage src="" />
         <AvatarFallback className=" bg-teal-800 text-white-100">
-          MB
+          {getInitials(message.memberFullName)}
         </AvatarFallback>
       </Avatar>
 
       <div className="grid gap-y-1">
         <div className="flex items-center gap-x-3 ">
           <div className="bg-pink-500 py-1 px-2 font-light text-white-100 rounded-md shadow-main-bottom text-xs">
-            Mario Brusarosco
+            {message.memberFullName}
           </div>
           <div className="text-pink-500 text-xs">
             {new Date(message.createdAt).toLocaleDateString()}{" "}

@@ -3,6 +3,7 @@ import { Outlet, useParams } from "react-router-dom";
 import { tableLoader } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
+import { InviteMember } from "../components/modals/invite-member";
 
 const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
@@ -13,7 +14,6 @@ const TableScreen = () => {
   });
 
   if (error) {
-    console.error({ error });
     return <div>{error.message}</div>;
   }
 
@@ -34,7 +34,7 @@ const TableScreen = () => {
 
       <Separator className="bg-teal-800 mt-3" />
 
-      <p>Invite code: {data.inviteCode}</p>
+      <InviteMember tableId={tableId as string} />
 
       <Outlet />
     </div>

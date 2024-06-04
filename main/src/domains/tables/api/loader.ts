@@ -13,9 +13,18 @@ export const tablesLoader = async () => {
 export const tableLoader = async ({ queryKey }: { queryKey: QueryKey }) => {
   const [, { tableId }] = queryKey as [string, { tableId: string }];
 
-  const result = await restApi.get(`/tables/${tableId}`);
+  try {
+    const result = await restApi.get(`/tables/${tableId}`);
+    console.log("[LOADER]-[TABLE]", { tableId });
 
-  console.log("[LOADER]-[TABLE]", { tableId });
-
-  return result.data;
+    return result.data;
+  } catch (error:
+    | {
+        response: {
+          data: string;
+        };
+      }
+    | any) {
+    throw Error(error?.response?.data);
+  }
 };

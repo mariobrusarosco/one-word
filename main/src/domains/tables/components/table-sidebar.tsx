@@ -14,12 +14,6 @@ const TableSidebar = () => {
     tableId: string;
   }>();
 
-  // const tablesQuery = useQuery<ITable[]>({
-  //   queryKey: ["tables"],
-  //   queryFn: tablesLoader,
-  //   enabled: false,
-  // });
-
   // ! This will be a good use case for Dependent Queries?
   const { data, error, isLoading } = useQuery<ITable>({
     queryKey: ["tables", { tableId }],
@@ -28,7 +22,6 @@ const TableSidebar = () => {
   });
 
   if (error) {
-    console.error({ error });
     return <div>{error.message}</div>;
   }
 

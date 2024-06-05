@@ -1,5 +1,6 @@
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { SocketEvents } from "@/domains/socket/typing/enums";
+import { table } from "console";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -8,8 +9,7 @@ export interface IPartipant {
   username: string;
 }
 
-const useTableSocket = () => {
-  const { tableId } = useParams<{ tableId: string }>();
+const useTableSocket = (tableId: string) => {
   const { on, emit, connected } = useWebSocket();
   const [tableParticipants, setTableParticipants] = useState<IPartipant[]>([]);
 
@@ -25,7 +25,7 @@ const useTableSocket = () => {
     });
     emit(SocketEvents.JOIN_TABLE, tableId);
     tablesRef.current = tableId;
-  }, [emit, isUserSwitchingTables]);
+  }, [emit, isUserSwitchingTables, tableId]);
 
   const leaveCurrentTable = useCallback(() => {
     emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
@@ -73,7 +73,7 @@ const useTableSocket = () => {
       // leaveCurrentTable();
       // emit("disconnect");
     };
-  }, []);
+  }, [connected]);
 
   return { participants: tableParticipants };
 };

@@ -22,7 +22,7 @@ const Message: React.FC<Props> = ({ message }) => {
       <div className="grid gap-y-1">
         <div className="flex items-center gap-x-3 ">
           <div className="bg-pink-500 py-1 px-2 font-light text-white-100 rounded-md shadow-main-bottom text-xs">
-            Mario Brusarosco
+            {message.memberFullName}
           </div>
           <div className="text-pink-500 text-xs">
             {new Date(message.createdAt).toLocaleDateString()}{" "}

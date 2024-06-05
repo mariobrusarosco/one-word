@@ -11,12 +11,6 @@ const TableSocketManager = ({ children }: { children: React.ReactNode }) => {
   const { tableId } = useParams<{ tableId: string }>();
   const tableSocket = useTableSocket(tableId);
 
-  // useEffect(() => {
-  //   return () => {
-  //     tableSocket;
-  //   };
-  // }, [tableSocket]);
-
   return (
     <TablesContext.Provider value={tableSocket}>
       {children}

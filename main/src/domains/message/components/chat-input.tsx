@@ -8,10 +8,12 @@ import { SocketEvents } from "@/domains/socket/typing/enums";
 import { useParams } from "react-router-dom";
 
 const ChatInput = () => {
-  const { channelId = "", tableId = "" } = useParams<{
+  const { channelId = "" } = useParams<{
     channelId: string;
     tableId: string;
   }>();
+  const chatSlug = `chat-${channelId}	`;
+
   const { emit } = useWebSocket();
   const [inputMessage, setInputMessage] = useState("");
   const queryClient = useQueryClient();
@@ -19,7 +21,10 @@ const ChatInput = () => {
     mutationFn: () => createMessage({ content: inputMessage, channelId }),
     onSuccess: () => {
       setInputMessage("");
-      emit(SocketEvents.NEW_CHAT_MESSAGE, { message: inputMessage, tableId });
+      emit(SocketEvents.NEW_CHAT_MESSAGE, {
+        message: inputMessage,
+        channelId: chatSlug,
+      });
 
       queryClient.invalidateQueries({
         queryKey: ["channel-messages", { channelId }],

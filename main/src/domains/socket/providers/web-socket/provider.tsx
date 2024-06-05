@@ -43,11 +43,31 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
     [connected, socket]
   ) satisfies EmitEvent;
 
+  const createNamespace = useCallback((namespace: string) => {
+    const socketInstance = io(
+      import.meta.env.VITE_ONE_WORD_SOCKET_URL + namespace,
+      {
+        autoConnect: false,
+      }
+    );
+    socketInstance.auth = {
+      id: socketInstance.id,
+      username,
+    };
+    socketInstance.connect();
+
+    socketInstance?.on("connect", () => {
+      setSocket(socketInstance);
+      setConnected(true);
+    });
+  }, []);
+
   useEffect(() => {
     if (isMounted.current) return;
 
     const handleInitialConnection = async () => {
       const username = `${authenticatedUser?.firstName} ${authenticatedUser?.lastName}`;
+
       const socketInstance = io(import.meta.env.VITE_ONE_WORD_SOCKET_URL, {
         autoConnect: false,
       });

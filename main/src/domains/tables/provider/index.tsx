@@ -1,5 +1,6 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useTableSocket } from "./use-table-socket";
+import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 
 type TablesContextType = ReturnType<typeof useTableSocket>;
 
@@ -7,6 +8,12 @@ const TablesContext = createContext<TablesContextType | undefined>(undefined);
 
 const TableSocketManager = ({ children }: { children: React.ReactNode }) => {
   const tableSocket = useTableSocket();
+
+  // useEffect(() => {
+  //   return () => {
+  //     tableSocket;
+  //   };
+  // }, [tableSocket]);
 
   return (
     <TablesContext.Provider value={tableSocket}>

@@ -35,7 +35,7 @@ const useTableSocket = () => {
       tableId,
       isUserSwitchingTables,
     });
-  }, [emit, isUserSwitchingTables]);
+  }, [emit, isUserSwitchingTables, tableId]);
 
   const watchForNewParticipants = useCallback(() => {
     on<IPartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
@@ -63,8 +63,15 @@ const useTableSocket = () => {
 
   useEffect(() => {
     return () => {
-      console.log("[SOCKET] leaving table for good");
-      leaveCurrentTable();
+      console.log(
+        "[SOCKET] leaving table for good",
+        tablesRef.current,
+        tableId
+      );
+      // leaveCurrentTable();
+      emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
+      // leaveCurrentTable();
+      // emit("disconnect");
     };
   }, []);
 

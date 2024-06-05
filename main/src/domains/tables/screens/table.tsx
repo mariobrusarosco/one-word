@@ -26,7 +26,10 @@ const TableScreen = () => {
   if (!data) return null;
 
   return (
-    <div data-ui="table-screen">
+    <div
+      data-ui="table-screen"
+      className="grid desktop:grid-cols-[224px,1fr] desktop:h-full"
+    >
       <TableSidebar table={data} />
 
       <div className="table w-full">
@@ -36,11 +39,8 @@ const TableScreen = () => {
             {data.name}
           </p>
         </div>
-
         <Separator className="bg-teal-800 mt-3" />
-
         <InviteMember tableId={tableId as string} />
-
         <Outlet />
       </div>
     </div>

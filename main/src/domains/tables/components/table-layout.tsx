@@ -5,7 +5,7 @@ const TableLayout = () => {
   return (
     <div
       data-ui="table-layout"
-      className="table-layout grid desktop:grid-cols-[120px,224px,1fr] desktop:h-full"
+      className="table-layout grid desktop:grid-cols-[120px,1fr] desktop:h-full"
     >
       <AppSidebar />
 

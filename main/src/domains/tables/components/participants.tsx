@@ -1,6 +1,7 @@
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 import { useTableSocketManager } from "../provider";
+import { IPartipant } from "../provider/use-table-socket";
 
 const Participant = ({ participant }: { participant: IPartipant }) => {
   return (
@@ -29,7 +30,7 @@ export const ParticpantsList = () => {
 
       <ul className="flex flex-col overflow-auto h-full pb-10">
         {tableSocket.participants.map((participant) => (
-          <Participant participant={participant} key={participant.userId} />
+          <Participant participant={participant} key={participant.username} />
         ))}
       </ul>
     </div>

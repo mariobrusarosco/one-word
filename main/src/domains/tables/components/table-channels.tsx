@@ -15,7 +15,7 @@ const TableChannels = ({ channels }: { channels: IChannel[] }) => {
       </div>
       <ul className="flex flex-col gap-y-2 overflow-auto h-full pb-10">
         {channels.map((channel) => (
-          <li>
+          <li key={channel.id}>
             <Link
               to={`channels/${channel.id}`}
               className="flex items-center gap-x-2 p-2 rounded-md bg-white-100 hover:bg-pink-500 cursor-pointer group"

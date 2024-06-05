@@ -18,17 +18,17 @@ const useTableSocket = () => {
     tablesRef.current && tablesRef.current !== tableId;
 
   const joinNewTable = useCallback(() => {
-    // emit(SocketEvents.JOIN_TABLE, tableId);
     console.log("[SOCKET] - [FRONT] - Joining table", {
       tablesRef: tablesRef.current,
       tableId,
       isUserSwitchingTables,
     });
+    emit(SocketEvents.JOIN_TABLE, tableId);
     tablesRef.current = tableId;
   }, [emit, isUserSwitchingTables]);
 
   const leaveCurrentTable = useCallback(() => {
-    // emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
+    emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
     console.log("[SOCKET] - [FRONT] - Leaving table", {
       connected,
       tablesRef: tablesRef.current,
@@ -45,6 +45,7 @@ const useTableSocket = () => {
         tableId,
         isUserSwitchingTables,
       });
+      setTableParticipants(data);
     });
   }, [connected, tableId, on]);
 
@@ -58,7 +59,14 @@ const useTableSocket = () => {
     joinNewTable();
 
     watchForNewParticipants();
-  }, [connected, isUserSwitchingTables]);
+  }, [connected, tableId]);
+
+  useEffect(() => {
+    return () => {
+      console.log("[SOCKET] leaving table for good");
+      leaveCurrentTable();
+    };
+  }, []);
 
   return { participants: tableParticipants };
 };

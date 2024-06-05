@@ -48,6 +48,7 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
 
     const handleInitialConnection = async () => {
       const username = `${authenticatedUser?.firstName} ${authenticatedUser?.lastName}`;
+
       const socketInstance = io(import.meta.env.VITE_ONE_WORD_SOCKET_URL, {
         autoConnect: false,
       });

@@ -1,15 +1,13 @@
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { SocketEvents } from "@/domains/socket/typing/enums";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 
 export interface IPartipant {
   userId: string;
   username: string;
 }
 
-const useTables = () => {
-  const { tableId } = useParams<{ tableId: string }>();
+const useTableSocket = (tableId?: string) => {
   const { on, emit, connected } = useWebSocket();
   const [tableParticipants, setTableParticipants] = useState<IPartipant[]>([]);
 
@@ -18,14 +16,13 @@ const useTables = () => {
     tablesRef.current && tablesRef.current !== tableId;
 
   const joinNewTable = useCallback(() => {
-    emit(SocketEvents.JOIN_TABLE, tableId);
-
+    emit(SocketEvents.JOIN_TABLE, `table-${tableId}`);
     tablesRef.current = tableId;
-  }, [emit, isUserSwitchingTables]);
+  }, [emit, isUserSwitchingTables, tableId]);
 
   const leaveCurrentTable = useCallback(() => {
-    emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
-  }, [emit, isUserSwitchingTables]);
+    emit(SocketEvents.LEAVE_TABLE, `table-${tablesRef.current}`);
+  }, [emit, isUserSwitchingTables, tableId]);
 
   const watchForNewParticipants = useCallback(() => {
     on<IPartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
@@ -43,9 +40,15 @@ const useTables = () => {
     joinNewTable();
 
     watchForNewParticipants();
-  }, [connected, isUserSwitchingTables]);
+  }, [connected, tableId]);
 
-  return { tableParticipants };
+  useEffect(() => {
+    return () => {
+      emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
+    };
+  }, [connected]);
+
+  return { participants: tableParticipants };
 };
 
-export { useTables };
+export { useTableSocket };

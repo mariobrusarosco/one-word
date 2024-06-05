@@ -1,8 +1,9 @@
 import { IChannel } from "@/domains/channel/typing/interfaces";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const TableChannels = ({ channels }: { channels: IChannel[] }) => {
+  const { tableId } = useParams<{ tableId: string }>();
   if (channels === undefined || channels.length === 0) return null;
 
   return (
@@ -15,9 +16,9 @@ const TableChannels = ({ channels }: { channels: IChannel[] }) => {
       </div>
       <ul className="flex flex-col gap-y-2 overflow-auto h-full pb-10">
         {channels.map((channel) => (
-          <li>
+          <li key={channel.id}>
             <Link
-              to={`${channel.tableId}/channels/${channel.id}`}
+              to={`${tableId}/channels/${channel.id}`}
               className="flex items-center gap-x-2 p-2 rounded-md bg-white-100 hover:bg-pink-500 cursor-pointer group"
             >
               <Icon

@@ -15,7 +15,10 @@ const AppSidebar = () => {
   });
 
   return (
-    <div className="app-sidebar  bg-white-100 h-full flex items-center gap-4 dark:bg-teal-800 desktop:flex-col desktop:py-5 overflow-hidden shadow-main-right z-[3]">
+    <div
+      data-ui="app-sidebar"
+      className="app-sidebar  bg-white-100 h-full flex items-center gap-4 dark:bg-teal-800 desktop:flex-col desktop:py-5 overflow-hidden shadow-main-right z-[3]"
+    >
       <section className="new-table-creation flex justify-center  dark:border-b-white-100 ">
         <CreateTable />
       </section>
@@ -25,11 +28,11 @@ const AppSidebar = () => {
       <ul className="flex items-center gap-x-4 desktop:flex-1 desktop:flex-col desktop:gap-y-4 overflow-auto desktop:px-5 desktop:w-full">
         {data?.map((table) => (
           <li key={table?.name}>
-            <Button roundness="full" size="large">
-              <NavLink to={`/tables/${table?.id}`}>
+            <NavLink to={`/tables/${table?.id}`}>
+              <Button roundness="full" size="large">
                 {getInitials(table?.name)}
-              </NavLink>
-            </Button>
+              </Button>
+            </NavLink>
           </li>
         ))}
       </ul>

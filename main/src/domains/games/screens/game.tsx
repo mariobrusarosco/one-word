@@ -1,14 +1,14 @@
-import { useTablesContext } from "@/domains/tables/provider";
+import { useTableSocketManager } from "@/domains/tables/provider";
 
 const GameScreen = () => {
-  const tablesContext = useTablesContext();
+  const tableSocket = useTableSocketManager();
 
   return (
     <div>
       <h2>Game</h2>
 
       <ul className="grid overflow-auto h-full pb-10">
-        {tablesContext.tables.tableParticipants.map((participant) => (
+        {tableSocket.participants.map((participant) => (
           <li key={participant.userId}>{participant.username}</li>
         ))}
       </ul>

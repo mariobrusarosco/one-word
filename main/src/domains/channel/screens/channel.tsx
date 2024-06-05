@@ -2,9 +2,10 @@ import { useParams } from "react-router-dom";
 import { MessageList } from "@/domains/message/components/message-list";
 import { ChatInput } from "@/domains/message/components/chat-input";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { useIsFetching, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { IChannel } from "../typing/interfaces";
 import { channelLoader } from "../api/loaders";
+import { useChannelSocket } from "../hooks/use-channel-socket";
 
 const ChannelScreen = () => {
   const { channelId } = useParams<{
@@ -21,9 +22,7 @@ const ChannelScreen = () => {
     enabled: true,
   });
 
-  const fetchingChannelMessages = useIsFetching({
-    queryKey: ["channel-messages", { channelId }],
-  });
+  useChannelSocket(channelId);
 
   if (error) {
     return <div>{error.message}</div>;
@@ -48,7 +47,7 @@ const ChannelScreen = () => {
           <p className="text-pink-500 dark:text-teal-800 text-3xl desktop:text-5xl">
             Channel
           </p>
-          {fetchingChannelMessages ? <p>Loading...</p> : null}
+          {/* {fetchingChannelMessages ? <p>Loading...</p> : null} */}
           <p className="table-name font-sans text-3xl text-teal-800 dark:text-white-100 desktop:text-5xl">
             {channel?.name}
           </p>

@@ -3,6 +3,7 @@ import { AuthenticatedMenu } from "./authenticated-menu/menu";
 import { AppHeader } from "./app-header";
 import { WebSocketProvider } from "@/domains/socket/providers/web-socket/provider";
 import { useAuth } from "../hooks/use-auth";
+import { AppSidebar } from "./app-sidebar";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -29,10 +30,12 @@ export const AuthenticatedLayout = () => {
   return (
     <AuthProvider>
       <WebSocketProvider>
-        <div data-layout="authenticated" className="h-dvh">
+        <div data-ui="authenticated-layout" className="h-dvh">
           <AppHeader />
 
-          <div className="app-content h-[calc(100dvh-92px)] dark:bg-pink-500 ">
+          <div className="app-content h-[calc(100dvh-92px)] dark:bg-pink-500 grid desktop:grid-cols-[120px,1fr]">
+            <AppSidebar />
+
             <Outlet />
           </div>
 

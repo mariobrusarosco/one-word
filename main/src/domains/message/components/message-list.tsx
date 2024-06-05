@@ -14,30 +14,32 @@ const MessageList = ({ channelName }: { channelName: IChannel["name"] }) => {
     channelId: string;
     tableId: string;
   }>();
-  const { socket } = useWebSocket();
+  const { on } = useWebSocket();
   const queryClient = useQueryClient();
   const ref = useRef<HTMLDivElement>(null);
 
   const infiniteQuery = useInfiniteChannelMessages({
     channelId: channelId || undefined,
   });
-
-  useEffect(() => {
-    const scrollListToBottom = () =>
-      ref?.current?.scrollTo({
-        top: ref.current.scrollHeight,
-      });
-
-    scrollListToBottom();
-  }, [infiniteQuery.isFetching]);
-
-  useEffect(() => {
-    socket?.on(SocketEvents.UPDATE_CHAT_MESSAGES, () => {
+  const watchForNewMessages = () => {
+    on(SocketEvents.UPDATE_CHAT_MESSAGES, () => {
       queryClient.invalidateQueries({
         queryKey: ["channel-messages", { channelId }],
       });
     });
-  }, [channelId, queryClient, socket]);
+  };
+  const scrollListToBottom = () =>
+    ref?.current?.scrollTo({
+      top: ref.current.scrollHeight,
+    });
+
+  useEffect(() => {
+    scrollListToBottom();
+  }, [infiniteQuery.isFetching]);
+
+  useEffect(() => {
+    watchForNewMessages();
+  }, [channelId, queryClient]);
 
   if (infiniteQuery.error) {
     return <div>Error: {infiniteQuery.error.message}</div>;

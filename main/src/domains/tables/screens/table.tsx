@@ -4,13 +4,15 @@ import { tableLoader } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { InviteMember } from "../components/modals/invite-member";
+import { TablesProvider } from "../provider";
+import { TableSidebar } from "../components/table-sidebar";
 
 const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
   const { data, error, isFetching } = useQuery<ITable>({
     queryKey: ["tables", { tableId }],
     queryFn: tableLoader,
-    enabled: false,
+    enabled: true,
   });
 
   if (error) {
@@ -24,21 +26,33 @@ const TableScreen = () => {
   if (!data) return null;
 
   return (
-    <div className="table w-full">
-      <div className="heading flex justify-between items-center font-sans ">
-        <p className="text-pink-500 dark:text-teal-800 text-5xl">Table</p>
-        <p className="table-name font-semibold uppercase text-2xl text-teal-800 dark:text-white-100 ">
-          {data.name}
-        </p>
+    <div data-ui="table-screen">
+      <TableSidebar table={data} />
+
+      <div className="table w-full">
+        <div className="heading flex justify-between items-center font-sans ">
+          <p className="text-pink-500 dark:text-teal-800 text-5xl">Table</p>
+          <p className="table-name font-semibold uppercase text-2xl text-teal-800 dark:text-white-100 ">
+            {data.name}
+          </p>
+        </div>
+
+        <Separator className="bg-teal-800 mt-3" />
+
+        <InviteMember tableId={tableId as string} />
+
+        <Outlet />
       </div>
-
-      <Separator className="bg-teal-800 mt-3" />
-
-      <InviteMember tableId={tableId as string} />
-
-      <Outlet />
     </div>
   );
 };
 
-export default TableScreen;
+const TableScreenWithProvider = () => {
+  return (
+    <TablesProvider>
+      <TableScreen />
+    </TablesProvider>
+  );
+};
+
+export default TableScreenWithProvider;

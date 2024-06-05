@@ -18,18 +18,33 @@ const useTables = () => {
     tablesRef.current && tablesRef.current !== tableId;
 
   const joinNewTable = useCallback(() => {
-    emit(SocketEvents.JOIN_TABLE, tableId);
-
+    // emit(SocketEvents.JOIN_TABLE, tableId);
+    console.log("[SOCKET] - [FRONT] - Joining table", {
+      tablesRef: tablesRef.current,
+      tableId,
+      isUserSwitchingTables,
+    });
     tablesRef.current = tableId;
   }, [emit, isUserSwitchingTables]);
 
   const leaveCurrentTable = useCallback(() => {
-    emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
+    // emit(SocketEvents.LEAVE_TABLE, tablesRef.current);
+    console.log("[SOCKET] - [FRONT] - Leaving table", {
+      connected,
+      tablesRef: tablesRef.current,
+      tableId,
+      isUserSwitchingTables,
+    });
   }, [emit, isUserSwitchingTables]);
 
   const watchForNewParticipants = useCallback(() => {
     on<IPartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
-      setTableParticipants(data);
+      console.log("[SOCKET] - [FRONT] - Updating Table", {
+        connected,
+        tablesRef: tablesRef.current,
+        tableId,
+        isUserSwitchingTables,
+      });
     });
   }, [connected, tableId, on]);
 

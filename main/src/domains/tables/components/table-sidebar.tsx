@@ -9,7 +9,7 @@ import { TableSearch } from "@/domains/tables/components/table-search";
 import { TableChannels } from "./table-channels";
 import { useParams } from "react-router-dom";
 
-const TableSidebar = () => {
+const TableSidebar = ({}) => {
   const { tableId } = useParams<{
     tableId: string;
   }>();
@@ -18,7 +18,7 @@ const TableSidebar = () => {
   const { data, error, isLoading } = useQuery<ITable>({
     queryKey: ["tables", { tableId }],
     queryFn: tableLoader,
-    enabled: !!tableId,
+    enabled: false,
   });
 
   if (error) {

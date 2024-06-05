@@ -29,7 +29,7 @@ export const AuthenticatedLayout = () => {
   return (
     <AuthProvider>
       <WebSocketProvider>
-        <div data-layout="authenticated" className="h-dvh">
+        <div data-ui="authenticated-layout" className="h-dvh">
           <AppHeader />
 
           <div className="app-content h-[calc(100dvh-92px)] dark:bg-pink-500 ">

@@ -1,7 +1,6 @@
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
-import { useTablesContext } from "../provider";
-import { IPartipant } from "../hooks/use-tables";
+import { useTableSocketManager } from "../provider";
 
 const Participant = ({ participant }: { participant: IPartipant }) => {
   return (
@@ -19,7 +18,7 @@ const Participant = ({ participant }: { participant: IPartipant }) => {
 };
 
 export const ParticpantsList = () => {
-  const tablesContext = useTablesContext();
+  const tableSocket = useTableSocketManager();
 
   return (
     <div className="table-participants px-4 pt-4 pb-10 overflow-hidden max-h-[500px]">
@@ -29,7 +28,7 @@ export const ParticpantsList = () => {
       </div>
 
       <ul className="flex flex-col overflow-auto h-full pb-10">
-        {tablesContext.tables.tableParticipants.map((participant) => (
+        {tableSocket.participants.map((participant) => (
           <Participant participant={participant} key={participant.userId} />
         ))}
       </ul>

@@ -25,11 +25,11 @@ const AppSidebar = () => {
       <ul className="flex items-center gap-x-4 desktop:flex-1 desktop:flex-col desktop:gap-y-4 overflow-auto desktop:px-5 desktop:w-full">
         {data?.map((table) => (
           <li key={table?.name}>
-            <Button roundness="full" size="large">
-              <NavLink to={`/tables/${table?.id}`}>
+            <NavLink to={`/tables/${table?.id}`}>
+              <Button roundness="full" size="large">
                 {getInitials(table?.name)}
-              </NavLink>
-            </Button>
+              </Button>
+            </NavLink>
           </li>
         ))}
       </ul>

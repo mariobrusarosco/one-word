@@ -1,24 +1,21 @@
 import { createContext, useContext } from "react";
-import { useTables } from "../hooks/use-tables";
+import { useTableSocket } from "./use-table-socket";
 
-type TablesContextType = {
-  tables: ReturnType<typeof useTables>;
-};
+type TablesContextType = ReturnType<typeof useTableSocket>;
 
 const TablesContext = createContext<TablesContextType | undefined>(undefined);
 
-const TablesProvider = ({ children }: { children: React.ReactNode }) => {
-  const tables = useTables();
-  const state: TablesContextType = {
-    tables,
-  };
+const TableSocketManager = ({ children }: { children: React.ReactNode }) => {
+  const tableSocket = useTableSocket();
 
   return (
-    <TablesContext.Provider value={state}>{children}</TablesContext.Provider>
+    <TablesContext.Provider value={tableSocket}>
+      {children}
+    </TablesContext.Provider>
   );
 };
 
-const useTablesContext = (): TablesContextType => {
+const useTableSocketManager = (): TablesContextType => {
   const context = useContext(TablesContext);
 
   if (context === undefined) {
@@ -28,4 +25,4 @@ const useTablesContext = (): TablesContextType => {
   return context;
 };
 
-export { TablesProvider, useTablesContext };
+export { TableSocketManager, useTableSocketManager };

@@ -8,7 +8,7 @@ export interface IPartipant {
   username: string;
 }
 
-const useTables = () => {
+const useTableSocket = () => {
   const { tableId } = useParams<{ tableId: string }>();
   const { on, emit, connected } = useWebSocket();
   const [tableParticipants, setTableParticipants] = useState<IPartipant[]>([]);
@@ -60,7 +60,7 @@ const useTables = () => {
     watchForNewParticipants();
   }, [connected, isUserSwitchingTables]);
 
-  return { tableParticipants };
+  return { participants: tableParticipants };
 };
 
-export { useTables };
+export { useTableSocket };

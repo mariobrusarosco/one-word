@@ -4,12 +4,12 @@ import { tableLoader } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { InviteMember } from "../components/modals/invite-member";
-import { TablesProvider } from "../provider";
+import { TableSocketManager } from "../provider";
 import { TableSidebar } from "../components/table-sidebar";
 
 const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
-  const { data, error, isFetching } = useQuery<ITable>({
+  const { data, error, isLoading } = useQuery<ITable>({
     queryKey: ["tables", { tableId }],
     queryFn: tableLoader,
     enabled: true,
@@ -19,7 +19,7 @@ const TableScreen = () => {
     return <div>{error.message}</div>;
   }
 
-  if (isFetching) {
+  if (isLoading) {
     return <div>loading tables...</div>;
   }
 
@@ -49,9 +49,9 @@ const TableScreen = () => {
 
 const TableScreenWithProvider = () => {
   return (
-    <TablesProvider>
+    <TableSocketManager>
       <TableScreen />
-    </TablesProvider>
+    </TableSocketManager>
   );
 };
 

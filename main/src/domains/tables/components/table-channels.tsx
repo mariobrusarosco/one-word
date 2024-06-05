@@ -17,7 +17,7 @@ const TableChannels = ({ channels }: { channels: IChannel[] }) => {
         {channels.map((channel) => (
           <li>
             <Link
-              to={`${channel.tableId}/channels/${channel.id}`}
+              to={`channels/${channel.id}`}
               className="flex items-center gap-x-2 p-2 rounded-md bg-white-100 hover:bg-pink-500 cursor-pointer group"
             >
               <Icon

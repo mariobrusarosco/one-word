@@ -1,17 +1,48 @@
-import { AppSidebar } from "@/domains/auth/components/app-sidebar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import { TableSidebar } from "./table-sidebar";
+import { useQuery } from "@tanstack/react-query";
+import { tableLoader } from "../api/loader";
+import { ITable } from "../typing/interfaces";
+import { TableSocketManager } from "../provider";
 
 const TableLayout = () => {
+  const { tableId } = useParams<{ tableId: string }>();
+  const {
+    data: table,
+    error,
+    isLoading,
+  } = useQuery<ITable>({
+    queryKey: ["tables", { tableId }],
+    queryFn: tableLoader,
+    enabled: !!tableId,
+  });
+
+  if (isLoading) return <div>Loading table...</div>;
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
+  if (!table) return null;
+
   return (
     <div
       data-ui="table-layout"
-      className="table-layout grid desktop:grid-cols-[120px,1fr] desktop:h-full"
+      className="grid desktop:grid-cols-[224px,1fr] desktop:h-ful"
     >
-      <AppSidebar />
+      <TableSidebar table={table} />
 
       <Outlet />
     </div>
   );
 };
 
-export { TableLayout };
+const TableLayoutWithProvider = () => {
+  return (
+    <TableSocketManager>
+      <TableLayout />
+    </TableSocketManager>
+  );
+};
+
+export default TableLayoutWithProvider;

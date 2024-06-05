@@ -1,8 +1,9 @@
 import { IChannel } from "@/domains/channel/typing/interfaces";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const TableChannels = ({ channels }: { channels: IChannel[] }) => {
+  const { tableId } = useParams<{ tableId: string }>();
   if (channels === undefined || channels.length === 0) return null;
 
   return (
@@ -17,7 +18,7 @@ const TableChannels = ({ channels }: { channels: IChannel[] }) => {
         {channels.map((channel) => (
           <li key={channel.id}>
             <Link
-              to={`channels/${channel.id}`}
+              to={`${tableId}/channels/${channel.id}`}
               className="flex items-center gap-x-2 p-2 rounded-md bg-white-100 hover:bg-pink-500 cursor-pointer group"
             >
               <Icon

@@ -5,6 +5,7 @@ import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { useIsFetching, useQuery } from "@tanstack/react-query";
 import { IChannel } from "../typing/interfaces";
 import { channelLoader } from "../api/loaders";
+import { useChannelSocket } from "../hooks/use-channel-socket";
 
 const ChannelScreen = () => {
   const { channelId } = useParams<{
@@ -20,6 +21,7 @@ const ChannelScreen = () => {
     queryFn: channelLoader,
     enabled: true,
   });
+  useChannelSocket();
 
   const fetchingChannelMessages = useIsFetching({
     queryKey: ["channel-messages", { channelId }],
@@ -48,18 +50,18 @@ const ChannelScreen = () => {
           <p className="text-pink-500 dark:text-teal-800 text-3xl desktop:text-5xl">
             Channel
           </p>
-          {fetchingChannelMessages ? <p>Loading...</p> : null}
+          {/* {fetchingChannelMessages ? <p>Loading...</p> : null}
           <p className="table-name font-sans text-3xl text-teal-800 dark:text-white-100 desktop:text-5xl">
             {channel?.name}
-          </p>
+          </p> */}
         </div>
 
         <Separator className="bg-pink-500 my-4" />
       </div>
 
-      <MessageList channelName={channel.name} />
+      {/* <MessageList channelName={channel.name} /> */}
 
-      <ChatInput />
+      {/* <ChatInput /> */}
     </div>
   );
 };

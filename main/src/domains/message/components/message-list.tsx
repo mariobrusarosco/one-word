@@ -14,7 +14,7 @@ const MessageList = ({ channelName }: { channelName: IChannel["name"] }) => {
     channelId: string;
     tableId: string;
   }>();
-  const { socket } = useWebSocket();
+  const { on } = useWebSocket();
   const queryClient = useQueryClient();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -32,7 +32,7 @@ const MessageList = ({ channelName }: { channelName: IChannel["name"] }) => {
   }, [infiniteQuery.isFetching]);
 
   useEffect(() => {
-    socket?.on(SocketEvents.UPDATE_CHAT_MESSAGES, () => {
+    on(SocketEvents.UPDATE_CHAT_MESSAGES, () => {
       queryClient.invalidateQueries({
         queryKey: ["channel-messages", { channelId }],
       });

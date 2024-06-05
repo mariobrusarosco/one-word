@@ -1,18 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { Outlet, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { tableLoader } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { InviteMember } from "../components/modals/invite-member";
-import { TableSocketManager } from "../provider";
-import { TableSidebar } from "../components/table-sidebar";
 
 const TableScreen = () => {
   const { tableId } = useParams<{ tableId: string }>();
   const { data, error, isLoading } = useQuery<ITable>({
-    queryKey: ["tables", { tableId }],
+    queryKey: ["table", { tableId }],
     queryFn: tableLoader,
-    enabled: true,
+    enabled: !!tableId,
   });
 
   if (error) {
@@ -23,15 +21,10 @@ const TableScreen = () => {
     return <div>loading tables...</div>;
   }
 
-  if (!data) return null;
+  if (!data || !tableId) return null;
 
   return (
-    <div
-      data-ui="table-screen"
-      className="grid desktop:grid-cols-[224px,1fr] desktop:h-full"
-    >
-      <TableSidebar table={data} />
-
+    <div data-ui="table-screen" className="">
       <div className="table w-full">
         <div className="heading flex justify-between items-center font-sans ">
           <p className="text-pink-500 dark:text-teal-800 text-5xl">Table</p>
@@ -40,19 +33,11 @@ const TableScreen = () => {
           </p>
         </div>
         <Separator className="bg-teal-800 mt-3" />
-        <InviteMember tableId={tableId as string} />
-        <Outlet />
+
+        <InviteMember tableId={tableId} />
       </div>
     </div>
   );
 };
 
-const TableScreenWithProvider = () => {
-  return (
-    <TableSocketManager>
-      <TableScreen />
-    </TableSocketManager>
-  );
-};
-
-export default TableScreenWithProvider;
+export default TableScreen;

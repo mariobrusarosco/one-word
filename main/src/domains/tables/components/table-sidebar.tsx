@@ -12,6 +12,7 @@ const TableSidebar = ({ table }: { table: ITable }) => {
     tableId: string;
   }>();
 
+  console.log("[SOCKET]", { tableId });
   if (!tableId) return null;
 
   return (

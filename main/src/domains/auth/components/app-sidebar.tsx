@@ -15,7 +15,10 @@ const AppSidebar = () => {
   });
 
   return (
-    <div className="app-sidebar  bg-white-100 h-full flex items-center gap-4 dark:bg-teal-800 desktop:flex-col desktop:py-5 overflow-hidden shadow-main-right z-[3]">
+    <div
+      data-ui="app-sidebar"
+      className="app-sidebar  bg-white-100 h-full flex items-center gap-4 dark:bg-teal-800 desktop:flex-col desktop:py-5 overflow-hidden shadow-main-right z-[3]"
+    >
       <section className="new-table-creation flex justify-center  dark:border-b-white-100 ">
         <CreateTable />
       </section>

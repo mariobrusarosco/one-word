@@ -7,7 +7,7 @@ export interface IPartipant {
   username: string;
 }
 
-const useTableSocket = (tableId: string) => {
+const useTableSocket = (tableId?: string) => {
   const { on, emit, connected } = useWebSocket();
   const [tableParticipants, setTableParticipants] = useState<IPartipant[]>([]);
 

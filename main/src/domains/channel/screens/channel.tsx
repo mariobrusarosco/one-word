@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { MessageList } from "@/domains/message/components/message-list";
 import { ChatInput } from "@/domains/message/components/chat-input";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { useIsFetching, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { IChannel } from "../typing/interfaces";
 import { channelLoader } from "../api/loaders";
 import { useChannelSocket } from "../hooks/use-channel-socket";
@@ -22,7 +22,7 @@ const ChannelScreen = () => {
     enabled: true,
   });
 
-  const channelSocket = useChannelSocket(channelId);
+  useChannelSocket(channelId);
 
   if (error) {
     return <div>{error.message}</div>;
@@ -56,9 +56,9 @@ const ChannelScreen = () => {
         <Separator className="bg-pink-500 my-4" />
       </div>
 
-      <MessageList channelName={channel.name} channelSocket={channelSocket} />
+      <MessageList channelName={channel.name} />
 
-      <ChatInput channelSocket={channelSocket} />
+      <ChatInput />
     </div>
   );
 };

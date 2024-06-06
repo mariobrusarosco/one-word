@@ -1,9 +1,10 @@
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
-import { useTableSocketManager } from "../provider";
-import { IPartipant } from "../provider/use-table-socket";
+import { ITablePartipant } from "../typing/interfaces";
 
-const Participant = ({ participant }: { participant: IPartipant }) => {
+const Participant = ({ participant }: { participant: ITablePartipant }) => {
+  if (!participant) return null;
+
   return (
     <div className="participant flex items-center gap-2 px-3 py-3  cursor-pointer rounded-md hover:bg-pink-500 group">
       <div className="participant-avatar bg-pink-500 w-7 h-7 rounded-full flex justify-center items-center group-hover:bg-teal-800">
@@ -18,8 +19,12 @@ const Participant = ({ participant }: { participant: IPartipant }) => {
   );
 };
 
-export const ParticpantsList = () => {
-  // const tableSocket = useTableSocketManager();
+export const ParticpantsList = ({
+  tableParticipants,
+}: {
+  tableParticipants: ITablePartipant[];
+}) => {
+  if (tableParticipants?.length === 0) return null;
 
   return (
     <div className="table-participants px-4 pt-4 pb-10 overflow-hidden max-h-[500px]">
@@ -29,9 +34,9 @@ export const ParticpantsList = () => {
       </div>
 
       <ul className="flex flex-col overflow-auto h-full pb-10">
-        {/* {tableSocket.participants.map((participant) => (
+        {tableParticipants.map((participant) => (
           <Participant participant={participant} key={participant.username} />
-        ))} */}
+        ))}
       </ul>
     </div>
   );

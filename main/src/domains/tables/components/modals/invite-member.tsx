@@ -12,14 +12,12 @@ import {
 } from "@/domains/ui-system/components/ui/dialog";
 import { useState } from "react";
 import { useToast } from "@/domains/ui-system/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 import { inviteFriendMutation } from "../../api/mutations";
 
 export const InviteMember = ({ tableId }: { tableId: string }) => {
   const { closeModal, openModal, isOpen } = useModal("invite-friend");
   const [email, setEmail] = useState("");
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: inviteFriendMutation,
@@ -35,7 +33,6 @@ export const InviteMember = ({ tableId }: { tableId: string }) => {
         title: "All good! Your friend can seat on this table!",
       });
       closeModal();
-      navigate(`tables/${tableId}`);
     },
   });
 

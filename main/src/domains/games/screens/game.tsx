@@ -1,9 +1,6 @@
-import { useTableSocketManager } from "@/domains/tables/provider";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 
 const GameScreen = () => {
-  const tableSocket = useTableSocketManager();
-
   return (
     <div data-ui="game-screen">
       <div className="heading font-extralight">
@@ -20,9 +17,9 @@ const GameScreen = () => {
       </div>
 
       <ul className="grid overflow-auto h-full pb-10">
-        {tableSocket.participants.map((participant) => (
+        {/* {tableSocket.participants.map((participant) => (
           <li key={participant.userId}>{participant.username}</li>
-        ))}
+        ))} */}
       </ul>
     </div>
   );

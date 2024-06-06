@@ -18,3 +18,8 @@ export interface ITable {
   inviteCode: string;
   channels: IChannel[];
 }
+
+export interface ITablePartipant {
+  userId: string;
+  username: string;
+}

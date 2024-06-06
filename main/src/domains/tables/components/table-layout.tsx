@@ -3,6 +3,7 @@ import { TableSidebar } from "./table-sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { tableLoader } from "../api/loader";
 import { ITable } from "../typing/interfaces";
+import { useTableSocket } from "../hooks/use-table-socket";
 
 const TableLayout = () => {
   const { tableId } = useParams<{ tableId: string }>();
@@ -15,8 +16,7 @@ const TableLayout = () => {
     queryFn: tableLoader,
     enabled: !!tableId,
   });
-
-  // const tableSocketManager = useTableConnection(tableId);
+  const tableSocket = useTableSocket(tableId);
 
   if (isLoading) return <div>Loading table...</div>;
 
@@ -26,16 +26,17 @@ const TableLayout = () => {
 
   if (!table) return null;
 
+  console.log("[DEBUG] 3.0", { tableSocket });
+
   return (
     <div
       data-ui="table-layout"
       className="grid desktop:h-full overflow-hidden desktop:grid-cols-[224px,1fr]"
     >
-      {/* <AppSidebar /> */}
-      <TableSidebar table={table} />
+      <TableSidebar table={table} tableSocket={tableSocket} />
 
       <div data-ui="table-wrapper" className="p-10">
-        <Outlet />
+        <Outlet context={{ table, tableSocket }} />
       </div>
     </div>
   );

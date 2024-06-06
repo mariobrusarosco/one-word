@@ -6,8 +6,13 @@ import { TableSearch } from "@/domains/tables/components/table-search";
 import { TableChannels } from "./table-channels";
 import { useParams } from "react-router-dom";
 import { ActiveGameDisplay } from "@/domains/games/components/active-game-display";
+import { useTableSocket } from "../provider/use-table-socket";
 
-const TableSidebar = ({ table }: { table: ITable }) => {
+interface Props {
+  table: ITable;
+  tableSocket: ReturnType<typeof useTableSocket>;
+}
+const TableSidebar = ({ table, tableSocket }: Props) => {
   const { tableId } = useParams<{
     tableId: string;
   }>();
@@ -34,7 +39,7 @@ const TableSidebar = ({ table }: { table: ITable }) => {
         <Separator />
       </div>
 
-      <ParticpantsList />
+      <ParticpantsList tableParticipants={tableSocket.tableParticipants} />
 
       <div className="my-3">
         <Separator />

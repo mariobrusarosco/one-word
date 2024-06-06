@@ -72,7 +72,9 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     try {
-      handleInitialConnection();
+      if (!isMounted.current) {
+        handleInitialConnection();
+      }
       isMounted.current = true;
     } catch (error) {
       console.error(

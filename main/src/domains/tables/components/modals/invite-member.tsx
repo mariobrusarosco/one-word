@@ -35,7 +35,6 @@ export const InviteMember = ({ tableId }: { tableId: string }) => {
         title: "All good! Your friend can seat on this table!",
       });
       closeModal();
-      navigate(`tables/${tableId}`);
     },
   });
 

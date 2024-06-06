@@ -3,7 +3,7 @@ import { TableSidebar } from "./table-sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { tableLoader } from "../api/loader";
 import { ITable } from "../typing/interfaces";
-import { useTableSocket } from "../provider/use-table-socket";
+import { useTableSocket } from "../hooks/use-table-socket";
 
 const TableLayout = () => {
   const { tableId } = useParams<{ tableId: string }>();
@@ -36,7 +36,7 @@ const TableLayout = () => {
       <TableSidebar table={table} tableSocket={tableSocket} />
 
       <div data-ui="table-wrapper" className="p-10">
-        <Outlet />
+        <Outlet context={{ table, tableSocket }} />
       </div>
     </div>
   );

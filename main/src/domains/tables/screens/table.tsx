@@ -1,11 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { tableLoader } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { InviteMember } from "../components/modals/invite-member";
+import { useTableSocket } from "../hooks/use-table-socket";
+
+interface Props {
+  table: ITable;
+  tableSocket: ReturnType<typeof useTableSocket>;
+}
 
 const TableScreen = () => {
+  const tableProps = useOutletContext() as Props;
   const { tableId } = useParams<{ tableId: string }>();
   const { data, error, isLoading } = useQuery<ITable>({
     queryKey: ["table", { tableId }],
@@ -34,6 +41,10 @@ const TableScreen = () => {
       <Separator className="bg-teal-800 mt-3" />
 
       <InviteMember tableId={tableId} />
+
+      {tableProps?.tableSocket ? (
+        <div>{JSON.stringify(tableProps.tableSocket.tableParticipants)}</div>
+      ) : null}
     </div>
   );
 };

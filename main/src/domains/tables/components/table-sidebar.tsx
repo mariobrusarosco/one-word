@@ -6,7 +6,7 @@ import { TableSearch } from "@/domains/tables/components/table-search";
 import { TableChannels } from "./table-channels";
 import { useParams } from "react-router-dom";
 import { ActiveGameDisplay } from "@/domains/games/components/active-game-display";
-import { useTableSocket } from "../provider/use-table-socket";
+import { useTableSocket } from "../hooks/use-table-socket";
 
 interface Props {
   table: ITable;

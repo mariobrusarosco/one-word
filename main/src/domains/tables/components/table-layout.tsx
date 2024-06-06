@@ -29,9 +29,9 @@ const TableLayout = () => {
   return (
     <div
       data-ui="table-layout"
-      className="grid desktop:grid-cols-[224px,1fr] desktop:h-ful overflow-hidden"
+      className="grid desktop:h-full overflow-hidden desktop:grid-cols-[224px,1fr]"
     >
-      {/* h-[calc(100dvh-92px)] dark:bg-pink-500 grid desktop:grid-cols-[120px,1fr] */}
+      {/* <AppSidebar /> */}
       <TableSidebar table={table} />
 
       <div data-ui="table-wrapper" className="p-10">

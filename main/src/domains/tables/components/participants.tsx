@@ -19,7 +19,7 @@ const Participant = ({ participant }: { participant: IPartipant }) => {
 };
 
 export const ParticpantsList = () => {
-  const tableSocket = useTableSocketManager();
+  // const tableSocket = useTableSocketManager();
 
   return (
     <div className="table-participants px-4 pt-4 pb-10 overflow-hidden max-h-[500px]">
@@ -29,9 +29,9 @@ export const ParticpantsList = () => {
       </div>
 
       <ul className="flex flex-col overflow-auto h-full pb-10">
-        {tableSocket.participants.map((participant) => (
+        {/* {tableSocket.participants.map((participant) => (
           <Participant participant={participant} key={participant.username} />
-        ))}
+        ))} */}
       </ul>
     </div>
   );

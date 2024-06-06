@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthenticatedLayout } from "../../auth/components/authenticated-layout";
 import RootLayout from "./root-layout";
 import PublicLayout from "./public-layout";
@@ -13,6 +9,8 @@ import ErrorScreen from "../screens/error";
 import UISystemScreen from "@/domains/ui-system/screen";
 import ChannelScreen from "@/domains/channel/screens/channel";
 import TableLayout from "@/domains/tables/components/table-layout";
+import GameScreen from "@/domains/games/screens/game";
+import Intro from "../screens/intro";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -21,7 +19,7 @@ export const AppRouter = () => {
       element: <RootLayout />,
       errorElement: <ErrorScreen />,
       children: [
-        { index: true, element: <Navigate to="dashboard" /> },
+        { index: true, element: <Intro /> },
         {
           element: <AuthenticatedLayout />,
           children: [
@@ -33,6 +31,10 @@ export const AppRouter = () => {
                 {
                   path: ":tableId/channels/:channelId",
                   element: <ChannelScreen />,
+                },
+                {
+                  path: ":tableId/game",
+                  element: <GameScreen />,
                 },
               ],
             },

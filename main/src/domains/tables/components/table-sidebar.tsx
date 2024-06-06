@@ -2,17 +2,16 @@ import { ITable } from "../typing/interfaces";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { ParticpantsList } from "./participants";
-import { ActiveGame } from "@/domains/games/components/active-game";
 import { TableSearch } from "@/domains/tables/components/table-search";
 import { TableChannels } from "./table-channels";
 import { useParams } from "react-router-dom";
+import { ActiveGameDisplay } from "@/domains/games/components/active-game-display";
 
 const TableSidebar = ({ table }: { table: ITable }) => {
   const { tableId } = useParams<{
     tableId: string;
   }>();
 
-  console.log("[SOCKET]", { tableId });
   if (!tableId) return null;
 
   return (
@@ -29,7 +28,7 @@ const TableSidebar = ({ table }: { table: ITable }) => {
 
       <TableSearch />
 
-      <ActiveGame />
+      <ActiveGameDisplay />
 
       <div className="my-3">
         <Separator />

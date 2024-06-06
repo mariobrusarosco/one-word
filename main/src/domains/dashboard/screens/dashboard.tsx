@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const DashboardScreen = () => {
   return (
-    <div className="h-full ">
+    <div className="h-full">
       <h2 className="heading text-6xl font-serif text-white-100">Dashboard</h2>
 
       <section className="welcom-section pt-8 text-white-100">

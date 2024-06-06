@@ -46,7 +46,11 @@ const MessageList = ({ channelName }: { channelName: IChannel["name"] }) => {
   }
 
   return (
-    <div ref={ref} className="chat-messages flex-1 mb-5 mt-20 overflow-auto">
+    <div
+      data-ui="message-list"
+      ref={ref}
+      className="chat-messages flex-1 mb-5 mt-20 overflow-auto"
+    >
       <p className="text-3xl font-extralight text-teal-800 desktop:text-5xl">
         Welcome to{" "}
         <span className="font-semibold text-3xl desktop:text-5xl">

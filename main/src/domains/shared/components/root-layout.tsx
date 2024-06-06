@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
   return (
-    <div data-layout="root" className="root-layout">
+    <div data-ui="root-layout" className="">
       <Outlet />
       <Toaster />
     </div>

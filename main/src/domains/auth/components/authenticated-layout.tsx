@@ -3,7 +3,6 @@ import { AuthenticatedMenu } from "./authenticated-menu/menu";
 import { AppHeader } from "./app-header";
 import { WebSocketProvider } from "@/domains/socket/providers/web-socket/provider";
 import { useAuth } from "../hooks/use-auth";
-import { AppSidebar } from "./app-sidebar";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -19,11 +18,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return (
-    <div data-layout="auth" className="auth-layout">
-      {children}
-    </div>
-  );
+  return children;
 };
 
 export const AuthenticatedLayout = () => {
@@ -33,11 +28,9 @@ export const AuthenticatedLayout = () => {
         <div data-ui="authenticated-layout" className="h-dvh">
           <AppHeader />
 
-          <div className="app-content h-[calc(100dvh-92px)] dark:bg-pink-500 grid desktop:grid-cols-[120px,1fr]">
-            <AppSidebar />
-
+          <main data-ui="main-content" className="">
             <Outlet />
-          </div>
+          </main>
 
           <AuthenticatedMenu />
         </div>

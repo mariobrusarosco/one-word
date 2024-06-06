@@ -41,7 +41,10 @@ const ChannelScreen = () => {
   }
 
   return (
-    <div className="channel h-full flex flex-col p-14">
+    <div
+      data-ui="channel-screen"
+      className="channel h-full flex flex-col p-14 overflow-hidden"
+    >
       <div className="heading font-extralight">
         <div className="flex justify-between items-center font-sans ">
           <p className="text-pink-500 dark:text-teal-800 text-3xl desktop:text-5xl">

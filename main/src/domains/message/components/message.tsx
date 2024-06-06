@@ -4,6 +4,7 @@ import {
   AvatarImage,
 } from "@/domains/ui-system/components/ui/avatar";
 import { IMessage } from "../typing/interfaces";
+import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 
 interface Props {
   message: IMessage;
@@ -15,7 +16,7 @@ const Message: React.FC<Props> = ({ message }) => {
       <Avatar className="shadow-main-bottom">
         <AvatarImage src="" />
         <AvatarFallback className=" bg-teal-800 text-white-100">
-          MB
+          {getInitials(message.memberFullName || "")}
         </AvatarFallback>
       </Avatar>
 

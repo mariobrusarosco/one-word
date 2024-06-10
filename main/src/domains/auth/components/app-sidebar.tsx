@@ -1,40 +1,76 @@
-import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 import { tablesLoader } from "@/domains/tables/api/loader";
 import { CreateTable } from "@/domains/tables/components/modals/create-table";
 import { Table } from "@/domains/tables/typing/interfaces";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { useQuery } from "@tanstack/react-query";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
+import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
+import { SocketStatus } from "@/domains/socket/components/socket-status";
+import { ThemeModeToggle } from "./authenticated-menu/theme-mode-toggle";
+import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 
 const AppSidebar = () => {
-  const { data } = useQuery<Table[]>({
+  const { data: tables } = useQuery<Table[]>({
     queryKey: ["tables"],
     queryFn: tablesLoader,
     enabled: true,
   });
+  const { connected } = useWebSocket();
 
   return (
     <div
       data-ui="app-sidebar"
-      className="app-sidebar bg-white-100 h-full flex items-center gap-4 dark:bg-teal-800 desktop:flex-col desktop:py-5 overflow-hidden shadow-main-right z-[3] desktop:col-start-1 desktop:col-end-2  desktop:row-start-2"
+      className="flex items-center justify-between px-4 py-6 bg-neutral-100 dark:bg-violet-800 overflow-hidden shadow-main-bottom z-[3]"
     >
-      <section className="new-table-creation flex justify-center  dark:border-b-white-100 ">
+      <div className="flex items-center">
         <CreateTable />
-      </section>
 
-      <Separator className="my-4 dark:bg-white-100 w-0 h-10 desktop:w-full desktop:h-[2px]" />
+        <Separator
+          className="mx-4 bg-rose-800 h-[57px]"
+          orientation="vertical"
+        />
 
-      <ul className="flex items-center gap-x-4 desktop:flex-1 desktop:flex-col desktop:gap-y-4 overflow-auto desktop:px-5 desktop:w-full">
-        {data?.map((table) => (
-          <li key={table?.name}>
-            <Button roundness="full" size="large" asChild>
-              <NavLink to={`/tables/${table?.id}`}>
-                {getInitials(table?.name)}
-              </NavLink>
-            </Button>
-          </li>
-        ))}
+        <ul className="flex items-center gap-x-4">
+          {tables?.map((table) => (
+            <li key={table?.name}>
+              <Button roundness="full" size="small" asChild>
+                <Link to={`/tables/${table?.id}`}>
+                  {getInitials(table?.name)}
+                </Link>
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <ul className="flex items-center gap-3">
+        <Separator
+          className="mx-4 bg-rose-800 h-[57px]"
+          orientation="vertical"
+        />
+        <li>
+          <Button asChild variant="outline" roundness="full" size="small">
+            <Link to="/">
+              <Icon name="home" />
+            </Link>
+          </Button>
+        </li>
+
+        <li>
+          <Button asChild variant="outline" roundness="full" size="small">
+            <Link to="/account">
+              <Icon name="users" />
+            </Link>
+          </Button>
+        </li>
+        <li>
+          <ThemeModeToggle />
+        </li>
+        <li>
+          <SocketStatus connected={connected} />
+        </li>
       </ul>
     </div>
   );

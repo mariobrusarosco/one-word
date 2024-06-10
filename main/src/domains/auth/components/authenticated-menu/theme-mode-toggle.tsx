@@ -1,3 +1,4 @@
+import { Button } from "@/domains/ui-system/components/ui/button";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { useAppTheme } from "@/domains/ui-system/theming/theme";
 
@@ -9,13 +10,9 @@ const ThemeModeToggle = () => {
   };
 
   return (
-    <span onClick={toggleThemeMode} className="">
-      <Icon
-        name="sun-moon"
-        size="medium"
-        className="stroke-white-100 cursor-pointer"
-      />
-    </span>
+    <Button onClick={toggleThemeMode} variant="outline" roundness="full">
+      <Icon name="sun-moon" size="medium" />
+    </Button>
   );
 };
 

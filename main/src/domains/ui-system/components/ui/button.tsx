@@ -10,34 +10,40 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-pink-500 text-white-100 hover:bg-pink-800 dark:hover:bg-pink-800/50",
+          "bg-rose-800 text-neutral-100 hover:bg-rose-500 dark:hover:bg-rose-800/50",
         secondary:
-          "bg-teal-800 text-white-100 hover:bg-teal-800/80 dark:bg-white-100 dark:text-teal-800 dark:hover:bg-teal-800 dark:hover:text-white-100",
+          "bg-teal-800 text-neutral-100 hover:bg-teal-800/80 dark:bg-neutral-100 dark:text-teal-800 dark:hover:bg-teal-800 dark:hover:text-neutral-100",
         outline:
-          "shadow-none bg-transparent text-white-100 border border-white-100 hover:bg-white-100 hover:text-teal-800",
-        danger: "bg-red-400 text-white-100 hover:bg-red-400/80 ",
+          "shadow-none bg-transparent text-rose-800 border-2 border-rose-800 hover:bg-rose-800 hover:text-neutral-100",
+        danger: "bg-red-400 text-neutral-100 hover:bg-red-400/80 ",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "text-primary underline-offset-4 underline shadow-none",
       },
       roundness: {
-        default: "rounded",
+        none: "rounded-none",
+        tiny: "rounded-sm",
+        small: "rounded",
+        medium: "rounded-lg",
+        large: "rounded-2xl",
         full: "rounded-full",
       },
       size: {
-        small: "h-8  py-2 px-2 text-sm",
+        "extra-small": "h-8 p-2 text-xs",
+        small: "h-12 py-2 px-2 text-sm",
         medium: "h-11 px-4 text-base",
         large: "h-16  px-4 text-2xl",
       },
     },
     compoundVariants: [
-      { roundness: "full", size: "small", class: "w-8" },
-      { roundness: "full", size: "medium", class: "w-11" },
-      { roundness: "full", size: "large", class: "w-16" },
+      { roundness: "full", size: "extra-small", class: "w-8" },
+      { roundness: "full", size: "small", class: "w-12" },
+      { roundness: "full", size: "medium", class: "w-15" },
+      { roundness: "full", size: "large", class: "w-20" },
     ],
     defaultVariants: {
       variant: "primary",
-      size: "medium",
-      roundness: "default",
+      size: "small",
+      roundness: "small",
     },
   }
 );

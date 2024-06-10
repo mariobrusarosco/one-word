@@ -49,16 +49,13 @@ export const CreateTable = () => {
     >
       <DialogTrigger asChild>
         <Button
-          variant="secondary"
+          variant="outline"
           roundness="full"
-          size="large"
+          size="small"
           disabled={mutation.isPending}
           onClick={openModal}
         >
-          <Icon
-            name="plus"
-            className="stroke-white-100 flex w-8 dark:stroke-teal-800"
-          />
+          <Icon name="plus" />
         </Button>
       </DialogTrigger>
 

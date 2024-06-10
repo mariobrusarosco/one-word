@@ -1,6 +1,6 @@
 export const APP_FONTS = {
   fontFamily: {
-    serif: ["Lora", "serif"],
-    sans: ["DM Sans", "sans-serif"],
+    josefin: ["Josefin Sans", "sans-serif"],
+    sans: ["Open Sans", "sans-serif"],
   },
 };

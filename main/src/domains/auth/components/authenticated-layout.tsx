@@ -26,12 +26,7 @@ export const AuthenticatedLayout = () => {
   return (
     <AuthProvider>
       <WebSocketProvider>
-        <div
-          data-ui="authenticated-layout"
-          className="h-dvh desktop:grid desktop:grid-cols-[120px,1fr] desktop:grid-rows-[88px,1fr]"
-        >
-          <AppHeader />
-
+        <div data-ui="authenticated-layout" className="h-dvh">
           <AppSidebar />
           <main data-ui="main-content">
             <Outlet />

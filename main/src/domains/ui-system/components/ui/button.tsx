@@ -12,7 +12,7 @@ const buttonVariants = cva(
         primary:
           "bg-rose-800 text-neutral-100 hover:bg-rose-500 dark:hover:bg-rose-800/50",
         secondary:
-          "bg-teal-800 text-neutral-100 hover:bg-teal-800/80 dark:bg-neutral-100 dark:text-teal-800 dark:hover:bg-teal-800 dark:hover:text-neutral-100",
+          "bg-rose-800 text-neutral-100 hover:bg-rose-800/80 dark:text-neutral-100 dark:bg-violet-800 dark:hover:bg-teal-800 dark:hover:text-neutral-100",
         outline:
           "shadow-none bg-transparent text-rose-800 border-2 border-rose-800 hover:bg-rose-800 hover:text-neutral-100",
         danger: "bg-red-400 text-neutral-100 hover:bg-red-400/80 ",
@@ -30,7 +30,7 @@ const buttonVariants = cva(
       size: {
         "extra-small": "h-8 p-2 text-xs",
         small: "h-12 py-2 px-2 text-sm",
-        medium: "h-11 px-4 text-base",
+        medium: "h-11 px-4 text-sm",
         large: "h-16  px-4 text-2xl",
       },
     },

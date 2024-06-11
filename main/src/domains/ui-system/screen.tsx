@@ -13,142 +13,239 @@ const UISystemScreen = () => {
     <div>
       <h1>UI System</h1>
 
-      {/* <section>
+      <div>
         <h2>Button</h2>
 
-        <p>PRIMARY</p>
-        <li>
-          <Button variant="primary" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="primary" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="primary" size="large">
-            MB
-          </Button>
-        </li>
+        <div className="flex gap-4">
+          <div>
+            <h2>PRIMARY</h2>
+            <ul className="flex gap-4">
+              <li>
+                <Button roundness="none" variant="primary" size="extra-small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="none" variant="primary" size="small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="none" variant="primary" size="medium">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="none" variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
+            </ul>
 
-        <p>SECONDARY</p>
-        <li>
-          <Button variant="secondary" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="secondary" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="secondary" size="large">
-            MB
-          </Button>
-        </li>
+            <ul className="flex gap-4">
+              <li>
+                <Button roundness="tiny" variant="primary" size="extra-small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="tiny" variant="primary" size="small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="tiny" variant="primary" size="medium">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="tiny" variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
 
-        <p>OUTLINE</p>
-        <div className="bg-pink-800 p-4 flex flex-col gap-3">
-          <li>
-            <Button variant="outline" size="small">
-              MB
-            </Button>
-          </li>
-          <li>
-            <Button variant="outline" size="medium">
-              MB
-            </Button>
-          </li>
-          <li>
-            <Button variant="outline" size="large">
-              MB
-            </Button>
-          </li>
+              <li>
+                <Button roundness="tiny" variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
+            </ul>
+
+            <ul className="flex gap-4">
+              <li>
+                <Button roundness="small" variant="primary" size="extra-small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="small" variant="primary" size="small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="small" variant="primary" size="medium">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="small" variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
+
+              <li>
+                <Button roundness="small" variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
+            </ul>
+
+            <ul className="flex gap-4">
+              <li>
+                <Button roundness="medium" variant="primary" size="extra-small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="medium" variant="primary" size="small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="medium" variant="primary" size="medium">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="medium" variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
+
+              <li>
+                <Button roundness="medium" variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
+            </ul>
+
+            <ul className="flex gap-4">
+              <li>
+                <Button roundness="large" variant="primary" size="extra-small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="large" variant="primary" size="small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="large" variant="primary" size="medium">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button roundness="large" variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
+
+              <li>
+                <Button roundness="large" variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
+            </ul>
+
+            <ul className="flex gap-4">
+              <li>
+                <Button variant="primary" size="extra-small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button variant="primary" size="small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button variant="primary" size="medium">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button variant="primary" size="large">
+                  MB
+                </Button>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>SECONDARY</h3>
+            <section className="flex gap-4">
+              <li>
+                <Button variant="secondary" size="small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button variant="secondary" size="medium">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button variant="secondary" size="large">
+                  MB
+                </Button>
+              </li>
+            </section>
+          </div>
+
+          <div>
+            <h3>OUTLINE</h3>
+            <ul className="flex gap-4 bg-pink-500">
+              <li>
+                <Button variant="outline" size="small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button variant="outline" size="medium">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button variant="outline" size="large">
+                  MB
+                </Button>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>DANGER</h3>
+            <ul className="flex gap-4">
+              <li>
+                <Button variant="danger" size="small">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button variant="danger" size="medium">
+                  MB
+                </Button>
+              </li>
+              <li>
+                <Button variant="danger" size="large">
+                  MB
+                </Button>
+              </li>
+            </ul>
+          </div>
         </div>
-
-        <p>DANGER</p>
-        <li>
-          <Button variant="danger" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="danger" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button variant="danger" size="large">
-            MB
-          </Button>
-        </li>
-
-        <li>
-          <Button roundness="full" variant="primary" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="secondary" size="small">
-            MB
-          </Button>
-        </li>
-        <li className="bg-black">
-          <Button roundness="full" variant="outline" size="small">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="danger" size="small">
-            MB
-          </Button>
-        </li>
-
-        <li>
-          <Button roundness="full" variant="primary" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="secondary" size="medium">
-            MB
-          </Button>
-        </li>
-        <li className="bg-black">
-          <Button roundness="full" variant="outline" size="medium">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="danger" size="medium">
-            MB
-          </Button>
-        </li>
-
-        <li>
-          <Button roundness="full" variant="primary" size="large">
-            MB
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="secondary" size="large">
-            MB
-          </Button>
-        </li>
-        <li className="bg-black">
-          <Button roundness="full" variant="outline" size="large">
-            OU
-          </Button>
-        </li>
-        <li>
-          <Button roundness="full" variant="danger" size="large">
-            MB
-          </Button>
-        </li>
-      </section> */}
+      </div>
 
       <section>
         <h2>Popover</h2>

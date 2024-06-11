@@ -10,8 +10,8 @@ const ThemeModeToggle = () => {
   };
 
   return (
-    <Button onClick={toggleThemeMode} variant="outline" roundness="full">
-      <Icon name="sun-moon" size="medium" />
+    <Button onClick={toggleThemeMode} variant="primary" roundness="full">
+      <Icon name="sun-moon" />
     </Button>
   );
 };

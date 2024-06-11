@@ -11,7 +11,7 @@ import { SocketStatus } from "@/domains/socket/components/socket-status";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { ThemeModeToggle } from "../theme-mode-toggle";
 
-const AppSidebar = () => {
+const Navbar = () => {
   const { data: tables } = useQuery<Table[]>({
     queryKey: ["tables"],
     queryFn: tablesLoader,
@@ -76,4 +76,4 @@ const AppSidebar = () => {
   );
 };
 
-export { AppSidebar };
+export { Navbar };

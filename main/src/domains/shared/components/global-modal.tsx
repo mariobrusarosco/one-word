@@ -10,7 +10,7 @@ export const GlobalDialogContent = ({
   children: React.ReactNode;
 }) => {
   return (
-    <DialogContent className="global-modal-content border-none rounded-md p-20 bg-white-100 dark:bg-teal-800">
+    <DialogContent className="global-modal-content border-none rounded-md p-20 bg-neutral-100 dark:bg-violet-800">
       {children}
     </DialogContent>
   );
@@ -34,7 +34,7 @@ export const GlobalDialogDescription = ({
   children: React.ReactNode;
 }) => {
   return (
-    <DialogDescription className="global-modal-content border-none rounded-md bg-white-100 dark:bg-teal-800">
+    <DialogDescription className="global-modal-content border-none rounded-md ">
       {children}
     </DialogDescription>
   );

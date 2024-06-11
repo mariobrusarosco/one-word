@@ -9,7 +9,7 @@ import ChannelScreen from "@/domains/channel/screens/channel";
 import TableLayout from "@/domains/tables/components/table-layout";
 import GameScreen from "@/domains/games/screens/game";
 import Intro from "../screens/intro";
-import { AuthenticatedLayout } from "@/domains/auth/components/authenticated/authenticated-layout";
+import { AuthenticatedLayout } from "@/domains/auth/components/authenticated/layout";
 import PublicLayout from "@/domains/auth/components/public/layout";
 
 export const AppRouter = () => {

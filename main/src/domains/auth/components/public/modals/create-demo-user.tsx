@@ -1,7 +1,6 @@
 import { Button } from "@/domains/ui-system/components/ui/button";
-
 import { useMutation } from "@tanstack/react-query";
-import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+
 import { useModal } from "@/domains/ui-system/hooks/use-modal";
 import {
   GlobalDialogContent,
@@ -22,6 +21,7 @@ export const CreateDemoUser = () => {
   const [userDemo, setuserDemo] = useState("");
   const { toast } = useToast();
   const navigate = useNavigate();
+  const demoEmail = `${userDemo.replace(/\s/gi, "_").toLowerCase()}@demo.com`;
 
   const mutation = useMutation({
     mutationFn: userDemoMutation,
@@ -34,7 +34,7 @@ export const CreateDemoUser = () => {
     onSuccess: async () => {
       toast({
         variant: "success",
-        title: "user created",
+        title: "Demo user created!",
       });
       closeModal();
       navigate("/tables");
@@ -60,56 +60,61 @@ export const CreateDemoUser = () => {
     >
       <DialogTrigger asChild>
         <Button
-          variant="outline"
-          size="small"
+          variant="primary"
+          size="medium"
           disabled={mutation.isPending}
           onClick={openModal}
         >
-          <Icon
-            name="plus"
-            className="stroke-white-100 flex w-8 dark:stroke-teal-800"
-          />
-          create demo user?
+          Create User
         </Button>
       </DialogTrigger>
 
       <GlobalDialogContent>
-        <GlobalDialogHeader>
-          <p className="text-pink-500 text-4xl font-sans font-extralight">
-            Create a Demo User
-          </p>
-        </GlobalDialogHeader>
+        <div className="text-center font-josefin">
+          <GlobalDialogHeader>
+            <p className="text-rose-800 dark:text-neutral-100 text-5xl text-center ">
+              Create a Demo User
+            </p>
+          </GlobalDialogHeader>
 
-        <GlobalDialogDescription>
-          <p className="text-teal-800 text-lg font-sans font-extralight">
-            Type your user's name for demo purposes
-          </p>
-        </GlobalDialogDescription>
+          <GlobalDialogDescription>
+            <p className="text-violet-800 dark:text-neutral-100 text-xl font-light">
+              Just a user's name e.g. Jane Doe.
+            </p>
+          </GlobalDialogDescription>
+        </div>
+
         <form onSubmit={handleDemoUser}>
-          <div className="flex items-end gap-x-2 justify-center pt-14">
-            <div className="flex flex-col gap-y-3">
-              <label
-                className="uppercase text-pink-500 text-lg"
-                htmlFor="user-demo-name"
-              >
-                Demo User Name
-              </label>
+          <div className="flex flex-col mt-14">
+            <label
+              className="uppercase text-rose-500 dark:text-neutral-100 text-lg"
+              htmlFor="user-demo-name"
+            >
+              Demo User Name
+            </label>
+
+            <div className="flex gap-x-2">
               <input
                 value={userDemo}
                 onChange={handleInputChange}
                 type="text"
                 id="user-demo-name"
                 placeholder="Type your demo's name here"
-                className="rounded-sm py-2 px-4 border-2 border-pink-500 placeholder:opacity-80 placeholder:text-xs text-teal-800 font-sans font-light"
+                className="flex-1 rounded-sm py-2 px-4 border-2 border-rose-500 placeholder:opacity-80 placeholder:text-xs text-violet-800 font-light"
               />
+              <Button type="submit" disabled={mutation.isPending} size="medium">
+                invite friend
+              </Button>
             </div>
-            <Button
-              type="submit"
-              disabled={mutation.isPending}
-              className="text-xl font-extralight px-8"
-            >
-              create user
-            </Button>
+
+            {userDemo ? (
+              <p className="font-light text-xs mt-2 text-violet-500 dark:text-neutral-100">
+                You will be logged with an email of{" "}
+                <strong className="font-bold text-violet-800 dark:text-neutral-100">
+                  {demoEmail}
+                </strong>
+              </p>
+            ) : null}
           </div>
         </form>
       </GlobalDialogContent>

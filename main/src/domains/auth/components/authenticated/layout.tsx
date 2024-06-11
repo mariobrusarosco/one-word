@@ -1,8 +1,8 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { AuthenticatedMenu } from "./authenticated-menu/menu";
+import { AuthenticatedMenu } from "./menu/menu";
 import { WebSocketProvider } from "@/domains/socket/providers/web-socket/provider";
 import { useAuth } from "../../hooks/use-auth";
-import { AppSidebar } from "./app-sidebar";
+import { Navbar } from "./navbar";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -26,7 +26,7 @@ export const AuthenticatedLayout = () => {
     <AuthProvider>
       <WebSocketProvider>
         <div data-ui="authenticated-layout" className="h-dvh">
-          <AppSidebar />
+          <Navbar />
           <main data-ui="main-content">
             <Outlet />
           </main>

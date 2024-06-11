@@ -29,8 +29,8 @@ const buttonVariants = cva(
       size: {
         "extra-small": "h-8 p-2 text-xs",
         small: "h-12 py-2 px-2 text-sm",
-        medium: "h-11 px-4 text-sm",
-        large: "h-16  px-4 text-2xl",
+        medium: "py-4 px-6 font-light",
+        large: "px-4 text-2xl",
       },
     },
     compoundVariants: [

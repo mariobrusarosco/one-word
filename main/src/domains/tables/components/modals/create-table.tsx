@@ -38,6 +38,7 @@ export const CreateTable = () => {
     e.preventDefault();
 
     await mutation.mutate(tableNameInput);
+    setTableNameInput("");
   };
 
   return (

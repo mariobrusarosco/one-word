@@ -17,6 +17,7 @@ import {
   IconBrandFigma,
   IconSquareRoundedCheck,
   IconBarrierBlock,
+  IconShield,
 } from "@tabler/icons-react";
 
 type names =
@@ -38,7 +39,8 @@ type names =
   | "brand-figma"
   | "square-rounded-checked"
   | "barrier-block"
-  | "sun-moon";
+  | "sun-moon"
+  | "shield";
 
 export const iconMapper: Record<names, any> = {
   ["chevron-down"]: IconChevronDown,
@@ -60,6 +62,7 @@ export const iconMapper: Record<names, any> = {
   "brand-figma": IconBrandFigma,
   "square-rounded-checked": IconSquareRoundedCheck,
   "barrier-block": IconBarrierBlock,
+  shield: IconShield,
 };
 
 export type iconSizes = "extra-small" | "small" | "medium" | "large";

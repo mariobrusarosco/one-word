@@ -77,4 +77,8 @@
   * {
     @apply border-border;
   }
+
+  .screen-bg {
+    @apply bg-neutral-100 dark:bg-violet-800;
+  }
 }

@@ -11,6 +11,7 @@ import GameScreen from "@/domains/games/screens/game";
 import Intro from "../screens/intro";
 import { AuthenticatedLayout } from "@/domains/auth/components/authenticated/layout";
 import PublicLayout from "@/domains/auth/components/public/layout";
+import NoSelectedTable from "@/domains/tables/screens/no-selected-table";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -27,6 +28,7 @@ export const AppRouter = () => {
               path: "tables",
               element: <TableLayout />,
               children: [
+                { index: true, element: <NoSelectedTable /> },
                 { path: ":tableId", element: <TableScreen /> },
                 {
                   path: ":tableId/channels/:channelId",

@@ -13,6 +13,10 @@ import {
   IconHome2,
   IconHash,
   IconUsers,
+  IconBrandGithub,
+  IconBrandFigma,
+  IconSquareRoundedCheck,
+  IconBarrierBlock,
 } from "@tabler/icons-react";
 
 type names =
@@ -30,6 +34,10 @@ type names =
   | "home"
   | "hashtag"
   | "users"
+  | "brand-github"
+  | "brand-figma"
+  | "square-rounded-checked"
+  | "barrier-block"
   | "sun-moon";
 
 export const iconMapper: Record<names, any> = {
@@ -48,6 +56,10 @@ export const iconMapper: Record<names, any> = {
   home: IconHome2,
   hashtag: IconHash,
   users: IconUsers,
+  "brand-github": IconBrandGithub,
+  "brand-figma": IconBrandFigma,
+  "square-rounded-checked": IconSquareRoundedCheck,
+  "barrier-block": IconBarrierBlock,
 };
 
 export type iconSizes = "extra-small" | "small" | "medium" | "large";

@@ -14,5 +14,6 @@ export type IconProps = {
   // Get all the possible keys from iconMapper
   name: keyof typeof iconMapper;
   size?: iconSizes;
+  stroke?: number;
   className?: string;
 };

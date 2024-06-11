@@ -52,7 +52,7 @@ const features = [
 const IntroScren = () => {
   return (
     <div data-ui="intro-screen" className="h-dvh grid grid-cols-2 ">
-      <div data-ui="project-explanation" className="p-12 bg-violet-800 ">
+      <div data-ui="project-explanation" className="p-12 bg-violet-800 xl:p-32">
         <div data-ui="heading" className="flex items-baseline gap-x-2">
           <AppLogo className="w-[96px] h-[96px] stroke-neutral-100" />
           <h1 className="text-7xl font-josefin font-light text-neutral-100">
@@ -67,7 +67,7 @@ const IntroScren = () => {
         </p>
 
         <div className="my-14">
-          <ul className="flex gap-x-12 text-neutral-100 text-lg font-thin">
+          <ul className="flex gap-x-12 text-neutral-100 text-lg font-thin xl:flex-col xl:gap-y-10">
             <li>
               <a
                 className="flex items-center gap-x-2 hover:text-rose-800 transition-colors"
@@ -105,15 +105,15 @@ const IntroScren = () => {
         </div>
 
         <div className="mt-8 flex gap-x-4 items-center">
-          <Button asChild variant="secondary" size="medium">
+          <Button asChild variant="primary" size="medium" roundness="medium">
             <Link to="/login" className="flex">
               Explore the MVP
             </Link>
           </Button>
 
-          <p>or</p>
+          <p className="text-neutral-100 uppercase text-xs font-bold">or</p>
 
-          <Button asChild variant="secondary" size="medium">
+          <Button asChild variant="primary" size="medium" roundness="medium">
             <Link to="/login" className="flex">
               Watch a demo
             </Link>
@@ -123,14 +123,14 @@ const IntroScren = () => {
 
       <div
         data-ui="project-scope"
-        className="px-12 pt-24 pb-10 overflow-auto bg-neutral-100"
+        className="px-12 pt-24 pb-10 overflow-auto bg-neutral-100 xl:p-32 xl:pt-[180px]"
       >
         <h2 className="text-violet-800 font-josefin text-5xl font-light mb-2">
           Project Scope
         </h2>
         <Separator className="bg-violet-500 mt-1 mb-2" />
 
-        <p className="text-violet-800">
+        <p className="text-violet-800 text-lg font-light">
           This project is a{" "}
           <strong className="text-violet-800">Work In Progress</strong>, so
           below you'll find a list with the full scope plus a progress indicator

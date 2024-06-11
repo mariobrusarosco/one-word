@@ -17,6 +17,7 @@ const config = {
         "main-bottom": "0px 4px 4px rgba(0, 0, 0, 0.25)",
         "main-top": "0px 4px 4px rgba(0, 0, 0, 0.25)",
         "main-right": "4px 0px 4px rgba(0, 0, 0, 0.25)",
+        button: "0px 0px 6px 1px rgb(0, 0, 0)",
       },
       fontFamily: APP_FONTS.fontFamily,
       colors: {

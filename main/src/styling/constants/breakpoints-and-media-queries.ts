@@ -9,6 +9,13 @@ export const SCREENS_RANGE = {
   },
   desktop: {
     start: "1366px",
+    end: "1536px",
+  },
+  "large-desktop": {
+    start: "1536px",
+  },
+  "full-hd": {
+    start: "1920px",
   },
 };
 
@@ -34,8 +41,9 @@ const STARTING_FROM_DESKTOP_SCREENS = {
 };
 
 export const APP_BREAKPOINTS = {
-  ["only-m"]: ONLY_MOBILE_SCREENS,
-  ["only-t"]: ONLY_TABLET_SCREENS,
-  tablet: STARTING_FROM_TABLET_SCREENS,
-  desktop: STARTING_FROM_DESKTOP_SCREENS,
+  sm: { min: SCREENS_RANGE.mobile.start },
+  md: { min: SCREENS_RANGE.tablet.start },
+  lg: { min: SCREENS_RANGE.desktop.start },
+  xl: { min: SCREENS_RANGE["large-desktop"].start },
+  fh: { min: SCREENS_RANGE["full-hd"].start },
 };

@@ -10,6 +10,7 @@ import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 import { SocketStatus } from "@/domains/socket/components/socket-status";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { ThemeModeToggle } from "../theme-mode-toggle";
+import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 
 const Navbar = () => {
   const { data: tables } = useQuery<Table[]>({
@@ -18,11 +19,12 @@ const Navbar = () => {
     enabled: true,
   });
   const { connected } = useWebSocket();
+  const { toast } = useToast();
 
   return (
     <div
-      data-ui="app-sidebar"
-      className="flex items-center justify-between px-4 py-6 bg-neutral-100 dark:bg-violet-800 overflow-hidden shadow-main-bottom z-[3]"
+      data-ui="navbar"
+      className="flex items-center justify-between px-4 py-6 bg-neutral-100 dark:bg-violet-800 overflow-hidden shadow-main-bottom relative"
     >
       <div className="flex items-center">
         <CreateTable />
@@ -31,6 +33,18 @@ const Navbar = () => {
           className="mx-4 bg-rose-800 h-[57px]"
           orientation="vertical"
         />
+
+        <p
+          className="text-neutral-100"
+          onClick={() =>
+            toast({
+              variant: "destructive",
+              title: "Dsadsademo user created!",
+            })
+          }
+        >
+          eita
+        </p>
 
         <ul className="flex items-center gap-x-4">
           {tables?.map((table) => (

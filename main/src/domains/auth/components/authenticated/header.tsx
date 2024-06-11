@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 import { userLoader } from "../../api/loaders";
 import { ThemeModeToggle } from "../theme-mode-toggle";
+import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 
 const PublicHeader = () => {
   const { connected } = useWebSocket();
@@ -15,6 +16,7 @@ const PublicHeader = () => {
     queryFn: userLoader,
     enabled: false,
   });
+  const { toast } = useToast();
 
   const userInitials = getInitials(`${data?.firstName} ${data?.lastName}`);
 

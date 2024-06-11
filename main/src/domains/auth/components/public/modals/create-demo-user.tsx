@@ -103,7 +103,7 @@ export const CreateDemoUser = () => {
                 className="flex-1 rounded-sm py-2 px-4 border-2 border-rose-500 placeholder:opacity-80 placeholder:text-xs text-violet-800 font-light"
               />
               <Button type="submit" disabled={mutation.isPending} size="medium">
-                invite friend
+                create user
               </Button>
             </div>
 

@@ -152,7 +152,7 @@ const IntroScren = () => {
               <Icon
                 name={feature.iconName as keyof typeof iconMapper}
                 size="medium"
-                className="text-violet-800 stroke-width-1"
+                className="text-rose-800 stroke-width-1"
                 stroke={1}
               />
             </div>

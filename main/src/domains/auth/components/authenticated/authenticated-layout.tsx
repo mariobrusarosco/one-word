@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { AuthenticatedMenu } from "./authenticated-menu/menu";
 import { WebSocketProvider } from "@/domains/socket/providers/web-socket/provider";
-import { useAuth } from "../hooks/use-auth";
+import { useAuth } from "../../hooks/use-auth";
 import { AppSidebar } from "./app-sidebar";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {

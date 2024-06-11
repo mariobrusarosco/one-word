@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 import { SocketStatus } from "@/domains/socket/components/socket-status";
-import { ThemeModeToggle } from "./authenticated-menu/theme-mode-toggle";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+import { ThemeModeToggle } from "../theme-mode-toggle";
 
 const AppSidebar = () => {
   const { data: tables } = useQuery<Table[]>({

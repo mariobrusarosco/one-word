@@ -12,6 +12,7 @@ import Intro from "../screens/intro";
 import { AuthenticatedLayout } from "@/domains/auth/components/authenticated/layout";
 import PublicLayout from "@/domains/auth/components/public/layout";
 import NoSelectedTable from "@/domains/tables/screens/no-selected-table";
+import { MyAccountScreen } from "@/domains/my-account/screens/my-account";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -42,21 +43,8 @@ export const AppRouter = () => {
             },
             { path: "ui-system", element: <UISystemScreen /> },
             {
-              path: "dashboard",
-              async lazy() {
-                const { DashboardScreen } = await import(
-                  "../../dashboard/screens/dashboard"
-                );
-                return { Component: DashboardScreen };
-              },
-            },
-            {
               path: "account",
-              element: (
-                <div>
-                  <h1>Account</h1>
-                </div>
-              ),
+              element: <MyAccountScreen />,
             },
           ],
         },

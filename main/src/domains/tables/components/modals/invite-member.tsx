@@ -3,8 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useModal } from "@/domains/ui-system/hooks/use-modal";
 import {
   GlobalDialogContent,
-  GlobalDialogDescription,
-  GlobalDialogHeader,
+  GlobalDialogHeading,
 } from "@/domains/shared/components/global-modal";
 import {
   Dialog,
@@ -13,6 +12,7 @@ import {
 import { useState } from "react";
 import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { inviteFriendMutation } from "../../api/mutations";
+import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 
 export const InviteMember = ({ tableId }: { tableId: string }) => {
   const { closeModal, openModal, isOpen } = useModal("invite-friend");
@@ -55,35 +55,33 @@ export const InviteMember = ({ tableId }: { tableId: string }) => {
       open={isOpen}
     >
       <DialogTrigger asChild>
-        <Button
-          variant="primary"
-          size="medium"
-          disabled={mutation.isPending}
-          onClick={openModal}
-        >
-          invite friend
-        </Button>
+        <div className="flex items-baseline gap-x-2 pt-12">
+          <p className="text-violet-800 dark:text-neutral-100 text-lg">
+            Invite a friend
+          </p>
+          <Button
+            variant="primary"
+            size="extra-small"
+            roundness="medium"
+            disabled={mutation.isPending}
+            onClick={openModal}
+          >
+            <Icon name="plus" size="extra-small" />
+          </Button>
+        </div>
       </DialogTrigger>
 
       <GlobalDialogContent>
-        <GlobalDialogHeader>
-          <p className="text-pink-500 text-4xl font-sans font-extralight text-center">
-            Invite a friend to this table
-          </p>
-        </GlobalDialogHeader>
-
-        <GlobalDialogDescription>
-          <p className="text-teal-800 text-lg font-sans font-extralight text-center">
-            Type your friends's email here. This email needs to be already
-            registed in our platform.
-          </p>
-        </GlobalDialogDescription>
+        <GlobalDialogHeading
+          description="Type your friends's email here. This email needs to be already registed in our platform."
+          title="Invite a friend to this table"
+        />
 
         <form onSubmit={handleMemberInvite}>
-          <div className="flex items-end gap-x-2 justify-center pt-14">
+          <div className="flex items-end gap-x-4 justify-center pt-14">
             <div className="flex flex-col gap-y-3">
               <label
-                className="uppercase text-pink-500 text-lg"
+                className="uppercase text-rose-800 text-lg"
                 htmlFor="member-to-be-invited-email"
               >
                 Email
@@ -94,7 +92,7 @@ export const InviteMember = ({ tableId }: { tableId: string }) => {
                 type="email"
                 id="member-to-be-invited-email"
                 placeholder="Type your friends's email here"
-                className="rounded-sm py-2 px-4 border-2 border-pink-500 placeholder:opacity-80 placeholder:text-xs text-teal-800 font-sans font-light"
+                className="rounded-sm py-2 px-4 border-2 h-12 border-rose-800 placeholder:opacity-80 placeholder:text-xs text-violet-800 font-sans font-light"
               />
             </div>
             <Button

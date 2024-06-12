@@ -8,10 +8,10 @@ import { Link } from "react-router-dom";
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 import { SocketStatus } from "@/domains/socket/components/socket-status";
-import { ThemeModeToggle } from "./authenticated-menu/theme-mode-toggle";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+import { ThemeModeToggle } from "../theme-mode-toggle";
 
-const AppSidebar = () => {
+const Navbar = () => {
   const { data: tables } = useQuery<Table[]>({
     queryKey: ["tables"],
     queryFn: tablesLoader,
@@ -21,8 +21,8 @@ const AppSidebar = () => {
 
   return (
     <div
-      data-ui="app-sidebar"
-      className="flex items-center justify-between px-4 py-6 bg-neutral-100 dark:bg-violet-800 overflow-hidden shadow-main-bottom z-[3]"
+      data-ui="navbar"
+      className="flex items-center justify-between px-12 py-6 bg-neutral-100 dark:bg-violet-800 overflow-hidden shadow-main-bottom relative row-start-1 row-end-2 xl:px-20"
     >
       <div className="flex items-center">
         <CreateTable />
@@ -52,7 +52,7 @@ const AppSidebar = () => {
         />
         <li>
           <Button asChild variant="outline" roundness="full" size="small">
-            <Link to="/">
+            <Link to="/tables">
               <Icon name="home" />
             </Link>
           </Button>
@@ -76,4 +76,4 @@ const AppSidebar = () => {
   );
 };
 
-export { AppSidebar };
+export { Navbar };

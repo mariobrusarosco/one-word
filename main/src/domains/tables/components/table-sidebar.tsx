@@ -1,11 +1,8 @@
 import { ITable } from "../typing/interfaces";
-import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { ParticpantsList } from "./participants";
-import { TableSearch } from "@/domains/tables/components/table-search";
 import { TableChannels } from "./table-channels";
 import { useParams } from "react-router-dom";
-import { ActiveGameDisplay } from "@/domains/games/components/active-game-display";
 import { useTableSocket } from "../hooks/use-table-socket";
 
 interface Props {
@@ -20,30 +17,16 @@ const TableSidebar = ({ table, tableSocket }: Props) => {
   if (!tableId) return null;
 
   return (
-    <div className="table-sidebar bg-white-100 dark:bg-teal-800 shadow-main-right z-[2] h-full overflow-hidden flex flex-col">
-      <div className="table-name shadow-main-bottom px-4 py-4 flex justify-between cursor-pointer hover:bg-pink-500 group transition-colors">
-        <p className="text-xl text-pink-500 group-hover:text-white-100">
+    <div className="table-sidebar bg-neutral-100 dark:bg-violet-800 shadow-main-right z-[2] grid grid-rows-[56px,1fr,1px,1fr] overflow-hidden">
+      <div className="table-name shadow-main-bottom px-4 py-4 flex justify-between cursor-pointer hover:bg-rose-800 group transition-colors">
+        <p className="text text-rose-800 dark:text-neutral-100 group-hover:text-neutral-100 uppercase">
           {table.name}
         </p>
-        <Icon
-          name="chevron-down"
-          className="stroke-pink-500 group-hover:stroke-white-100 transition-colors"
-        />
-      </div>
-
-      <TableSearch />
-
-      <ActiveGameDisplay />
-
-      <div className="my-3">
-        <Separator />
       </div>
 
       <ParticpantsList tableParticipants={tableSocket.tableParticipants} />
 
-      <div className="my-3">
-        <Separator />
-      </div>
+      <Separator />
 
       <TableChannels channels={table.channels} />
     </div>

@@ -41,7 +41,7 @@ const ChatInput = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="chat-input bg-pink-500 max-h-[72px] rounded-md p-4 flex items-center flex-1 gap-3 text-white-100">
+      <div className="chat-input bg-rose-800 max-h-[72px] rounded-md p-4 flex items-center flex-1 gap-3 text-neutral-100">
         <Button
           type="submit"
           variant="secondary"
@@ -49,10 +49,10 @@ const ChatInput = () => {
           size="small"
           disabled={mutation.isPending || inputMessage.length === 0}
         >
-          <Icon name="plus" size="small" className="stroke-white-100 " />
+          <Icon name="plus" size="small" className="stroke-neutral-100 " />
         </Button>
         <input
-          className="bg-pink-900/25 p-2 w-full text-white-100 font-light focus-visible:outline-none placeholder-white-100 text-sm"
+          className="bg-transparent p-2 w-full text-neutral-100 font-light focus-visible:outline-none placeholder-neutral-100 text-sm"
           id="message"
           type="text"
           value={inputMessage}

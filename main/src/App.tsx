@@ -18,7 +18,7 @@ const AppWithProviders = ({ children }: { children: React.ReactNode }) => {
   const { AppThemeProvider } = useAppTheme();
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
       {AppThemeProvider ? (
         <AppThemeProvider defaultTheme="dark">{children}</AppThemeProvider>
       ) : (

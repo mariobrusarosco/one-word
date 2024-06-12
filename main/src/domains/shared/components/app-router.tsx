@@ -1,7 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AuthenticatedLayout } from "../../auth/components/authenticated-layout";
 import RootLayout from "./root-layout";
-import PublicLayout from "./public-layout";
 import LoginScreen from "../../auth/screens/login";
 import logoutUser from "../../auth/routes/logout-user";
 import TableScreen from "../../tables/screens/table";
@@ -11,6 +9,9 @@ import ChannelScreen from "@/domains/channel/screens/channel";
 import TableLayout from "@/domains/tables/components/table-layout";
 import GameScreen from "@/domains/games/screens/game";
 import Intro from "../screens/intro";
+import { AuthenticatedLayout } from "@/domains/auth/components/authenticated/layout";
+import PublicLayout from "@/domains/auth/components/public/layout";
+import NoSelectedTable from "@/domains/tables/screens/no-selected-table";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -27,6 +28,7 @@ export const AppRouter = () => {
               path: "tables",
               element: <TableLayout />,
               children: [
+                { index: true, element: <NoSelectedTable /> },
                 { path: ":tableId", element: <TableScreen /> },
                 {
                   path: ":tableId/channels/:channelId",

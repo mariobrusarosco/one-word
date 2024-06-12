@@ -21,7 +21,7 @@ const SocketStatus = ({ connected }: { connected: boolean | null }) => {
         ></span>
       </span>
 
-      <p className="text-rose-800 dark:text-neutral-100 text-xs uppercase font-semibold">
+      <p className="text-rose-800 dark:text-neutral-100 text-xs uppercase font-bold">
         {connected ? "online" : "offline"}
       </p>
     </div>

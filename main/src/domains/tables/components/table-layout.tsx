@@ -18,26 +18,20 @@ const TableLayout = () => {
   });
   const tableSocket = useTableSocket(tableId);
 
-  if (isLoading) return <div>Loading table...</div>;
+  if (isLoading) return <div>Loading tables...</div>;
 
   if (error) {
     return <div>{error.message}</div>;
   }
 
-  if (!table) return null;
-
-  console.log("[DEBUG] 3.0", { tableSocket });
-
   return (
     <div
       data-ui="table-layout"
-      className="grid desktop:h-full overflow-hidden desktop:grid-cols-[224px,1fr]"
+      className="grid lg:grid-cols-[224px,1fr] h-full"
     >
-      <TableSidebar table={table} tableSocket={tableSocket} />
+      {table ? <TableSidebar table={table} tableSocket={tableSocket} /> : null}
 
-      <div data-ui="table-wrapper" className="p-10">
-        <Outlet context={{ table, tableSocket }} />
-      </div>
+      <Outlet context={{ table, tableSocket }} />
     </div>
   );
 };

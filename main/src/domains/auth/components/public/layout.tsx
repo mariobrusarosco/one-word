@@ -1,9 +1,9 @@
-import { PublicHeader } from "@/domains/auth/public/components/header/header";
 import { Outlet } from "react-router-dom";
+import { PublicHeader } from "./header";
 
 const PublicLayout = () => {
   return (
-    <div style={{ border: "1px solid blue" }}>
+    <div data-ui="public-layout" className="h-dvh flex flex-col">
       <PublicHeader />
       <Outlet />
     </div>

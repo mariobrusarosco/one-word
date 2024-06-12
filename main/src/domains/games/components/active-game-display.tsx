@@ -11,8 +11,8 @@ export const ActiveGameDisplay = () => {
           to={`/tables/${tableId}/game`}
           className="flex items-center gap-2"
         >
-          <Icon name="device-gamepad" className="stroke-pink-500" />
-          <span className="uppercase text-lg text-pink-500">game</span>
+          <Icon name="device-gamepad" className="stroke-rose-800" />
+          <span className="uppercase text-lg text-rose-800">game</span>
         </Link>
       </div>
     </div>

@@ -15,22 +15,22 @@ const Message: React.FC<Props> = ({ message }) => {
     <li className="message p-3 shadow-main-bottom rounded-md flex items-center gap-x-3">
       <Avatar className="shadow-main-bottom">
         <AvatarImage src="" />
-        <AvatarFallback className=" bg-teal-800 text-white-100">
+        <AvatarFallback className=" bg-violet-800 text-neutral-100">
           {getInitials(message.memberFullName || "")}
         </AvatarFallback>
       </Avatar>
 
       <div className="grid gap-y-1">
         <div className="flex items-center gap-x-3 ">
-          <div className="bg-pink-500 py-1 px-2 font-light text-white-100 rounded-md shadow-main-bottom text-xs">
+          <div className="bg-rose-800 py-1 px-2 font-light text-neutral-100 rounded-md shadow-main-bottom text-xs">
             {message.memberFullName}
           </div>
-          <div className="text-pink-500 text-xs">
+          <div className="text-rose-800 text-xs">
             {new Date(message.createdAt).toLocaleDateString()}{" "}
             {new Date(message.createdAt).toLocaleTimeString()}
           </div>
         </div>
-        <p className="text-teal-800 text-sm">{message.content}</p>
+        <p className="text-violet-800 text-sm">{message.content}</p>
       </div>
     </li>
   );

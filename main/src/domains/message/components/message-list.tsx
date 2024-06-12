@@ -51,19 +51,19 @@ const MessageList = ({ channelName }: { channelName: IChannel["name"] }) => {
       ref={ref}
       className="chat-messages flex-1 mb-5 mt-20 overflow-auto"
     >
-      <p className="text-3xl font-extralight text-teal-800 desktop:text-5xl">
+      <p className="text-3xl font-extralight text-violet-800 desktop:text-5xl">
         Welcome to{" "}
         <span className="font-semibold text-3xl desktop:text-5xl">
           #{channelName}
         </span>
       </p>
-      <p className="text-2xl font-extralight text-pink-500">
+      <p className="text-2xl font-extralight text-rose-800">
         This is the beginning of a conversation
       </p>
       <div className="message-list mt-8">
         {infiniteQuery.hasNextPage && (
           <Button
-            className="mb-2 text-teal-800 uppercase font-semibold text-xs border-teal-800"
+            className="mb-2 text-violet-800 uppercase font-semibold text-xs border-violet-800"
             variant="outline"
             size="small"
             disabled={infiniteQuery.isFetchingNextPage}

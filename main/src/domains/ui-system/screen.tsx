@@ -205,7 +205,7 @@ const UISystemScreen = () => {
 
           <div>
             <h3>OUTLINE</h3>
-            <ul className="flex gap-4 bg-pink-500">
+            <ul className="flex gap-4 bg-rose-800">
               <li>
                 <Button variant="outline" size="small">
                   MB

@@ -67,13 +67,13 @@ export const InviteMember = ({ tableId }: { tableId: string }) => {
 
       <GlobalDialogContent>
         <GlobalDialogHeader>
-          <p className="text-pink-500 text-4xl font-sans font-extralight text-center">
+          <p className="text-rose-800 text-4xl font-sans font-extralight text-center">
             Invite a friend to this table
           </p>
         </GlobalDialogHeader>
 
         <GlobalDialogDescription>
-          <p className="text-teal-800 text-lg font-sans font-extralight text-center">
+          <p className="text-violet-800 text-lg font-sans font-extralight text-center">
             Type your friends's email here. This email needs to be already
             registed in our platform.
           </p>
@@ -83,7 +83,7 @@ export const InviteMember = ({ tableId }: { tableId: string }) => {
           <div className="flex items-end gap-x-2 justify-center pt-14">
             <div className="flex flex-col gap-y-3">
               <label
-                className="uppercase text-pink-500 text-lg"
+                className="uppercase text-rose-800 text-lg"
                 htmlFor="member-to-be-invited-email"
               >
                 Email
@@ -94,7 +94,7 @@ export const InviteMember = ({ tableId }: { tableId: string }) => {
                 type="email"
                 id="member-to-be-invited-email"
                 placeholder="Type your friends's email here"
-                className="rounded-sm py-2 px-4 border-2 border-pink-500 placeholder:opacity-80 placeholder:text-xs text-teal-800 font-sans font-light"
+                className="rounded-sm py-2 px-4 border-2 border-rose-800 placeholder:opacity-80 placeholder:text-xs text-violet-800 font-sans font-light"
               />
             </div>
             <Button

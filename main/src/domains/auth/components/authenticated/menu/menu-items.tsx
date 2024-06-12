@@ -10,7 +10,7 @@ export const MenuItem = forwardRef<HTMLSpanElement, MenuItemProps>(
     <span
       ref={ref}
       className={cn(
-        "flex flex-col items-center gap-y-1 text-white-100 cursor-pointer",
+        "flex flex-col items-center gap-y-1 text-neutral-100 cursor-pointer",
         className
       )}
       {...props}

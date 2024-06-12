@@ -27,7 +27,7 @@ const TableLayout = () => {
   return (
     <div
       data-ui="table-layout"
-      className="grid desktop:grid-cols-[224px,1fr] p-12 xl:p-20"
+      className="grid lg:grid-cols-[224px,1fr] h-full"
     >
       {table ? <TableSidebar table={table} tableSocket={tableSocket} /> : null}
 

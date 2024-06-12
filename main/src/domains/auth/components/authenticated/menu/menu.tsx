@@ -36,13 +36,13 @@ export const AuthenticatedMenu = () => {
     <DropdownMenu>
       <div
         data-ui="authenticated-menu"
-        className="sticky bottom-0 w-full flex items-center justify-center gap-x-4 bg-rose-500 p-4 dark:bg-violet-800 lg:row-start-1 lg:row-end-3 lg:hidden"
+        className="sticky bottom-0 w-full flex items-center justify-center gap-x-4 bg-rose-800 p-4 dark:bg-violet-800 lg:row-start-1 lg:row-end-3 lg:hidden"
       >
         <InitiallyVisibleItems />
 
         <OpenTrigger />
 
-        <DropdownMenuContent className="w-screen h-screen translate-y-[84px] border-none rounded-none bg-rose-500 p-0 dark:bg-violet-800">
+        <DropdownMenuContent className="w-screen h-screen translate-y-[84px] border-none rounded-none bg-rose-800 p-0 dark:bg-violet-800">
           <div className="flex justify-between shadow-xl px-4 py-6">
             <span className="text-neutral-100 text-4xl">one word</span>
             <CloseTrigger />

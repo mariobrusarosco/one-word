@@ -33,12 +33,12 @@ const TableScreen = () => {
   return (
     <div data-ui="table-screen">
       <div className="heading flex justify-between items-center font-sans ">
-        <p className="text-pink-500 dark:text-teal-800 text-5xl">Table</p>
-        <p className="table-name font-semibold uppercase text-2xl text-teal-800 dark:text-white-100 ">
+        <p className="text-rose-800 dark:text-violet-800 text-5xl">Table</p>
+        <p className="table-name font-semibold uppercase text-2xl text-violet-800 dark:text-neutral-100 ">
           {data.name}
         </p>
       </div>
-      <Separator className="bg-teal-800 mt-3" />
+      <Separator className="bg-violet-800 mt-3" />
 
       <InviteMember tableId={tableId} />
 

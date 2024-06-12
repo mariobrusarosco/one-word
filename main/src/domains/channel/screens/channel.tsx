@@ -47,16 +47,16 @@ const ChannelScreen = () => {
     >
       <div className="heading font-extralight">
         <div className="flex justify-between items-center font-sans ">
-          <p className="text-pink-500 dark:text-teal-800 text-3xl desktop:text-5xl">
+          <p className="text-rose-800 dark:text-violet-800 text-3xl desktop:text-5xl">
             Channel
           </p>
           {/* {fetchingChannelMessages ? <p>Loading...</p> : null} */}
-          <p className="table-name font-sans text-3xl text-teal-800 dark:text-white-100 desktop:text-5xl">
+          <p className="table-name font-sans text-3xl text-violet-800 dark:text-neutral-100 desktop:text-5xl">
             {channel?.name}
           </p>
         </div>
 
-        <Separator className="bg-pink-500 my-4" />
+        <Separator className="bg-rose-800 my-4" />
       </div>
 
       <MessageList channelName={channel.name} />

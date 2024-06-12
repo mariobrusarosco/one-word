@@ -82,3 +82,33 @@
     @apply bg-neutral-100 dark:bg-violet-800;
   }
 }
+
+@layer utilities {
+  .scrollable {
+    /* scrollbar-color: theme(colors.rose.800) theme(colors.rose.100); 
+    scrollbar-width: thin; */
+  }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: theme(colors.rose.800);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-track {
+  display: none;
+}
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+
+@supports not selector(::-webkit-scrollbar){
+  .scrollable {
+    scrollbar-width: auto;
+    scrollbar-color: theme(colors.rose.800) theme(colors.rose.800);
+  }
+}

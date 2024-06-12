@@ -87,7 +87,7 @@ export const CreateDemoUser = () => {
         <form onSubmit={handleDemoUser}>
           <div className="flex flex-col mt-14">
             <label
-              className="uppercase text-rose-500 dark:text-neutral-100 text-lg"
+              className="uppercase text-rose-800 dark:text-neutral-100 text-lg"
               htmlFor="user-demo-name"
             >
               Demo User Name
@@ -100,7 +100,7 @@ export const CreateDemoUser = () => {
                 type="text"
                 id="user-demo-name"
                 placeholder="Type your demo's name here"
-                className="flex-1 rounded-sm py-2 px-4 border-2 border-rose-500 placeholder:opacity-80 placeholder:text-xs text-violet-800 font-light"
+                className="flex-1 rounded-sm py-2 px-4 border-2 border-rose-800 placeholder:opacity-80 placeholder:text-xs text-violet-800 font-light"
               />
               <Button type="submit" disabled={mutation.isPending} size="medium">
                 create user

@@ -4,7 +4,7 @@ import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 
 const NoSelectedTable = () => {
   return (
-    <div data-ui="no-selected-table-screen" className="p-12 xl:p-20">
+    <div data-ui="no-selected-table-screen" className="p-12 xl:p-20 col-[1/-1]">
       <ScreenHeading title="No donuts for you" />
 
       <ul className="text-violet-800 dark:text-neutral-100 text-xl flex flex-col gap-y-6 pt-6">
@@ -13,8 +13,8 @@ const NoSelectedTable = () => {
             <Icon size="extra-small" name="device-gamepad" />
           </Button>
           <p>
-            You can join a table, if you were already invited to it, on the top
-            bar.
+            You can join a table, if you were already invited to it, on the
+            navbar.
           </p>
         </li>
 

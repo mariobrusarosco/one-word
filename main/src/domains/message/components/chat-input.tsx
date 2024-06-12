@@ -52,7 +52,7 @@ const ChatInput = () => {
           <Icon name="plus" size="small" className="stroke-neutral-100 " />
         </Button>
         <input
-          className="bg-pink-900/25 p-2 w-full text-neutral-100 font-light focus-visible:outline-none placeholder-neutral-100 text-sm"
+          className="bg-transparent p-2 w-full text-neutral-100 font-light focus-visible:outline-none placeholder-neutral-100 text-sm"
           id="message"
           type="text"
           value={inputMessage}

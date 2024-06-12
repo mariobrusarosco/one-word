@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import { MessageList } from "@/domains/message/components/message-list";
 import { ChatInput } from "@/domains/message/components/chat-input";
-import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { useQuery } from "@tanstack/react-query";
 import { IChannel } from "../typing/interfaces";
 import { channelLoader } from "../api/loaders";
 import { useChannelSocket } from "../hooks/use-channel-socket";
+import { ScreenHeading } from "@/domains/shared/components/screen-heading";
 
 const ChannelScreen = () => {
   const { channelId } = useParams<{
@@ -43,21 +43,9 @@ const ChannelScreen = () => {
   return (
     <div
       data-ui="channel-screen"
-      className="channel h-full flex flex-col p-14 overflow-hidden"
+      className="h-full flex flex-col flex-1 gap-y-6 px-12 py-6 overflow-auto scrollable"
     >
-      <div className="heading font-extralight">
-        <div className="flex justify-between items-center font-sans ">
-          <p className="text-rose-800 dark:text-violet-800 text-3xl desktop:text-5xl">
-            Channel
-          </p>
-          {/* {fetchingChannelMessages ? <p>Loading...</p> : null} */}
-          <p className="table-name font-sans text-3xl text-violet-800 dark:text-neutral-100 desktop:text-5xl">
-            {channel?.name}
-          </p>
-        </div>
-
-        <Separator className="bg-rose-800 my-4" />
-      </div>
+      <ScreenHeading title="Channel" subtitle={channel.name} />
 
       <MessageList channelName={channel.name} />
 

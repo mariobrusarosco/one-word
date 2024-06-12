@@ -15,7 +15,7 @@ const Message: React.FC<Props> = ({ message }) => {
     <li className="message p-3 shadow-main-bottom rounded-md flex items-center gap-x-3">
       <Avatar className="shadow-main-bottom">
         <AvatarImage src="" />
-        <AvatarFallback className=" bg-violet-800 text-neutral-100">
+        <AvatarFallback className=" bg-rose-800 text-neutral-100">
           {getInitials(message.memberFullName || "")}
         </AvatarFallback>
       </Avatar>
@@ -25,12 +25,14 @@ const Message: React.FC<Props> = ({ message }) => {
           <div className="bg-rose-800 py-1 px-2 font-light text-neutral-100 rounded-md shadow-main-bottom text-xs">
             {message.memberFullName}
           </div>
-          <div className="text-rose-800 text-xs">
+          <div className="text-rose-800 dark:text-neutral-100 text-xs">
             {new Date(message.createdAt).toLocaleDateString()}{" "}
             {new Date(message.createdAt).toLocaleTimeString()}
           </div>
         </div>
-        <p className="text-violet-800 text-sm">{message.content}</p>
+        <p className="text-violet-800 dark:text-neutral-100 text-sm">
+          {message.content}
+        </p>
       </div>
     </li>
   );

@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { IMessage } from "../typing/interfaces";
 import { Message } from "./message";
 import { Button } from "@/domains/ui-system/components/ui/button";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { SocketEvents } from "@/domains/socket/typing/enums";
 import { useInfiniteChannelMessages } from "../hooks/use-infinite-channel-messages";
@@ -21,13 +21,15 @@ const MessageList = ({ channelName }: { channelName: IChannel["name"] }) => {
   const infiniteQuery = useInfiniteChannelMessages({
     channelId: channelId || undefined,
   });
-  const watchForNewMessages = () => {
+
+  const watchForNewMessages = useCallback(() => {
     on(SocketEvents.UPDATE_CHAT_MESSAGES, () => {
       queryClient.invalidateQueries({
         queryKey: ["channel-messages", { channelId }],
       });
     });
-  };
+  }, [on]);
+
   const scrollListToBottom = () =>
     ref?.current?.scrollTo({
       top: ref.current.scrollHeight,
@@ -46,18 +48,16 @@ const MessageList = ({ channelName }: { channelName: IChannel["name"] }) => {
   }
 
   return (
-    <div
-      data-ui="message-list"
-      ref={ref}
-      className="chat-messages flex-1 mb-5 mt-20 overflow-auto"
-    >
-      <p className="text-3xl font-extralight text-violet-800 desktop:text-5xl">
-        Welcome to{" "}
-        <span className="font-semibold text-3xl desktop:text-5xl">
+    <div data-ui="message-list" ref={ref} className="overflow-auto">
+      <div className="flex items-center gap-x-2 text-neutral-100">
+        <p className="text-3xl font-normal text-violet-800 dark:text-neutral-100 font-josefin">
+          Welcome to
+        </p>
+        <span className="text-sm p-2 bg-rose-800 rounded-sm">
           #{channelName}
         </span>
-      </p>
-      <p className="text-2xl font-extralight text-rose-800">
+      </div>
+      <p className="text-xl  font-extralight font-josefin text-violet-800 dark:text-neutral-100">
         This is the beginning of a conversation
       </p>
       <div className="message-list mt-8">

@@ -32,7 +32,7 @@ export const AuthenticatedLayout = () => {
           <Navbar />
           <main
             data-ui="main-content"
-            className="screen-bg row-start-2 row-end-3"
+            className="screen-bg row-start-2 row-end-3 overflow-hidden"
           >
             <Outlet />
           </main>

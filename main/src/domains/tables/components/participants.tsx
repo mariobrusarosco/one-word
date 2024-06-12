@@ -5,7 +5,7 @@ const Participant = ({ participant }: { participant: ITablePartipant }) => {
   if (!participant) return null;
 
   return (
-    <div className="participant flex items-center gap-2 px-3 py-3 cursor-pointer rounded-md hover:bg-rose-800 group ">
+    <div className="participant flex items-center gap-2 px-3 py-3 cursor-pointer rounded-md hover:bg-rose-800 group transition-colors">
       <div className="participant-avatar bg-rose-800 w-7 h-7 rounded-full flex justify-center items-center group-hover:bg-violet-800">
         <span className="text-neutral-100 text-xs">
           {getInitials(participant.username)}

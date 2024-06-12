@@ -19,7 +19,5 @@ export const loaderPaginatedMessages = async ({
     },
   });
 
-  console.log("[LOADER] - [MESSAGES]", result);
-
   return (await result.data) as PageWithIMessages;
 };

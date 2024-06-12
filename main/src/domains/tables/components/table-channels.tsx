@@ -9,7 +9,7 @@ const ChannelItem = ({ channel }: { channel: IChannel }) => {
     <li>
       <Link
         to={`${tableId}/channels/${channel.id}`}
-        className="flex items-center gap-x-2 p-2 rounded-md bg-neutral-100 hover:bg-rose-800 dark:bg-violet-800 hover:dark:bg-rose-800  cursor-pointer group"
+        className="flex items-center gap-x-2 p-2 rounded-md bg-neutral-100 hover:bg-rose-800 dark:bg-violet-800 hover:dark:bg-rose-800 transition-colors cursor-pointer group"
       >
         <Icon
           name="hashtag"

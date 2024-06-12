@@ -83,13 +83,8 @@
   }
 }
 
-@layer utilities {
-  .scrollable {
-    /* scrollbar-color: theme(colors.rose.800) theme(colors.rose.100); 
-    scrollbar-width: thin; */
-  }
-}
 
+/* TODO start - Move this code to a file */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -112,3 +107,4 @@
     scrollbar-color: theme(colors.rose.800) theme(colors.rose.800);
   }
 }
+/* TODO end - Move this code to a file */

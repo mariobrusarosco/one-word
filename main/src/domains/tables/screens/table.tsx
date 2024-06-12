@@ -1,19 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { tableLoader } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { InviteMember } from "../components/modals/invite-member";
-import { useTableSocket } from "../hooks/use-table-socket";
 import { ScreenHeading } from "@/domains/shared/components/screen-heading";
 
-interface Props {
-  table: ITable;
-  tableSocket: ReturnType<typeof useTableSocket>;
-}
-
 const TableScreen = () => {
-  const tableProps = useOutletContext() as Props;
   const { tableId } = useParams<{ tableId: string }>();
   const {
     data: table,

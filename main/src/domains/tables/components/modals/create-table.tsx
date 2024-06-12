@@ -5,8 +5,7 @@ import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { useModal } from "@/domains/ui-system/hooks/use-modal";
 import {
   GlobalDialogContent,
-  GlobalDialogDescription,
-  GlobalDialogHeader,
+  GlobalDialogHeading,
 } from "@/domains/shared/components/global-modal";
 import {
   Dialog,
@@ -61,19 +60,13 @@ export const CreateTable = () => {
       </DialogTrigger>
 
       <GlobalDialogContent>
-        <GlobalDialogHeader>
-          <p className="text-rose-800 text-4xl font-sans font-extralight">
-            Create your own table
-          </p>
-        </GlobalDialogHeader>
+        <GlobalDialogHeading
+          title="Create your own table"
+          description="Give your table a name. Don't worry, you can change it later on."
+        />
 
-        <GlobalDialogDescription>
-          <p className="text-violet-800 text-lg font-sans font-extralight">
-            Give your table a name. Don't worry, you can change it later on.
-          </p>
-        </GlobalDialogDescription>
         <form onSubmit={handleCreateTable}>
-          <div className="flex items-end gap-x-2 justify-center pt-14">
+          <div className="flex items-end gap-x-4 justify-center pt-14">
             <div className="flex flex-col gap-y-3">
               <label
                 className="uppercase text-rose-800 text-lg"
@@ -87,7 +80,7 @@ export const CreateTable = () => {
                 type="text"
                 id="table-name"
                 placeholder="Type your table's name here"
-                className="rounded-sm py-2 px-4 border-2 border-rose-800 placeholder:opacity-80 placeholder:text-xs text-violet-800 font-sans font-light"
+                className="rounded-sm py-2 px-4 border-2 h-12 border-rose-800 placeholder:opacity-80 placeholder:text-xs text-violet-800 font-sans font-light"
               />
             </div>
             <Button

@@ -4,8 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useModal } from "@/domains/ui-system/hooks/use-modal";
 import {
   GlobalDialogContent,
-  GlobalDialogDescription,
-  GlobalDialogHeader,
+  GlobalDialogHeading,
 } from "@/domains/shared/components/global-modal";
 import {
   Dialog,
@@ -70,19 +69,10 @@ export const CreateDemoUser = () => {
       </DialogTrigger>
 
       <GlobalDialogContent>
-        <div className="text-center font-josefin">
-          <GlobalDialogHeader>
-            <p className="text-rose-800 dark:text-neutral-100 text-5xl text-center ">
-              Create a Demo User
-            </p>
-          </GlobalDialogHeader>
-
-          <GlobalDialogDescription>
-            <p className="text-violet-800 dark:text-neutral-100 text-xl font-light">
-              Just a user's name e.g. Jane Doe.
-            </p>
-          </GlobalDialogDescription>
-        </div>
+        <GlobalDialogHeading
+          description="Just a user's name e.g. Jane Doe."
+          title="Create a Demo User"
+        />
 
         <form onSubmit={handleDemoUser}>
           <div className="flex flex-col mt-14">
@@ -102,7 +92,12 @@ export const CreateDemoUser = () => {
                 placeholder="Type your demo's name here"
                 className="flex-1 rounded-sm py-2 px-4 border-2 border-rose-800 placeholder:opacity-80 placeholder:text-xs text-violet-800 font-light"
               />
-              <Button type="submit" disabled={mutation.isPending} size="medium">
+              <Button
+                type="submit"
+                disabled={mutation.isPending}
+                size="small"
+                className="min-w-[120px]"
+              >
                 create user
               </Button>
             </div>

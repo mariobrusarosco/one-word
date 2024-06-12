@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <div
       data-ui="navbar"
-      className="flex items-center justify-between px-12 py-6 bg-neutral-100 dark:bg-violet-800 overflow-hidden shadow-main-bottom relative row-start-1 row-end-2 xl:px-20"
+      className="flex items-center justify-between px-6 py-8 bg-neutral-100 dark:bg-violet-800 overflow-hidden shadow-main-bottom relative"
     >
       <div className="flex items-center">
         <CreateTable />
@@ -61,7 +61,7 @@ const Navbar = () => {
         <li>
           <Button asChild variant="outline" roundness="full" size="small">
             <Link to="/account">
-              <Icon name="users" />
+              <Icon name="user" />
             </Link>
           </Button>
         </li>

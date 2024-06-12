@@ -18,6 +18,7 @@ import {
   IconSquareRoundedCheck,
   IconBarrierBlock,
   IconShield,
+  IconUser,
 } from "@tabler/icons-react";
 
 type names =
@@ -40,6 +41,7 @@ type names =
   | "square-rounded-checked"
   | "barrier-block"
   | "sun-moon"
+  | "user"
   | "shield";
 
 export const iconMapper: Record<names, any> = {
@@ -57,6 +59,7 @@ export const iconMapper: Record<names, any> = {
   "sun-moon": IconSunMoon,
   home: IconHome2,
   hashtag: IconHash,
+  user: IconUser,
   users: IconUsers,
   "brand-github": IconBrandGithub,
   "brand-figma": IconBrandFigma,

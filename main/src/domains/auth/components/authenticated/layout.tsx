@@ -25,14 +25,11 @@ export const AuthenticatedLayout = () => {
   return (
     <AuthProvider>
       <WebSocketProvider>
-        <div
-          data-ui="authenticated-layout"
-          className="h-dvh grid grid-rows-[89px,1fr]"
-        >
+        <div data-ui="authenticated-layout" className="h-dvh flex flex-col">
           <Navbar />
           <main
             data-ui="main-content"
-            className="screen-bg row-start-2 row-end-3 overflow-hidden"
+            className="screen-bg flex-1 overflow-hidden"
           >
             <Outlet />
           </main>

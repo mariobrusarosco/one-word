@@ -4,6 +4,7 @@ import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { iconMapper } from "@/domains/ui-system/components/ui/icon/mapper";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { Link } from "react-router-dom";
+import { WatchDemo } from "../components/modals/watch-demo";
 
 const features = [
   {
@@ -113,11 +114,7 @@ const IntroScren = () => {
 
           <p className="text-neutral-100 uppercase text-xs font-bold">or</p>
 
-          <Button asChild variant="primary" size="medium" roundness="medium">
-            <Link to="/login" className="flex">
-              Watch a demo
-            </Link>
-          </Button>
+          <WatchDemo />
         </div>
       </div>
 

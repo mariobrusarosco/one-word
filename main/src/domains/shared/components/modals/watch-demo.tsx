@@ -8,7 +8,6 @@ import {
   Dialog,
   DialogTrigger,
 } from "@/domains/ui-system/components/ui/dialog";
-import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 
 export const WatchDemo = () => {
   const { closeModal, openModal, isOpen } = useModal("watch-demo");

@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import RootLayout from "./root-layout";
 import LoginScreen from "../../auth/screens/login";
 import logoutUser from "../../auth/routes/logout-user";
@@ -12,7 +16,10 @@ import Intro from "../screens/intro";
 import { AuthenticatedLayout } from "@/domains/auth/components/authenticated/layout";
 import PublicLayout from "@/domains/auth/components/public/layout";
 import NoSelectedTable from "@/domains/tables/screens/no-selected-table";
-import { MyAccountScreen } from "@/domains/my-account/screens/my-account";
+import { MyAccountScreen } from "@/domains/member/screens/my-account";
+import SignupScreen from "@/domains/auth/screens/sign-up";
+import LoginCallbackScreen from "@/domains/auth/screens/login-callback";
+import SignUpCallbackScreen from "@/domains/auth/screens/signup-callback";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -21,7 +28,24 @@ export const AppRouter = () => {
       element: <RootLayout />,
       errorElement: <ErrorScreen />,
       children: [
-        { index: true, element: <Intro /> },
+        { index: true, element: <Navigate to="tables" /> },
+        { path: "intro", element: <Intro /> },
+        {
+          element: <PublicLayout />,
+          children: [
+            {
+              path: "login",
+              element: <LoginScreen />,
+            },
+            {
+              path: "signup",
+              element: <SignupScreen />,
+            },
+            { path: "logout", action: logoutUser },
+            { path: "callback/login", element: <LoginCallbackScreen /> },
+            { path: "callback/signup", element: <SignUpCallbackScreen /> },
+          ],
+        },
         {
           element: <AuthenticatedLayout />,
           children: [
@@ -46,16 +70,6 @@ export const AppRouter = () => {
               path: "account",
               element: <MyAccountScreen />,
             },
-          ],
-        },
-        {
-          element: <PublicLayout />,
-          children: [
-            {
-              path: "login",
-              element: <LoginScreen />,
-            },
-            { path: "logout", action: logoutUser },
           ],
         },
       ],

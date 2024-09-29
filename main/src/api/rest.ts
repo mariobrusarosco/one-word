@@ -1,11 +1,12 @@
 import axios from "axios";
+import { errorSanitazer } from "./interceptors";
 
-// axios.defaults.withCredentials = true;
 export const restApi = axios.create({
   baseURL: import.meta.env.VITE_ONE_WORD_API,
   withCredentials: true,
   headers: {
-    // "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
   },
 });
+
+restApi.interceptors.response.use((response) => response, errorSanitazer);

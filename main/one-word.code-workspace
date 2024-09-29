@@ -1,14 +1,11 @@
 {
-  "folders": [
-    {
-      "path": ".."
-    },
-    {
-      "path": "../../api-one-word"
-    },
-    {
-      "path": "../../digital-garden"
-    }
-  ],
-  "settings": {}
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../api-one-word"
+		}
+	],
+	"settings": {}
 }

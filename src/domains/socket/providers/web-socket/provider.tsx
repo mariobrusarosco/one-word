@@ -1,7 +1,6 @@
 import { Socket, io } from "socket.io-client";
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { SocketEvents } from "../../typing/enums";
-import { useAppAuth } from "@/domains/auth/hooks/use-app-auth";
 
 export type SocketInstance = Socket;
 
@@ -20,7 +19,10 @@ export type WebSocketContextProps = SocketState | undefined;
 const WebSocketContext = createContext<WebSocketContextProps>(undefined);
 
 const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data: authenticatedUser } = useAppAuth();
+  const authenticatedUser = {
+    firstName: "Walter",
+    lastName: "White",
+  };
   const [socket, setSocket] = useState<SocketInstance | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
   const isMounted = useRef(false);

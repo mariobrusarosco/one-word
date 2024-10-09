@@ -1,4 +1,3 @@
-import { ElementType } from "react";
 import { useReactController } from "./adapters/react-context";
 import { ThemeController } from "./typing";
 

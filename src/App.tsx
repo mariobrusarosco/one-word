@@ -16,7 +16,8 @@ const queryClient = new QueryClient({
 });
 
 const AppWithProviders = ({ children }: { children: React.ReactNode }) => {
-  const { AppThemeProvider } = useAppTheme();
+  const appTheme = useAppTheme();
+  const AppThemeProvider = appTheme.AppThemeProvider;
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -29,7 +30,11 @@ const AppWithProviders = ({ children }: { children: React.ReactNode }) => {
           redirect_uri: window.location.origin,
         }}
       >
-        <AppThemeProvider defaultTheme="dark">{children}</AppThemeProvider>
+        {AppThemeProvider ? (
+          <AppThemeProvider defaultTheme="dark">{children}</AppThemeProvider>
+        ) : (
+          children
+        )}
       </Auth0Provider>
     </QueryClientProvider>
   );

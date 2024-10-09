@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./root-layout";
 import LoginScreen from "../../auth/screens/login";
 import logoutUser from "../../auth/routes/logout-user";
@@ -28,8 +24,7 @@ export const AppRouter = () => {
       element: <RootLayout />,
       errorElement: <ErrorScreen />,
       children: [
-        { index: true, element: <Navigate to="tables" /> },
-        { path: "intro", element: <Intro /> },
+        { index: true, element: <Intro /> },
         {
           element: <PublicLayout />,
           children: [

@@ -1,9 +1,7 @@
 import { AppLogo } from "@/domains/ui-system/components/ui/app-logo";
-import { Button } from "@/domains/ui-system/components/ui/button";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { iconMapper } from "@/domains/ui-system/components/ui/icon/mapper";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { Link } from "react-router-dom";
 import { WatchDemo } from "../components/modals/watch-demo";
 
 const features = [
@@ -106,14 +104,6 @@ const IntroScren = () => {
         </div>
 
         <div className="mt-8 flex gap-x-4 items-center">
-          <Button asChild variant="primary" size="medium" roundness="medium">
-            <Link to="/login" className="flex">
-              Explore the MVP
-            </Link>
-          </Button>
-
-          <p className="text-neutral-100 uppercase text-xs font-bold">or</p>
-
           <WatchDemo />
         </div>
       </div>

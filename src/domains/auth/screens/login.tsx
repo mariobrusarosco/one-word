@@ -1,11 +1,7 @@
-import { useLocation } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "@/domains/ui-system/components/ui/button";
 
 const LoginScreen = () => {
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-
   return (
     <div className="h-full flex flex-col items-center justify-center bg-neutral-100 dark:bg-violet-800">
       <h1 className="text-6xl uppercase font-extralight font-josefin mb-5 dark:text-neutral-100">

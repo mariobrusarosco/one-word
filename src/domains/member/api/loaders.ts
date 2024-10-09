@@ -1,5 +1,5 @@
 import { restApi } from "@/api/rest";
-import { IMember } from "../typing/interfaces";
+import { IMember } from "@/domains/auth/typing/enums-and-interfaces";
 
 export const userLoader = async () => {
   const result = await restApi.get("/auth");
@@ -8,8 +8,6 @@ export const userLoader = async () => {
 };
 
 export const memberLoader = async ({ queryKey }: { queryKey: any }) => {
-  const [, { providerId }] = queryKey;
-
   console.log("[AUTH] 2", queryKey);
 
   const result = await restApi.get("/member");

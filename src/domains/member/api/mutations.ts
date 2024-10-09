@@ -1,9 +1,7 @@
 import { restApi } from "@/api/rest";
 import { useToast } from "@/domains/ui-system/components/ui/use-toast";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const userDemoMutation = async (demoId: string) => {
   const result = await restApi.post(
@@ -19,13 +17,12 @@ const userDemoMutation = async (demoId: string) => {
   return await result.data;
 };
 
-const createUser = async (user: ReturnType<typeof useAuth0>["user"]) => {
+const createUser = async (user: any) => {
   const result = await restApi.post("/auth/signup", user);
 
   return await result.data;
 };
 
-// const useSignup = (auth: ReturnType<typeof useAuth0>) => {
 const useSignup = () => {
   const navigate = useNavigate();
   const { toast } = useToast();

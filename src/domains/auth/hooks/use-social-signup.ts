@@ -13,10 +13,14 @@ const useSocialSign = (process: "signin" | "signup") => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { mutate } = useMutation({
-    mutationFn: () =>
-      isSignUp
-        ? createSocialUser(externalAuth?.user)
-        : signInSocialUser(externalAuth?.user?.sub),
+    mutationFn: () => {
+      if (!externalAuth?.user) {
+        throw new Error("User is not authenticated");
+      }
+      return isSignUp
+        ? createSocialUser(externalAuth.user)
+        : signInSocialUser(externalAuth.user.sub);
+    },
     onError: (error) => {
       toast({
         variant: "destructive",

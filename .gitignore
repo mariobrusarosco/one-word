@@ -34,5 +34,6 @@ one-word.code-workspace
 .env
 .env.local
 .env.staging
+.env.demo
 .env.development
 .env.production

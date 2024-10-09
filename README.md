@@ -1,28 +1,57 @@
 # One Word
 
-A side project App where I intend to:
+It’s a virtual board game made as side project. It's heavily based on
+“Just One” - a cooperative party game in which participants
+have to play together to discover as many mystery words as possible.
 
-1. Simulate a real-world app as much as possible. The goal is to validate premises and get a
-   closer feel for the pros and cons regarding front-end patterns, tools, and frameworks.
+# Stack
 
-2. Use it as part of my _portfolio_ so I can demonstrate _some_ skills and somethings I learn on my spear time.
+LANGUAGE
 
+- Typescript
 
-![image](https://github.com/mariobrusarosco/one-word/assets/12510938/ea072947-5069-4311-a0f5-5696496bd8e0)
+FRAMEWORK
 
-## Development
+- React
 
-This Project is a Work In Progress, so below, you can see how I am organizing
-its development
+TOOLS
 
-### Project Development
+- React Router
+- Tailwind
+- chadcn
+- Vite
+- Circle CI
+- AWS Cloudftont
+- AWS Route 53
+- AWS Buckets
+- AWS CLI
 
-Tasks are tracked: [here](https://github.com/users/mariobrusarosco/projects/6).
+# API
 
-### QA
+[Postman](https://documenter.getpostman.com/view/2930329/2s9YRGxUEq)
 
-Bugs and issues are tracked [here](https://github.com/users/mariobrusarosco/projects/7).
+# ScreenShots
 
-### Design
+# Design
 
-This is the Figma File where the design: [here](https://www.figma.com/file/KZ4tq3xzzz2CvWwijUZoRy/Side-Projects?type=design&node-id=918%3A4431&mode=design&t=w3dyrkhv8dfaclhP-1)
+[Link](https://www.figma.com/file/lTIxelelnjm83MiROxrlTe/One-Word?type=design&node-id=0%3A1&mode=design&t=8IL9mMSoloe1bCnK-1)
+
+# Project
+
+## Engenireeing
+
+- _Build System_: [here](https://github.com/users/mariobrusarosco/docs/build-system.md).
+- _CI/CD_: [here](https://github.com/users/mariobrusarosco/docs/ci-cd.md).
+- _Styling_: [here](https://github.com/users/mariobrusarosco/docs/styling.md).
+- _State Management_: Coming Soon.
+- _Tooling_: Coming Soon.
+- _Routing_: Coming Soon.
+- _Authentication_: Coming Soon.
+- _Unit Testing_: Coming Soon.
+- _Profiling_: Coming Soon.
+
+## Product
+
+- _Design_: [here](https://www.figma.com/file/lTIxelelnjm83MiROxrlTe/One-Word?type=design&node-id=0%3A1&mode=design&t=8IL9mMSoloe1bCnK-1)
+- _Tasks_: Coming Soon.
+- _QA_: [Coming Soon.

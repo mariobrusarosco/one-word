@@ -1,4 +1,4 @@
-import { restApi } from "@/api/rest";
+import { api } from "@/api";
 
 const createMessage = async ({
   content,
@@ -7,7 +7,7 @@ const createMessage = async ({
   content: string;
   channelId: string;
 }) => {
-  const result = await restApi.post(`/messages/${channelId}`, { content });
+  const result = await api.post(`/messages/${channelId}`, { content });
 
   return await result.data;
 };

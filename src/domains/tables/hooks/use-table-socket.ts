@@ -10,39 +10,25 @@ const useTableSocket = (tableId?: string) => {
   );
 
   const joinNewTable = useCallback(() => {
-    console.log("[DEBUG] 3.1  join table - ", `table-${tableId}`);
-    emit(SocketEvents.JOIN_TABLE, `table-${tableId}`);
+    tableId && emit(SocketEvents.JOIN_TABLE, `table-${tableId}`);
   }, [emit, tableId]);
 
   const leaveCurrentTable = useCallback(() => {
-    console.log("[DEBUG] 3.1  leave table - ", `table-${tableId}`);
-    emit(SocketEvents.LEAVE_TABLE, `table-${tableId}`);
+    tableId && emit(SocketEvents.LEAVE_TABLE, `table-${tableId}`);
   }, [emit, tableId]);
 
   const watchForNewParticipants = useCallback(() => {
-    console.log(
-      "[DEBUG] 3.1  watchForNewParticipants table - ",
-      `table-${tableId}`
-    );
-    on<ITablePartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
-      setTableParticipants(data);
-    });
+    tableId &&
+      on<ITablePartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
+        setTableParticipants(data);
+      });
   }, [connected, tableId, on]);
 
   useEffect(() => {
-    console.log("[DEBUG] 3.1  mounting - useTableSocket", {
-      tableId,
-      connected,
-    });
-
     joinNewTable();
     watchForNewParticipants();
 
     return () => {
-      console.log("[DEBUG] 3.1  unmounting - useTableSocket", {
-        tableId,
-        connected,
-      });
       leaveCurrentTable();
     };
   }, [tableId, connected]);

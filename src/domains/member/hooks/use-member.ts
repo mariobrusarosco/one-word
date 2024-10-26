@@ -1,14 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { memberLoader } from "../api/loaders";
-import { useAuth0 as useExternalAuth } from "@auth0/auth0-react";
 
-export const useMember = () => {
-  const externalAuth = useExternalAuth();
-  const externalAuthId = externalAuth?.user?.sub;
-
+export const useMember = (isAuthenticated?: boolean) => {
   return useQuery({
-    queryKey: ["member", { externalAuthId }],
+    queryKey: ["member"],
     queryFn: memberLoader,
-    enabled: !!externalAuthId,
+    enabled: !!isAuthenticated,
   });
 };

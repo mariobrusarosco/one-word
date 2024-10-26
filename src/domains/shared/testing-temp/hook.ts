@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { restApi } from "../../../api/rest";
+import { api } from "../../../api";
 import { useQuery } from "@tanstack/react-query";
 
 export const useToggle = (
@@ -45,7 +45,7 @@ export const useFetch = (endpoint: string, queryKey: string) => {
   return useQuery({
     queryKey: ["tables", queryKey, endpoint],
     queryFn: async () => {
-      const response = await restApi.get(endpoint);
+      const response = await api.get(endpoint);
       console.log("[queryKey]", endpoint, response);
       return response?.data || [];
     },

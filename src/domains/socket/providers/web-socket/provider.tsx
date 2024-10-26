@@ -1,6 +1,7 @@
 import { Socket, io } from "socket.io-client";
 import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { SocketEvents } from "../../typing/enums";
+import { useMember } from "@/domains/member/hooks/use-member";
 
 export type SocketInstance = Socket;
 
@@ -19,29 +20,19 @@ export type WebSocketContextProps = SocketState | undefined;
 const WebSocketContext = createContext<WebSocketContextProps>(undefined);
 
 const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
-  const authenticatedUser = {
-    firstName: "Walter",
-    lastName: "White",
-  };
+  const member = useMember();
   const [socket, setSocket] = useState<SocketInstance | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
   const isMounted = useRef(false);
 
   const onEvent = useCallback(
-    (event: SocketEvents, callback: any) => {
-      if (connected) {
-        socket?.on(event, callback);
-      }
-    },
+    (event: SocketEvents, callback: any) =>
+      connected && socket?.on(event, callback),
     [connected, socket]
   ) satisfies OnEvent;
 
   const emitEvent = useCallback(
-    (event, data) => {
-      if (connected) {
-        socket?.emit(event, data);
-      }
-    },
+    (event, data) => connected && socket?.emit(event, data),
     [connected, socket]
   ) satisfies EmitEvent;
 
@@ -49,8 +40,7 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
     if (isMounted.current) return;
 
     const handleInitialConnection = async () => {
-      const username = `${authenticatedUser?.firstName} ${authenticatedUser?.lastName}`;
-
+      const username = `${member?.data?.firstName} ${member?.data?.lastName}`;
       const socketInstance = io(import.meta.env.VITE_ONE_WORD_SOCKET_URL, {
         autoConnect: false,
       });
@@ -84,7 +74,7 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
         error
       );
     }
-  }, [authenticatedUser]);
+  }, [member?.data?.firstName, member?.data?.lastName]);
 
   return (
     <WebSocketContext.Provider

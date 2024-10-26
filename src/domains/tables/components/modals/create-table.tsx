@@ -12,16 +12,21 @@ import {
   DialogTrigger,
 } from "@/domains/ui-system/components/ui/dialog";
 import { useState } from "react";
+import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 
 export const CreateTable = () => {
+  const { toast } = useToast();
   const { closeModal, openModal, isOpen } = useModal("create-table");
   const [tableNameInput, setTableNameInput] = useState("");
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: createTableMutation,
-    onError: (error) => {
-      alert(error);
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Ops! Something went wrong",
+      });
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tables"] });

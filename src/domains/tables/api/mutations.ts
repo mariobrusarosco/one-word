@@ -1,7 +1,7 @@
-import { restApi } from "@/api/rest";
+import { api } from "@/api";
 
 const createTableMutation = async (name: string) => {
-  const result = await restApi.post("/tables", { name });
+  const result = await api.post("/tables", { name });
 
   return await result.data;
 };
@@ -13,7 +13,7 @@ const inviteFriendMutation = async ({
   tableId: string;
   email: string;
 }) => {
-  const result = await restApi.put(`/tables/${tableId}/seat`, { email });
+  const result = await api.put(`/tables/${tableId}/seat`, { email });
 
   return await result.data;
 };

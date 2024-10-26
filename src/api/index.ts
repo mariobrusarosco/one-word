@@ -1,7 +1,7 @@
 import axios from "axios";
 import { errorSanitazer } from "./interceptors";
 
-export const restApi = axios.create({
+export const api = axios.create({
   baseURL: import.meta.env.VITE_ONE_WORD_API,
   withCredentials: true,
   headers: {
@@ -9,4 +9,4 @@ export const restApi = axios.create({
   },
 });
 
-restApi.interceptors.response.use((response) => response, errorSanitazer);
+api.interceptors.response.use((response) => response, errorSanitazer);

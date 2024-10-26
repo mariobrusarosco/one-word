@@ -1,10 +1,10 @@
-import { restApi } from "@/api/rest";
+import { api } from "@/api";
 import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const userDemoMutation = async (demoId: string) => {
-  const result = await restApi.post(
+  const result = await api.post(
     "/auth",
     { demoId },
     {
@@ -18,7 +18,7 @@ const userDemoMutation = async (demoId: string) => {
 };
 
 const createUser = async (user: any) => {
-  const result = await restApi.post("/auth/signup", user);
+  const result = await api.post("/auth/signup", user);
 
   return await result.data;
 };

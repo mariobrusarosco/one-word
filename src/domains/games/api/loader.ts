@@ -1,7 +1,7 @@
-import { restApi } from "../../../api/rest";
+import { api } from "../../../api";
 
 export const loaderGames = async () => {
-  const response = await restApi.get("/games");
+  const response = await api.get("/games");
 
   console.warn(response);
 

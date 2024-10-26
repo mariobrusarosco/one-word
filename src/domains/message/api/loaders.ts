@@ -1,4 +1,4 @@
-import { restApi } from "../../../api/rest";
+import { api } from "../../../api";
 import { PageWithIMessages } from "../typing/interfaces";
 
 export const loaderPaginatedMessages = async ({
@@ -12,7 +12,7 @@ export const loaderPaginatedMessages = async ({
 }) => {
   if (!channelId) return;
 
-  const result = await restApi.get(`/messages/${channelId}`, {
+  const result = await api.get(`/messages/${channelId}`, {
     params: {
       take,
       cursor: pageParam,

@@ -19,6 +19,8 @@ const Navbar = () => {
   });
   const { connected } = useWebSocket();
 
+  console.log({ connected });
+
   return (
     <div
       data-ui="navbar"

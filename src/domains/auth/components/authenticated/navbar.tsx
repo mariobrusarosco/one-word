@@ -17,6 +17,7 @@ const Navbar = () => {
     queryFn: tablesLoader,
     enabled: true,
   });
+
   const { connected } = useWebSocket();
 
   return (

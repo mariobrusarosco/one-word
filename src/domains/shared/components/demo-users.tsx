@@ -1,8 +1,6 @@
-import { useAuth } from "@/domains/auth/context";
-import { authenticateByPassedMember } from "@/domains/auth/context/bypass";
 import { useAuthentication } from "@/domains/auth/hooks/use-authentication";
 import { Button } from "@/domains/ui-system/components/ui/button";
-import { useQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,13 +12,15 @@ export const DemoUsers = ({
   const [publicId, setPublicId] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
   const authentication = useAuthentication(publicId);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (authentication.isSuccess) {
-      navigate("/tables");
       handleUserSelection?.();
+      queryClient.clear();
+      navigate("/tables");
     }
-  }, [authentication.isSuccess, handleUserSelection, navigate]);
+  }, [authentication.isSuccess, handleUserSelection, navigate, queryClient]);
 
   return (
     <div>

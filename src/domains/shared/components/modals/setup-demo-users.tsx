@@ -8,12 +8,8 @@ import {
   Dialog,
   DialogTrigger,
 } from "@/domains/ui-system/components/ui/dialog";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
-import { authenticateByPassedMember } from "@/domains/auth/context/bypass";
 import { DemoUsers } from "../demo-users";
 
 export const SetupDemoUsers = () => {
@@ -61,23 +57,11 @@ export const SetupDemoUsers = () => {
                 <strong>two different Browser's windows.</strong>
               </p>
             </li>
-
-            <li className="flex gap-x-2 align-center">
-              <Icon
-                name="hashtag"
-                size="small"
-                className="text-rose-800 dark:text-neutral-100 stroke-width-1"
-                stroke={1}
-              />
-              <p className="text-xl font-light font-josefin text-violet-800 dark:text-neutral-100">
-                Take a look!
-              </p>
-            </li>
           </ul>
         </div>
 
         <p className="text-center text-2xl font-light font-josefin text-violet-800 dark:text-neutral-100">
-          I want to use
+          Select a User
         </p>
 
         <DemoUsers handleUserSelection={closeModal} />

@@ -3,6 +3,7 @@ import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
 import { iconMapper } from "@/domains/ui-system/components/ui/icon/mapper";
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { WatchDemo } from "../components/modals/watch-demo";
+import { SetupDemoUsers } from "../components/modals/setup-demo-users";
 
 const features = [
   {
@@ -48,6 +49,7 @@ const features = [
     ],
   },
 ];
+
 const IntroScren = () => {
   return (
     <div data-ui="intro-screen" className="h-dvh grid grid-cols-2 ">
@@ -105,6 +107,7 @@ const IntroScren = () => {
 
         <div className="mt-8 flex gap-x-4 items-center">
           <WatchDemo />
+          <SetupDemoUsers />
         </div>
       </div>
 

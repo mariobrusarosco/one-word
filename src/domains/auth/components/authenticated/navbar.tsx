@@ -17,9 +17,8 @@ const Navbar = () => {
     queryFn: tablesLoader,
     enabled: true,
   });
-  const { connected } = useWebSocket();
 
-  console.log({ connected });
+  const { connected } = useWebSocket();
 
   return (
     <div

@@ -16,6 +16,7 @@ import { MyAccountScreen } from "@/domains/member/screens/my-account";
 import SignupScreen from "@/domains/auth/screens/sign-up";
 import LoginCallbackScreen from "@/domains/auth/screens/login-callback";
 import SignUpCallbackScreen from "@/domains/auth/screens/signup-callback";
+import { AuthProvider } from "@/domains/auth/context";
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -42,7 +43,11 @@ export const AppRouter = () => {
           ],
         },
         {
-          element: <AuthenticatedLayout />,
+          element: (
+            <AuthProvider>
+              <AuthenticatedLayout />
+            </AuthProvider>
+          ),
           children: [
             {
               path: "tables",

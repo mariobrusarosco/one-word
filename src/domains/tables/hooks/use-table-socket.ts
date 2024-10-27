@@ -22,7 +22,7 @@ const useTableSocket = (tableId?: string) => {
       on<ITablePartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
         setTableParticipants(data);
       });
-  }, [connected, tableId, on]);
+  }, [tableId, on]);
 
   useEffect(() => {
     joinNewTable();
@@ -31,7 +31,13 @@ const useTableSocket = (tableId?: string) => {
     return () => {
       leaveCurrentTable();
     };
-  }, [tableId, connected]);
+  }, [
+    tableId,
+    connected,
+    joinNewTable,
+    watchForNewParticipants,
+    leaveCurrentTable,
+  ]);
 
   return { tableParticipants };
 };

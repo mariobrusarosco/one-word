@@ -4,7 +4,7 @@ export type IMessage = {
   content: string;
   channelId: string;
   memberId: string;
-  memberFullName: string;
+  memberNickname: string;
   createdAt: Date;
   updatedAt: Date;
 };

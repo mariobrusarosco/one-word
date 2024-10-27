@@ -17,6 +17,7 @@ const ChatInput = () => {
   const { emit } = useWebSocket();
   const [inputMessage, setInputMessage] = useState("");
   const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: () => createMessage({ content: inputMessage, channelId }),
     onSuccess: () => {

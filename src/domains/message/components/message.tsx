@@ -16,14 +16,14 @@ const Message: React.FC<Props> = ({ message }) => {
       <Avatar className="shadow-main-bottom">
         <AvatarImage src="" />
         <AvatarFallback className=" bg-rose-800 text-neutral-100">
-          {getInitials(message.memberFullName || "")}
+          {getInitials(message.memberNickname || "")}
         </AvatarFallback>
       </Avatar>
 
       <div className="grid gap-y-1">
         <div className="flex items-center gap-x-3 ">
           <div className="bg-rose-800 py-1 px-2 font-light text-neutral-100 rounded-md shadow-main-bottom text-xs">
-            {message.memberFullName}
+            {message.memberNickname}
           </div>
           <div className="text-rose-800 dark:text-neutral-100 text-xs">
             {new Date(message.createdAt).toLocaleDateString()}{" "}

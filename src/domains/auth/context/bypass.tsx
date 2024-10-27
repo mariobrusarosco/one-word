@@ -1,8 +1,6 @@
-import { api } from "@/api";
 import { useMember } from "@/domains/member/hooks/use-member";
 import { createContext, useContext } from "react";
 import { AuthData } from "../typing/enums-and-interfaces";
-import { useQuery } from "@tanstack/react-query";
 import { useAuthentication } from "../hooks/use-authentication";
 
 const ByPassAuthContext = createContext<AuthData | undefined>(undefined);

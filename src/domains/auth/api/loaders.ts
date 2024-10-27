@@ -1,5 +1,4 @@
 import { api } from "@/api";
-import { AuthMode } from "../typing/enums-and-interfaces";
 
 export type AuthenticationPayload =
   | {

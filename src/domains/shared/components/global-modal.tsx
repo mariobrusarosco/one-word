@@ -9,7 +9,7 @@ export const GlobalDialogHeading = ({
   title,
 }: {
   title: string;
-  description: string;
+  description?: string;
 }) => {
   return (
     <div>
@@ -20,12 +20,14 @@ export const GlobalDialogHeading = ({
         {title}
       </DialogHeader>
 
-      <DialogDescription
-        data-ui="global-modal-description"
-        className="border-none rounded-md text-violet-800 dark:text-neutral-100 text-xl text-center font-josefin font-light "
-      >
-        {description}
-      </DialogDescription>
+      {description ? (
+        <DialogDescription
+          data-ui="global-modal-description"
+          className="border-none rounded-md text-violet-800 dark:text-neutral-100 text-xl text-center font-josefin font-light "
+        >
+          {description}
+        </DialogDescription>
+      ) : null}
     </div>
   );
 };

@@ -27,10 +27,10 @@ const buttonVariants = cva(
         full: "rounded-full",
       },
       size: {
-        "extra-small": "p-2 text-xs",
-        small: "h-12 py-2 px-2 text-sm",
-        medium: "py-4 px-6 font-light",
-        large: "px-4 text-2xl",
+        "extra-small": "p-2 text-xs font-normal",
+        small: "h-12 py-2 px-2 text-sm font-normal",
+        medium: "py-4 px-6 font-light text-xl font-normal",
+        large: "px-6 py-6 text-xl font-normal",
       },
     },
     compoundVariants: [

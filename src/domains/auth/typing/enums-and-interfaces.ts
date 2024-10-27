@@ -10,7 +10,7 @@ export interface IMember {
   updatedAt: string;
 }
 
-export type AuthMode = "signin" | "signup" | "logout";
+export type AuthMode = "signin" | "signup" | "logout" | "demo";
 
 export type AuthData = {
   isAuthenticating: boolean;

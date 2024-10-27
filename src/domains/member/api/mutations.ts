@@ -3,20 +3,6 @@ import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-const userDemoMutation = async (demoId: string) => {
-  const result = await api.post(
-    "/auth",
-    { demoId },
-    {
-      headers: {
-        "X-Auth-Demo": true,
-      },
-    }
-  );
-
-  return await result.data;
-};
-
 const createUser = async (user: any) => {
   const result = await api.post("/auth/signup", user);
 
@@ -48,4 +34,4 @@ const useSignup = () => {
   return { registerUserAndRedirect: mutate, status };
 };
 
-export { userDemoMutation, useSignup };
+export { useSignup };

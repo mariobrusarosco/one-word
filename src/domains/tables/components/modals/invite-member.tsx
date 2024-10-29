@@ -13,8 +13,10 @@ import { useState } from "react";
 import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { inviteFriendMutation } from "../../api/mutations";
 import { Icon } from "@/domains/ui-system/components/ui/icon/icon";
+import { useParams } from "react-router-dom";
 
-export const InviteMember = ({ tableId }: { tableId: string }) => {
+export const InviteMember = () => {
+  const { tableId } = useParams<{ tableId: string }>() as { tableId: string };
   const { closeModal, openModal, isOpen } = useModal("invite-friend");
   const [email, setEmail] = useState("");
   const { toast } = useToast();
@@ -55,8 +57,8 @@ export const InviteMember = ({ tableId }: { tableId: string }) => {
       open={isOpen}
     >
       <DialogTrigger asChild>
-        <div className="flex items-baseline gap-x-2 pt-12">
-          <p className="text-violet-800 dark:text-neutral-100 text-lg">
+        <div className="flex items-baseline gap-x-2">
+          <p className="text-violet-800 dark:text-neutral-100 text-sm uppercase">
             Invite a friend
           </p>
           <Button

@@ -6,8 +6,9 @@ import { createMessage } from "../api/mutations";
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { SocketEvents } from "@/domains/socket/typing/enums";
 import { useParams } from "react-router-dom";
+import { Skeleton } from "@/domains/ui-system/components/ui/skeleton";
 
-const ChatInput = () => {
+export const ChatInput = () => {
   const { channelId = "" } = useParams<{
     channelId: string;
     tableId: string;
@@ -21,15 +22,14 @@ const ChatInput = () => {
   const mutation = useMutation({
     mutationFn: () => createMessage({ content: inputMessage, channelId }),
     onSuccess: () => {
-      setInputMessage("");
       emit(SocketEvents.NEW_CHAT_MESSAGE, {
         message: inputMessage,
         channelId: chatSlug,
       });
-
       queryClient.invalidateQueries({
         queryKey: ["channel-messages", { channelId }],
       });
+      setInputMessage("");
     },
   });
 
@@ -37,12 +37,16 @@ const ChatInput = () => {
     e.preventDefault();
 
     if (!inputMessage) return false;
-    await mutation.mutate();
+
+    mutation.mutate();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="chat-input bg-rose-800 max-h-[72px] rounded-md p-4 flex items-center flex-1 gap-3 text-neutral-100">
+    <form onSubmit={handleSubmit} data-ui="chat-input">
+      <div
+        data-ui="chat-input"
+        className="absolute bottom-0 bg-rose-800 w-full rounded-md p-4 flex items-center flex-1 gap-3 text-neutral-100"
+      >
         <Button
           type="submit"
           variant="secondary"
@@ -52,6 +56,7 @@ const ChatInput = () => {
         >
           <Icon name="plus" size="small" className="stroke-neutral-100 " />
         </Button>
+
         <input
           className="bg-transparent p-2 w-full text-neutral-100 font-light focus-visible:outline-none placeholder-neutral-100 text-sm"
           id="message"
@@ -65,4 +70,14 @@ const ChatInput = () => {
   );
 };
 
-export { ChatInput };
+export const ChatInputLoading = () => {
+  return (
+    <div
+      data-ui="chat-input-loading"
+      className="absolute bottom-0 w-full rounded-md p-4 flex items-center flex-1 gap-3"
+    >
+      <Skeleton className="w-[48px] h-[48px] rounded-full " />
+      <Skeleton className="w-full h-[48px]" />
+    </div>
+  );
+};

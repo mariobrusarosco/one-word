@@ -1,37 +1,46 @@
 import { Outlet, useParams } from "react-router-dom";
-import { TableSidebar } from "./table-sidebar";
+import { TableSidebar, TableSidebarLoading } from "./table-sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { tableLoader } from "../api/loader";
 import { ITable } from "../typing/interfaces";
 import { useTableSocket } from "../hooks/use-table-socket";
+import { useTableLoadingState } from "../hooks/use-table-loading-state";
 
 const TableLayout = () => {
   const { tableId } = useParams<{ tableId: string }>();
   const {
     data: table,
     error,
-    isLoading,
+    isSuccess,
   } = useQuery<ITable>({
-    queryKey: ["tables", { tableId }],
+    queryKey: ["table", { tableId }],
     queryFn: tableLoader,
     enabled: !!tableId,
   });
   const tableSocket = useTableSocket(tableId);
+  const nothingToRender = table === undefined && isSuccess;
+  const { isFetching } = useTableLoadingState();
 
-  if (isLoading) return <div>Loading tables...</div>;
+  if (!tableId) return null;
 
-  if (error) {
-    return <div>{error.message}</div>;
+  if (error || nothingToRender) {
+    return <div>{error?.message || "Something went wrong"}</div>;
   }
 
   return (
     <div
       data-ui="table-layout"
-      className="grid lg:grid-cols-[224px,1fr] h-full"
+      className="grid lg:grid-cols-[224px,1fr] h-[calc(100vh-121px)]"
     >
-      {table ? <TableSidebar table={table} tableSocket={tableSocket} /> : null}
+      {isFetching ? (
+        <TableSidebarLoading />
+      ) : (
+        table && <TableSidebar table={table} tableSocket={tableSocket} />
+      )}
 
-      <Outlet context={{ table, tableSocket }} />
+      <div data-ui="table-layout-content" className="p-12 overflow-hidden">
+        <Outlet context={{ table, tableSocket }} />
+      </div>
     </div>
   );
 };

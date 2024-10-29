@@ -17,8 +17,7 @@ export const DemoUsers = ({
   useEffect(() => {
     if (authentication.isSuccess) {
       handleUserSelection?.();
-      queryClient.clear();
-      navigate("/tables");
+      window.location.replace("/tables");
     }
   }, [authentication.isSuccess, handleUserSelection, navigate, queryClient]);
 

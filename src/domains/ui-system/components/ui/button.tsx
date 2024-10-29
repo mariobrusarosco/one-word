@@ -17,6 +17,7 @@ const buttonVariants = cva(
         danger: "bg-red-400 text-neutral-100 hover:bg-red-400/80 ",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 underline shadow-none",
+        skeleton: "pointer-events-none bg-slate-100",
       },
       roundness: {
         none: "rounded-none",
@@ -29,8 +30,8 @@ const buttonVariants = cva(
       size: {
         "extra-small": "p-2 text-xs font-normal",
         small: "h-12 py-2 px-2 text-sm font-normal",
-        medium: "py-4 px-6 font-light text-xl font-normal",
-        large: "px-6 py-6 text-xl font-normal",
+        medium: "py-4 px-6",
+        large: "px-6 py-6 text-lg",
       },
     },
     compoundVariants: [

@@ -3,13 +3,14 @@ import { AuthenticatedMenu } from "./menu/menu";
 import { WebSocketProvider } from "@/domains/socket/providers/web-socket/provider";
 import { Navbar } from "./navbar";
 import { useAuth } from "../../context";
+import AppLoader from "@/domains/shared/components/app-loader";
 
 export const AuthenticatedLayout = () => {
   const auth = useAuth();
   const location = useLocation();
 
   if (auth?.isAuthenticating) {
-    return <div>loading</div>;
+    return <AppLoader />;
   }
 
   if (!auth.isAuthenticated) {
@@ -18,17 +19,18 @@ export const AuthenticatedLayout = () => {
 
   return (
     <WebSocketProvider>
-      <div data-ui="authenticated-layout" className="h-dvh flex flex-col">
+      <div
+        data-ui="authenticated-layout"
+        className="flex flex-col min-h-screen"
+      >
         <Navbar />
-        <main
-          data-ui="main-content"
-          className="screen-bg flex-1 overflow-hidden"
-        >
+
+        <main data-ui="main-content" className="screen-bg flex-1">
           <Outlet />
         </main>
-        <AuthenticatedMenu />-
+
+        <AuthenticatedMenu />
       </div>
     </WebSocketProvider>
   );
-  // }
 };

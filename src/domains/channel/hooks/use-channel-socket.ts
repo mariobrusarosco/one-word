@@ -7,11 +7,9 @@ const useChannelSocket = (channelId?: string) => {
   const chatSlug = `chat-${channelId}	`;
 
   useEffect(() => {
-    console.log("[SOCKET] 2.0 joining channel", channelId);
     emit(SocketEvents.JOIN_CHAT, chatSlug);
 
     return () => {
-      console.log("[SOCKET] 2.0 leaving channel", chatSlug);
       emit(SocketEvents.LEAVE_CHAT, chatSlug);
     };
   }, [channelId]);

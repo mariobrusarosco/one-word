@@ -1,7 +1,7 @@
 {
   "name": "one-word",
   "private": true,
-  "version": "1.4.0",
+  "version": "1.5.0",
   "scripts": {
     "dev": "vite --mode local-dev",
     "dev-demo": "vite --mode demo",

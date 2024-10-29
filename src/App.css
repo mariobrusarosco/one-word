@@ -9,6 +9,12 @@
   min-width: 0;
 }
 
+
+
+body {
+  min-height: 100vh;
+}
+
 @layer base {
   :root {
     --background: 0 0% 97%;

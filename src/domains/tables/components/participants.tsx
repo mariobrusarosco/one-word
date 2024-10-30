@@ -25,8 +25,7 @@ export const ParticpantsList = ({
 }: {
   tableParticipants: ITablePartipant[];
 }) => {
-  if (tableParticipants?.length === 0) return null;
-
+  console.log("from ParticpantsList", { tableParticipants });
   return (
     <div className="table-participants overflow-hidden pb-14">
       <p className="uppercase text-sm font-light text-rose-800 dark:text-neutral-100 p-4">

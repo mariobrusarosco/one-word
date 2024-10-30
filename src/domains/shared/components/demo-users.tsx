@@ -1,5 +1,6 @@
 import { useAuthentication } from "@/domains/auth/hooks/use-authentication";
 import { Button } from "@/domains/ui-system/components/ui/button";
+import { Spinner } from "@/domains/ui-system/components/ui/spinner";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -44,9 +45,12 @@ export const DemoUsers = ({
       </div>
 
       {authentication.isLoading ? (
-        <p className="p-2 mt-6 text-xs font-semibold uppercase text-center text-rose-800 dark:text-neutral-100">
-          Please wait!
-        </p>
+        <div className="flex gap-x-2 justify-center items-center mt-10">
+          <Spinner size="small" outer="secondary" inner="secondary" />
+          <span className="p-2 text-xs font-semibold uppercase text-center text-rose-800 dark:text-neutral-100">
+            working on it
+          </span>
+        </div>
       ) : null}
     </div>
   );

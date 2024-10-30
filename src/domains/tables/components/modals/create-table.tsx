@@ -13,6 +13,7 @@ import {
 } from "@/domains/ui-system/components/ui/dialog";
 import { useState } from "react";
 import { useToast } from "@/domains/ui-system/components/ui/use-toast";
+import { Spinner } from "@/domains/ui-system/components/ui/spinner";
 
 export const CreateTable = () => {
   const { toast } = useToast();
@@ -30,6 +31,10 @@ export const CreateTable = () => {
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tables"] });
+      toast({
+        variant: "success",
+        title: "Table created successfully!",
+      });
       closeModal();
     },
   });
@@ -74,7 +79,7 @@ export const CreateTable = () => {
           <div className="flex items-end gap-x-4 justify-center pt-14">
             <div className="flex flex-col gap-y-3">
               <label
-                className="uppercase text-rose-800 text-lg"
+                className="uppercase dark:text-neutral-100 text-rose-800 text-lg"
                 htmlFor="table-name"
               >
                 Table name
@@ -91,9 +96,13 @@ export const CreateTable = () => {
             <Button
               type="submit"
               disabled={mutation.isPending}
-              className="text-xl font-extralight px-8"
+              className="text-xl font-extralight px-8 min-w-[125px]"
             >
-              create
+              {mutation.isPending ? (
+                <Spinner size="small" inner="secondary" outer="secondary" />
+              ) : (
+                "create"
+              )}
             </Button>
           </div>
         </form>

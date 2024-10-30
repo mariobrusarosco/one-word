@@ -1,16 +1,18 @@
 import { ITable } from "@/domains/tables/typing/interfaces";
 import { Skeleton } from "@/domains/ui-system/components/ui/skeleton";
+import { Link } from "react-router-dom";
 
 export const TableName = ({ table }: { table: ITable }) => {
   return (
-    <div
+    <Link
+      to={`${table.id}`}
       data-ui="table-name"
       className="table-name shadow-main-bottom px-4 py-4 flex justify-between cursor-pointer hover:bg-rose-800 group transition-colors"
     >
       <p className="text text-rose-800 dark:text-neutral-100 group-hover:text-neutral-100 uppercase">
         {table.name}
       </p>
-    </div>
+    </Link>
   );
 };
 

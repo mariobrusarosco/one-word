@@ -1,5 +1,7 @@
 # One Word
 
+![One Word](image.png)
+
 It’s a virtual board game made as side project. It's heavily based on
 “Just One” - a cooperative party game in which participants
 have to play together to discover as many mystery words as possible.

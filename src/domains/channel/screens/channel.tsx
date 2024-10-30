@@ -27,7 +27,7 @@ const ChannelScreen = () => {
     queryFn: channelLoader,
     enabled: true,
   });
-  const { isFetching } = useTableLoadingState();
+  const { isLoading } = useTableLoadingState();
 
   useChannelSocket(channelId);
 
@@ -35,7 +35,7 @@ const ChannelScreen = () => {
     return <div>{error.message}</div>;
   }
 
-  if (isFetching)
+  if (isLoading)
     return (
       <div data-ui="channel-screen-loading" className="relative h-full">
         <ScreenHeadingLoading />
@@ -54,7 +54,11 @@ const ChannelScreen = () => {
 
   return (
     <div data-ui="channel-screen" className="relative h-full">
-      <ScreenHeading title="Channel" subtitle={channel.name} />
+      <ScreenHeading
+        title="Channel"
+        subtitle={channel.name}
+        loading={isLoading}
+      />
       <MessageList channelName={channel.name} />
       <ChatInput />
     </div>

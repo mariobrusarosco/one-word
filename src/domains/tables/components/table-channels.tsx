@@ -6,6 +6,8 @@ import { Link, useParams } from "react-router-dom";
 export const TableChannels = ({ channels }: { channels: IChannel[] }) => {
   if (channels === undefined || channels.length === 0) return null;
 
+  console.log({ channels });
+
   return (
     <div data-ui="table-channels" className="overflow-hidden pb-14 ">
       <p className="uppercase text-sm font-light text-rose-800 dark:text-neutral-100 p-4">

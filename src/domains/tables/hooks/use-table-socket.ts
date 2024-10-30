@@ -21,6 +21,7 @@ const useTableSocket = (tableId?: string) => {
     tableId &&
       on<ITablePartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
         setTableParticipants(data);
+        console.log(tableParticipants);
       });
   }, [tableId, on]);
 

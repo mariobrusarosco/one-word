@@ -13,7 +13,7 @@ export const TableChannels = ({ channels }: { channels: IChannel[] }) => {
       <p className="uppercase text-sm font-light text-rose-800 dark:text-neutral-100 p-4">
         channels
       </p>
-      <ul className="flex flex-col gap-y-2 h-0 min-h-[100%] overflow-auto scrollable px-4">
+      <ul className="flex flex-col gap-y-2 min-h-[100%] overflow-auto scrollable px-4">
         {channels.map((channel) => (
           <ChannelItem key={channel.id} channel={channel} />
         ))}

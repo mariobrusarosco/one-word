@@ -1,16 +1,17 @@
-import { ITable } from "../typing/interfaces";
-import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { ParticpantsList, ParticpantsListLoading } from "./participants";
-import { TableChannels, TableChannelsLoading } from "./table-channels";
-import { useParams } from "react-router-dom";
-import { useTableSocket } from "../hooks/use-table-socket";
 import {
   TableName,
   TableNameLoading,
 } from "@/domains/tables/components/table-name";
+import { Separator } from "@/domains/ui-system/components/ui/separator";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 import { tableLoader } from "../api/loader";
 import { useTableLoadingState } from "../hooks/use-table-loading-state";
-import { useQuery } from "@tanstack/react-query";
+import { useTableSocket } from "../hooks/use-table-socket";
+import { ITable } from "../typing/interfaces";
+import { ParticpantsList, ParticpantsListLoading } from "./participants";
+import { TableChannels, TableChannelsLoading } from "./table-channels";
+import { TableGameLink, TableGameLinkLoading } from "./table-game-link";
 
 export const TableSidebar = () => {
   const { tableId } = useParams<{
@@ -23,17 +24,16 @@ export const TableSidebar = () => {
     enabled: false,
   });
 
-  console.log({ table });
-
   const { isLoading } = useTableLoadingState();
 
   if (isLoading)
     return (
       <Container>
         <TableNameLoading />
-        <ParticpantsListLoading />
-        <Separator />
+        <TableGameLinkLoading />
         <TableChannelsLoading />
+        <Separator />
+        <ParticpantsListLoading />
       </Container>
     );
 
@@ -54,16 +54,17 @@ export const TableSidebar = () => {
   return (
     <Container>
       <TableName table={table} />
-      <ParticpantsList tableParticipants={tableSocket.tableParticipants} />
-      <Separator />
+      <TableGameLink table={table} />
       <TableChannels channels={table.channels} />
+      <Separator />
+      <ParticpantsList tableParticipants={tableSocket.tableParticipants} />
     </Container>
   );
 };
 
 const Container = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="table-sidebar bg-neutral-100 dark:bg-violet-800 shadow-main-right z-[2] grid grid-rows-[56px,1fr,1px,1fr] overflow-hidden">
+    <div className="table-sidebar bg-neutral-100 dark:bg-violet-800 shadow-main-right z-[2] overflow-hidden">
       {children}
     </div>
   );

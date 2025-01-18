@@ -1,11 +1,12 @@
 import { Separator } from "@/domains/ui-system/components/ui/separator";
+import { GameParticipantsList } from "../components/game-participants";
 
 const GameScreen = () => {
   return (
     <div data-ui="game-screen">
       <div className="heading font-extralight">
         <div className="flex justify-between items-center font-sans ">
-          <p className="text-rose-800 dark:text-violet-800 text-3xl desktop:text-5xl">
+          <p className="text-rose-800 font-josefin dark:text-neutral-100 text-6xl font-regular ">
             Game
           </p>
           <p className="table-name font-sans text-3xl text-violet-800 dark:text-neutral-100 desktop:text-5xl">
@@ -13,14 +14,15 @@ const GameScreen = () => {
           </p>
         </div>
 
-        <Separator className="bg-rose-800 my-4" />
+        <Separator className="bg-rose-800 dark:bg-neutral-100 my-4" />
       </div>
 
-      <ul className="grid overflow-auto h-full pb-10">
-        {/* {tableSocket.participants.map((participant) => (
-          <li key={participant.userId}>{participant.username}</li>
-        ))} */}
-      </ul>
+      <GameParticipantsList
+        gameParticipants={Array.from({ length: 8 }, (_, index) => ({
+          username: `Player ${index + 1}`,
+          userId: `user-${index + 1}`,
+        }))}
+      />
     </div>
   );
 };

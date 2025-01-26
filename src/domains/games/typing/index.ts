@@ -32,14 +32,20 @@ export interface IGamePartipant {
 export interface IGameState {
   // phases: IGamePhases;
   activePhase: GamePhaseStatus;
-  // rotation: {
-  //   leadPlayer: string;
+  rotation: {
+    leadPlayer: string;
   //   leadPlayerIndex: number;
-  //   isMemberLeadPlayer: boolean;
-  // };
+    isMemberLeadPlayer: boolean;
+  };
   participants: IGamePartipant[];
+  chosenWord?: string;
+  similarWords?: ISimilarWord[];
+  guessedWords?: string[];
 }
 
+export interface IGameHandlers {
+  updateGameOnSocket: (game: IGameState) => void;
+}
 
 
 export interface IGameWords {

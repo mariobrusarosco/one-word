@@ -1,15 +1,13 @@
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-
 import { GamePhase } from "../components/game-phase";
-// import { GameParticipantsList } from "../components/game-participants";
-// import { GameBoard } from "../components/game-board";
 import { useGameNew } from "../hooks/use-game-new";
+import { GameParticipantsList } from "../components/game-participants";
+import { GameBoard } from "../components/game-board";
 
 const GameScreen = () => {
-  const game = useGameNew();
+  const { game, handlers } = useGameNew();
 
   if(!game) return null;
-  
 
   console.log('[TEST - game]', game);
   return (
@@ -20,9 +18,9 @@ const GameScreen = () => {
       </div>
 
       <div className="flex gap-4 justify-between">
-        {/* <GameParticipantsList gameState={gameState} /> */}
+        <GameParticipantsList game={game} />
       
-        {/* <GameBoard gameState={gameState} handlers={handlers} /> */}
+        <GameBoard game={game} handlers={handlers}  />
       </div>
 
     </div>

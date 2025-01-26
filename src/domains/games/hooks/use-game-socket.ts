@@ -2,10 +2,12 @@ import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { SocketEvents } from "@/domains/socket/typing/enums";
 import { useCallback, useEffect, useState } from "react";
 import { IGamePartipant, IGameState } from "../typing";
+import { useQueryClient } from "@tanstack/react-query";
 
 const useGameSocket = (tableId?: string) => {
   const { on, emit } = useWebSocket();
   const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>([]);
+  const queryClient = useQueryClient();
 
   const joinGameRoom = useCallback(() => {
     tableId && emit(SocketEvents.JOIN_GAME_ROOM, `table-${tableId}-game`);
@@ -22,14 +24,14 @@ const useGameSocket = (tableId?: string) => {
     );
   }, [tableId, on]);
 
-  const onGameUpdateOnSocket = useCallback((callback: (gameState: IGameState) => void) => {
-    // debugger
-    tableId && on<IGameState>(SocketEvents.GAME_UPDATE, callback);
-  }, [tableId, on]);
+  const watchForGameUpdate = useCallback(() => {
+    tableId && on(SocketEvents.GAME_UPDATE, (gameState: IGameState) => {
+      queryClient.setQueryData(['gameState'], gameState);
+    });
+  }, [tableId, on, queryClient]);
 
-  const updateGameOnSocket = useCallback((gameState: IGameState) => {
-    debugger
-    tableId && emit(SocketEvents.GAME_UPDATE, gameState);
+  const updateGameOnSocket = useCallback((game: IGameState) => {
+    tableId && emit(SocketEvents.GAME_UPDATE, game);
   }, [tableId, emit]);
 
   const watchForDisconnections = useCallback(() => {
@@ -45,14 +47,16 @@ const useGameSocket = (tableId?: string) => {
     joinGameRoom();
     watchForNewParticipants();
     watchForDisconnections();
+    watchForGameUpdate();
+
     return () => {
       leaveGameRoom();
     };
-  }, [joinGameRoom, watchForNewParticipants, watchForDisconnections, leaveGameRoom]);
+  }, [joinGameRoom, watchForNewParticipants, watchForDisconnections, leaveGameRoom, watchForGameUpdate]);
 
   return { 
     gameParticipants,
-    onGameUpdateOnSocket,
+    watchForGameUpdate,
     updateGameOnSocket
   };
 };

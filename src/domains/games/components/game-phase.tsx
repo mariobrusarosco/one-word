@@ -1,7 +1,7 @@
 import { IGameState } from "../typing";
 
 export const GamePhase = ({ game }: { game: IGameState }) => {
-  const {  activePhase } = game;
+  const {  activePhase, rotation } = game;
 
   console.log('[GamePhase]', game);
   return (
@@ -10,7 +10,7 @@ export const GamePhase = ({ game }: { game: IGameState }) => {
         Game
       </p>
         <p className="text-rose-800 dark:text-neutral-100 text-4xl font-josefin font-regular mr-8">
-            {/* turn of {participants[0].username} */}
+            turn of {rotation.leadPlayer}
         </p>
         <p className="table-name font-sans text-4xl text-violet-800 dark:text-neutral-100 desktop:text-4xl">  
             {activePhase}

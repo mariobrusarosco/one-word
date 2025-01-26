@@ -1,14 +1,14 @@
 import { Skeleton } from "@/domains/ui-system/components/ui/skeleton";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
-import { IGamePartipant, IGameRotation, IGameState } from "../typing";
+import { IGamePartipant, IGameState } from "../typing";
 
 
 export const GameParticipantsList = ({
-  gameState
+  game
 }: {
-  gameState: IGameState;
+  game: IGameState;
 }) => {
-  const { participants, rotation } = gameState;
+  const { participants, rotation } = game;
   
   // Remove the destructured leadPlayer and use rotation.leadPlayer directly
   console.log('[GAME - GameParticipantsList]', rotation.leadPlayer);

@@ -1,17 +1,17 @@
-import { IGameHandlers } from "../hooks/use-game";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   GamePhaseStatus,
+  IGameHandlers,
   IGameState
 } from "../typing";
 import { Button } from "@/domains/ui-system/components/ui/button";
 
-
-export const GameBoard = ({ gameState, handlers }: { gameState: IGameState, handlers: IGameHandlers}) => {
-  return <div className="game-board">{renderPhaseContent(gameState, handlers)}</div>;
+export const GameBoard = ({ game, handlers }: { game: IGameState, handlers: IGameHandlers }) => {
+  return <div className="game-board">{renderPhaseContent(game, handlers)}</div>;
 };
 
-const renderPhaseContent = (gameState: IGameState, handlers: IGameHandlers) => {
-  const { activePhase } = gameState;
+const renderPhaseContent = (game: IGameState, handlers: IGameHandlers) => {
+  const { activePhase } = game;
 
   const phaseComponents = {
     [GamePhaseStatus.NOT_STARTED]: NotStarted,
@@ -23,23 +23,32 @@ const renderPhaseContent = (gameState: IGameState, handlers: IGameHandlers) => {
   };
 
   const Component = phaseComponents[activePhase];
-  return Component ? <Component gameState={gameState} handlers={handlers} /> : null;
+    return Component ? <Component game={game} handlers={handlers} /> : null;
 };
 
-const NotStarted = ({ gameState, handlers }: { gameState: IGameState, handlers: IGameHandlers }) => {
+const NotStarted = ({ game, handlers }: { game: IGameState, handlers: IGameHandlers }) => {
+  const queryClient = useQueryClient();
+
+  const handleStartGame = () => {
+    queryClient.setQueryData(['gameState'], (oldData: IGameState) => ({
+      ...oldData,
+      activePhase: GamePhaseStatus.CHOOSING_THE_WORD
+    }));
+
+    handlers.updateGameOnSocket({
+      ...game,
+      activePhase: GamePhaseStatus.CHOOSING_THE_WORD
+    });
+  }
+
   return (
     <div className="flex flex-col gap-2">
-      {gameState.rotation.isMemberLeadPlayer ? (
+      {game.rotation.isMemberLeadPlayer ? (
         <div className="flex justify-center flex-col gap-2">
           <span className="text-sm text-gray-500">
             When you´re ready, go ahead and...
           </span>
-          <Button
-            onClick={() => {
-              console.log('[GAME STATE]', gameState);
-              // handlers.updateGamePhase(GamePhaseStatus.CHOOSING_THE_WORD);
-            }}
-          >
+          <Button onClick={handleStartGame}>
             Start game
           </Button>
         </div>
@@ -50,11 +59,26 @@ const NotStarted = ({ gameState, handlers }: { gameState: IGameState, handlers: 
   );
 };
 
-const ChoosingTheWord = ({ gameState, handlers }: { gameState: IGameState, handlers: IGameHandlers }) => {
-  console.log(gameState, handlers )
+const ChoosingTheWord = ({ game, handlers }: { game: IGameState, handlers: IGameHandlers }) => {
+  const queryClient = useQueryClient();
+  
+  const handleChooseWord = (word: string) => {
+    queryClient.setQueryData(['gameState'], (oldData: IGameState) => ({
+      ...oldData,
+      chosenWord: word,
+      activePhase: GamePhaseStatus.WRITING_SIMILAR_WORDS
+    }));
+
+    handlers.updateGameOnSocket({
+      ...game,
+      chosenWord: word,
+      activePhase: GamePhaseStatus.WRITING_SIMILAR_WORDS
+    });
+  };
+
   const {
     rotation: { leadPlayer, isMemberLeadPlayer },
-  } = gameState;
+  } = game;
   return (
     <div>
       {isMemberLeadPlayer ? (
@@ -64,12 +88,7 @@ const ChoosingTheWord = ({ gameState, handlers }: { gameState: IGameState, handl
           <p className="text-lg text-white">3 - verb</p>
           <p className="text-lg text-white">4 - place</p>
 
-          <Button
-            onClick={() => {
-              // chooseWord("test word");
-              // updateGamePhase(GamePhaseStatus.WRITING_SIMILAR_WORDS);
-            }}
-          >
+          <Button onClick={() => handleChooseWord("test word")}>
             Start Round
           </Button>
         </div>
@@ -85,12 +104,26 @@ const ChoosingTheWord = ({ gameState, handlers }: { gameState: IGameState, handl
 };
 
 
-const WritingSimilarWords = ({ gameState, handlers }: { gameState: IGameState, handlers: IGameHandlers }) => {
+const WritingSimilarWords = ({ game }: { game: IGameState }) => {
+  const queryClient = useQueryClient();
+
+  const handleSubmitWord = (word: string) => {
+    queryClient.setQueryData(['gameState'], (oldData: IGameState) => ({
+      ...oldData,
+      similarWords: [...(oldData.similarWords || []), {
+        userId: "1",
+        userName: "test",
+        value: word
+      }],
+      activePhase: GamePhaseStatus.GUESSING_THE_WORD
+    }));
+  };
+
   const {
     rotation: { isMemberLeadPlayer, leadPlayer },
-  } = gameState;
+  } = game;
 
-  console.log(handlers);
+  // console.log(handlers);
   // const handleSubmit = () => {
   //   const similarWord: ISimilarWord = {
   //     userId: "1", // Get from member context
@@ -114,7 +147,7 @@ const WritingSimilarWords = ({ gameState, handlers }: { gameState: IGameState, h
             <input type="text" />
           </div>
 
-          {/* <Button onClick={handleSubmit}>Done</Button> */}
+          <Button onClick={() => handleSubmitWord("test")}>Done</Button>
         </div>
       ) : (
         <p className="text-lg text-white">Players are guessing the word...</p>
@@ -123,10 +156,20 @@ const WritingSimilarWords = ({ gameState, handlers }: { gameState: IGameState, h
   );
 };
 
-const GuessingTheWord = ({ gameState, handlers }: { gameState: IGameState, handlers: IGameHandlers }) => {
+const GuessingTheWord = ({ game }: { game: IGameState }) => {
+  const queryClient = useQueryClient();
+
+  const handleGuessWord = (word: string) => {
+    queryClient.setQueryData(['gameState'], (oldData: IGameState) => ({
+      ...oldData,
+      guessedWords: [...(oldData.guessedWords || []), word],
+      activePhase: GamePhaseStatus.REMOVING_SIMILAR_WORDS
+    }));
+  };
+
   const {
     rotation: { isMemberLeadPlayer, leadPlayer },
-  } = gameState;
+  } = game;
     
   return (
     <div>
@@ -147,18 +190,7 @@ const GuessingTheWord = ({ gameState, handlers }: { gameState: IGameState, handl
             <input type="text" />
           </div>
 
-          <Button
-            onClick={() => {
-              const updatedGame = {
-                ...gameState,
-                activePhase: GamePhaseStatus.REMOVING_SIMILAR_WORDS
-              }
-
-              handlers.updateGame(updatedGame);
-            }}
-          >
-            Done
-          </Button>
+          <Button onClick={() => handleGuessWord("test")}>Done</Button>
         </div>
       ) : (
         <p className="text-lg text-white">Players are guessing the word...</p>
@@ -167,14 +199,24 @@ const GuessingTheWord = ({ gameState, handlers }: { gameState: IGameState, handl
   );
 };
 
-const RemovingSimilarWords = ({ gameState, handlers }: { gameState: IGameState, handlers: IGameHandlers }) => {
-  console.log(gameState, handlers );
+const RemovingSimilarWords = ({ game }: { game: IGameState }) => {
+  const queryClient = useQueryClient();
+
+  const handleRemoveWord = (wordToRemove: string) => {
+    queryClient.setQueryData(['gameState'], (oldData: IGameState) => ({
+      ...oldData,
+      similarWords: oldData.similarWords?.filter(w => w.value !== wordToRemove),
+      activePhase: GamePhaseStatus.RESULTS
+    }));
+  };
+
+  console.log(game );
   return (
     <p className="text-lg text-white">Remove duplicate or invalid words...</p>
   );
 };
 
-const Results = ({ gameState, handlers }: { gameState: IGameState, handlers: IGameHandlers }) => {
-  console.log(gameState, handlers )
+const Results = ({ game }: { game: IGameState }) => {
+  console.log(game )
   return <p className="text-lg text-white">Game results</p>;
 };

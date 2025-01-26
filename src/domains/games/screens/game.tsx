@@ -1,28 +1,30 @@
 import { Separator } from "@/domains/ui-system/components/ui/separator";
-import { GameParticipantsList } from "../components/game-participants";
+
+import { GamePhase } from "../components/game-phase";
+// import { GameParticipantsList } from "../components/game-participants";
+// import { GameBoard } from "../components/game-board";
+import { useGameNew } from "../hooks/use-game-new";
 
 const GameScreen = () => {
+  const game = useGameNew();
+
+  if(!game) return null;
+  
+
+  console.log('[TEST - game]', game);
   return (
     <div data-ui="game-screen">
       <div className="heading font-extralight">
-        <div className="flex justify-between items-center font-sans ">
-          <p className="text-rose-800 font-josefin dark:text-neutral-100 text-6xl font-regular ">
-            Game
-          </p>
-          <p className="table-name font-sans text-3xl text-violet-800 dark:text-neutral-100 desktop:text-5xl">
-            Not Started
-          </p>
-        </div>
-
+        <GamePhase game={game} />
         <Separator className="bg-rose-800 dark:bg-neutral-100 my-4" />
       </div>
 
-      <GameParticipantsList
-        gameParticipants={Array.from({ length: 8 }, (_, index) => ({
-          username: `Player ${index + 1}`,
-          userId: `user-${index + 1}`,
-        }))}
-      />
+      <div className="flex gap-4 justify-between">
+        {/* <GameParticipantsList gameState={gameState} /> */}
+      
+        {/* <GameBoard gameState={gameState} handlers={handlers} /> */}
+      </div>
+
     </div>
   );
 };

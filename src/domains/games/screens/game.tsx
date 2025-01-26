@@ -1,6 +1,6 @@
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { GamePhase } from "../components/game-phase";
-import { useGameNew } from "../hooks/use-game-new";
+import { useGameNew } from "../hooks/use-game";
 import { GameParticipantsList } from "../components/game-participants";
 import { GameBoard } from "../components/game-board";
 

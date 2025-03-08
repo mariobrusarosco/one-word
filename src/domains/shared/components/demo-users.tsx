@@ -35,7 +35,7 @@ export const DemoUsers = ({
           disabled={authentication.isLoading}
           variant="outline"
           className="px-8 py-6 min-w-[180px]"
-          onClick={() => setPublicId("dcb3e0ee-753d-4a8d-98fe-6db4ed01d3ac")}
+          onClick={() => setPublicId("1")}
         >
           Lara Croft
         </Button>
@@ -47,7 +47,7 @@ export const DemoUsers = ({
             disabled={authentication.isLoading}
             variant="outline"
             className="px-8 py-6 min-w-[180px]"
-            onClick={() => setPublicId("013373bc-9e88-4f17-83bf-9f7bf59d908f")}
+            onClick={() => setPublicId("2")}
             >
             Sherlock Holmes
           </Button>
@@ -58,7 +58,7 @@ export const DemoUsers = ({
           disabled={authentication.isLoading}
           variant="outline"
           className="px-8 py-6 min-w-[180px]"
-          onClick={() => setPublicId("ca1c0388-f63f-4603-8657-8313ba93903e")}
+          onClick={() => setPublicId("3")}
         >
           Walter White
         </Button>
@@ -69,7 +69,7 @@ export const DemoUsers = ({
           disabled={authentication.isLoading}
           variant="outline"
           className="px-8 py-6 min-w-[180px]"
-          onClick={() => setPublicId("460f7776-a866-4e79-9072-9f8f8256ad36")}
+          onClick={() => setPublicId("4")}
         >
           Jesse Pinkman
         </Button>

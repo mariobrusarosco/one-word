@@ -1243,13 +1243,444 @@ Great! I'll proceed with editing database.md to:
 
 _****_
 
-
+```diff
+  ## Starting the Local Database
+  
+- ### Step 1: Start the PostgreSQL Container
++ ### Step 1: Clone the Repository (if you haven't already)
++ 
++ First, clone the API One Word repository to your local machine:
++ 
++ ```bash
++ git clone https://github.com/mariobrusarosco/api-one-word.git
++ cd api-one-word
++ ```
++ 
++ ### Step 2: Update Environment Variables
++ 
++ Open the `.env` file in the root of your project and set the `DATABASE_URL` variable to match your PostgreSQL configuration:
++ 
++ ```env
++ DATABASE_URL=postgres://your_username:your_password@localhost:5432/your_database_name
++ ```
++ 
++ > If you set `your_username` to `postgres`, `your_password` to `postgres`, and `your_database_name` to `api_one_word`, your `DATABASE_URL` would look like this:
++ 
++ ```env
++ DATABASE_URL=postgres://postgres:postgres@localhost:5432/api_one_word
++ ```
++ 
++ ### Step 3: Start the PostgreSQL Container
+  
+  The project uses Docker to run a PostgreSQL database instance. Follow these steps to start it:
+     You should see the `postgres_db` container listed as running.
+  
+- ### Step 2: Initialize the Database
++ ### Step 4: Configure Prisma
++ 
++ Ensure your `prisma/schema.prisma` file is set up correctly to use PostgreSQL. It should look like this:
++ 
++ ```prisma
++ datasource db {
++   provider = "postgresql"
++   url      = env("DATABASE_URL")
++ }
++ 
++ generator client {
++   provider = "prisma-client-js"
++ }
++ ```
++ 
++ This configuration tells Prisma to use PostgreSQL as the database provider and to get the connection string from the `DATABASE_URL` environment variable.
++ 
++ ### Step 5: Initialize the Database
+  
+  After starting the container, you need to set up the database schema and seed it with initial data:
+  
+     ```bash
+-    npx prisma migrate dev --schema=./src/prisma/schema.prisma
++    npx prisma migrate dev --name your_migration_name --schema=./src/prisma/schema.prisma
+     ```
+  
+  2. Open your browser and navigate to:
+  
+-    ```bash
++    ```
+     http://localhost:5555
+     ```
+  
+  Prisma Studio offers a user-friendly interface where you can:
+- 
+  - Browse all tables and records
+  - Filter and sort data
+  
+  3. Add a new server with the following connection details:
+- 
+     - Name: One Word Local
+     - Host: localhost
+  
+  2. Launch DBeaver and connect to your PostgreSQL database with these details:
+- 
+     - Connection Type: PostgreSQL
+     - Server Host: localhost
+  
+  To explore the database schema:
+- 
+  - In Prisma Studio: Click on a model name to see its structure
+  - In pgAdmin: Expand Servers > One Word Local > Databases > postgres > Schemas > public > Tables, then right-click a table and select "Properties"
+  
+  To execute custom SQL queries:
+- 
+  - In pgAdmin: Click Tools > Query Tool, then enter and execute your SQL
+  - In DBeaver: Right-click on the database connection and select "SQL Editor"
+  4. Restart your API server to ensure it uses the updated schema.
+  
+- 
+- 
+- 
+- --- possible duplicated content
+- 
+- # Local Database Setup Guide for the API One Word Project
+- 
+- This guide will help you set up a local PostgreSQL database for the API One Word project using Docker and Prisma. By following these steps, you will ensure that all developers are using the same database version and can easily manage migrations.
+- 
+- ## Prerequisites
+- 
+- - **Docker**: Ensure that Docker is installed and running on your machine. You can download it from [Docker's official website](https://www.docker.com/get-started).
+- - **Node.js**: Make sure you have Node.js installed. You can download it from [Node.js official website](https://nodejs.org/).
+- 
+- ## Step 1: Clone the Repository
+- 
+- First, clone the API One Word repository to your local machine:
+- 
+- ```bash
+- git clone https://github.com/mariobrusarosco/api-one-word.git
+- cd api-one-word
+- ```
+- 
+- ## Step 2: Update the Environment Variables
+- 
+- Open the `.env` file in the root of your project and set the `DATABASE_URL` variable to match your PostgreSQL configuration:
+- 
+- ```env
+- DATABASE_URL=postgres://your_username:your_password@localhost:5432/your_database_name
+- ```
+- 
+- > If you set `your_username` to `postgres`, `your_password` to `password`, and `your_database_name` to `api_one_word`, your `DATABASE_URL` would look like this:
+- 
+- ```env
+- DATABASE_URL=postgres://postgres:password@localhost:5432/api_one_word
+- ```
+- 
+- ## Step 3: Start the PostgreSQL Container
+- 
+- Run the following command in your terminal to start the PostgreSQL container:
+- 
+- ```bash
+- docker compose up -d
+- ```
+- 
+- This command will start the PostgreSQL service in the background.
+- 
+- ## Step 4: Configure Prisma
+- 
+- Ensure your `prisma/schema.prisma` file is set up correctly to use PostgreSQL. It should look like this:
+- 
+- ```prisma
+- datasource db {
+-   provider = "postgresql"
+-   url      = env("DATABASE_URL")
+- }
+- 
+- generator client {
+-   provider = "prisma-client-js"
+- }
+- ```
+- 
+- ## Step 5: Manage Migrations with Prisma
+- 
+- ### Generate a New Migration
+- 
+- After making changes to your Prisma schema, run the following command to create a new migration:
+- 
+- ```bash
+- npx prisma migrate dev --name your_migration_name
+- ```
+- 
+- ### Apply Migrations
+- 
+- To apply all pending migrations, run:
+- 
+- ```bash
+- npx prisma migrate deploy
+- ```
+- 
+- ### Open Prisma Studio
+- 
+- You can also use Prisma Studio to interact with your database:
+- 
+- ```bash
+- npx prisma studio
+- ```
+- 
+- ## Step 6: Stopping the PostgreSQL Container
+- 
+- When you no longer need the PostgreSQL container, you can stop it by running:
+- 
+- ```bash
+- docker-compose down
+- ```
+- 
+- If you want to reset the database and remove all data, you can run:
+- 
+- ```bash
+- docker-compose down -v
+- ```
+- 
+- ## Additional Notes
+- 
+- - Ensure that your Docker service is running before executing the commands.
+- - If you encounter any issues, check the logs of the PostgreSQL container using:
+- 
+- ```bash
+- docker-compose logs postgres
+- ```
+- 
+- ## Conclusion
+- 
+- By following this guide, you should have a fully functional local PostgreSQL database set up for the API One Word project. This setup allows for consistent development environments across all team members and simplifies the process of managing database migrations with Prisma. If you have any questions or need further assistance, feel free to reach out to the team!
+- 
+- > **Note:** For more detailed database documentation including GUI tools, common operations, and troubleshooting, please see [src/docs/database.md](src/docs/database.md).
+- ---
++ ## Note for One Word Frontend Project
++ 
++ If you're working on the One Word frontend project, note that it integrates with this API One Word project. To make the frontend work properly, you'll need to have this API running with a properly configured database.
+```
 
 ---
 
 _****_
 
+I've made the following changes:
+1. Removed the entirely redundant second section
+2. Integrated unique details from the second section into the first section:
+   - Added more detailed repository setup steps
+   - Added environment variable examples
+   - Added the specific migration command with `--name` parameter
+3. Improved formatting and organization
+4. Kept all the comprehensive GUI tools and troubleshooting information
+5. Added a note about frontend project integration at the end
 
+The document now has a single, complete guide without redundancy while preserving all valuable information. Would you like me to make any adjustments to this edit?
+
+---
+
+_**User**_
+
+Can you create the content for @local-development.md ?
+
+I need to tell developers which commands to run, and make the local environment ready 
+
+---
+
+_**Assistant**_
+
+<think>
+I'll create content for local-development.md that:
+1. Provides clear steps for setting up the local development environment
+2. Lists all necessary commands in sequence
+3. References database.md for detailed database setup
+4. Focuses on getting the development environment running
+
+I can see from the files that:
+- The project uses Docker for the database
+- Uses yarn for package management
+- Has environment variables that need to be set up
+- Requires database initialization
+</think>
+
+---
+
+_****_
+
+```diff
+- 
+- 
++ # Local Development Guide
++ 
++ This guide will help you set up and run the API One Word project in your local environment.
++ 
++ ## Prerequisites
++ 
++ Ensure you have the following installed:
++ - [Node.js](https://nodejs.org/) (version 16 or higher)
++ - [Yarn](https://yarnpkg.com/) package manager
++ - [Docker](https://www.docker.com/get-started) and Docker Compose
++ 
++ ## Quick Start
++ 
++ 1. Clone the repository:
++    ```bash
++    git clone https://github.com/mariobrusarosco/api-one-word.git
++    cd api-one-word
++    ```
++ 
++ 2. Install dependencies:
++    ```bash
++    yarn install
++    ```
++ 
++ 3. Set up environment variables:
++    ```bash
++    cp .example.env .env
++    ```
++    Then edit `.env` with your preferred settings. The default values should work for local development.
++ 
++ 4. Start the database and API server:
++    ```bash
++    # Start PostgreSQL in the background
+     docker-compose up -d
+-    yarn dev 
++ 
++    # Start the development server
++    yarn dev
++    ```
++ 
++ The API will be available at `http://localhost:3000`.
++ 
++ ## Development Commands
++ 
++ Here are the most commonly used commands during development:
++ 
++ ```bash
++ # Start the development server with hot reload
++ yarn dev
++ 
++ # Run tests
++ yarn test
++ 
++ # Run linter
++ yarn lint
++ 
++ # Format code
++ yarn format
++ 
++ # Generate Prisma client
++ yarn generate-schema
++ 
++ # Run database migrations
++ yarn db:migrate
++ 
++ # Seed the database
++ yarn seed
++ 
++ # Start Prisma Studio (database GUI)
++ yarn studio
++ ```
++ 
++ ## Database Setup
++ 
++ For detailed instructions on setting up and managing the database, please refer to our [Database Guide](database.md).
++ 
++ ## Accessing the API
++ 
++ Once running, you can access:
++ - API endpoints at `http://localhost:3000`
++ - Swagger documentation at `http://localhost:3000/api-docs`
++ - Socket.IO test page at `http://localhost:3000/socket.html`
++ 
++ ## Development Workflow
++ 
++ 1. **Making Changes**
++    - Create a new branch for your feature/fix
++    - Make your changes
++    - Run tests and linting before committing
++    - Submit a pull request
++ 
++ 2. **Database Changes**
++    - Modify the Prisma schema in `src/prisma/schema.prisma`
++    - Generate a new migration: `yarn db:migrate`
++    - Update the Prisma client: `yarn generate-schema`
++ 
++ 3. **Testing Changes**
++    - Write tests for new features
++    - Run the test suite: `yarn test`
++    - Ensure all tests pass before submitting PR
++ 
++ ## Troubleshooting
++ 
++ ### Common Issues
++ 
++ 1. **Port Conflicts**
++    - Database (5432): Check if another PostgreSQL instance is running
++    - API (3000): Check if the port is in use by another service
++ 
++ 2. **Database Connection Issues**
++    ```bash
++    # Check database container status
++    docker-compose ps
++ 
++    # View database logs
++    docker-compose logs postgres
++    ```
++ 
++ 3. **Node/Yarn Issues**
++    ```bash
++    # Clear node_modules and reinstall
++    rm -rf node_modules
++    yarn install
++    ```
++ 
++ ### Getting Help
++ 
++ If you encounter any issues:
++ 1. Check the [Database Guide](database.md) for database-specific problems
++ 2. Review Docker logs: `docker-compose logs`
++ 3. Check the API server logs
++ 4. Reach out to the team if problems persist
++ 
++ ## Additional Resources
++ 
++ - [API Documentation](https://www.postman.com/mario-brusarosco/workspace/mario-brusarosco/collection/2930329-c069887a-c13d-4bee-8bda-e69e3f5b9163)
++ - [Database Guide](database.md)
++ - [Project README](../../readme.md) 
+```
+
+---
+
+_****_
+
+I've created a comprehensive local development guide that:
+
+1. **Quick Start Section**:
+   - Clear steps to get up and running quickly
+   - Prerequisites and initial setup
+   - Basic commands to start the environment
+
+2. **Development Commands**:
+   - Common commands developers will need
+   - Each command with a clear description
+   - Organized by type (dev, test, database, etc.)
+
+3. **Development Workflow**:
+   - Step-by-step process for making changes
+   - Database-specific workflow
+   - Testing procedures
+
+4. **Troubleshooting**:
+   - Common issues developers might face
+   - Solutions and commands to resolve them
+   - Where to get help
+
+5. **References**:
+   - Links to other documentation
+   - Points to database.md for detailed database setup
+   - API documentation and resources
+
+Would you like me to make any adjustments to this guide? For example:
+1. Add more specific troubleshooting scenarios?
+2. Include more detail about any particular section?
+3. Add any project-specific workflows or commands?
 
 ---
 

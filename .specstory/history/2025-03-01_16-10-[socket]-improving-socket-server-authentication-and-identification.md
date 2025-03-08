@@ -1,6 +1,6 @@
 ## SpecStory
 
-## Improving Socket Server Authentication and Identification (3/1/2025, 4:10:50 PM)
+## [SOCKET] Improving Socket Server Authentication and Identification (3/1/2025, 4:10:50 PM)
 
 _**User**_
 

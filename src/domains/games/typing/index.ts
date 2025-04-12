@@ -25,8 +25,14 @@ export interface IGameLeadRotation {
 export type IGameHook = IGameState & IGameActions
 
 export interface IGamePartipant {
-    userId: string;
+    userID: string;
     username: string;
+}
+
+export interface IGameParticipantExitPayload {
+    user: IGamePartipant;
+    message: string;
+    timestamp: string;
 }
 
 export interface IGameState {

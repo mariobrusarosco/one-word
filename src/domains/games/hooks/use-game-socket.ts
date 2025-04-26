@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast, useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { useMember } from "@/domains/member/hooks/use-member";
 import { IMember } from "@/domains/auth/typing/enums-and-interfaces";
+import { ISocketUser } from "@/domains/socket/typing/interfaces";
 
 const useGameSocket = (tableId?: string, member?: IMember) => {
   const { on, emit } = useWebSocket();
@@ -24,20 +25,25 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
     })
   }, [emit, tableId])
 
-  const emitLeaveGame = useCallback(() => {
-    console.log('[GAME] [LEAVE_GAME]')
-    emit(SocketEvents.LEAVE_GAME, {
-      gameId: `game-${tableId}`,
-      memberId: member?.id
-    })
-  }, [emit, tableId])
+  // const emitLeaveGame = useCallback(() => {
+  //   console.log('[GAME] [LEAVE_GAME]')
+  //   emit(SocketEvents.LEAVE_GAME, {
+  //     gameId: `game-${tableId}`,
+  //     memberId: member?.id
+  //   })
+  // }, [emit, tableId])
 
-  const watchForParticipants = useCallback(() => {
-    console.log('[GAME] [WATCH_FOR_PARTICIPANTS]')
-    on(SocketEvents.UPDATE_GAME_PARTICIPANTS, (data) => {
-      console.log('[GAME] [UPDATE_GAME_PARTICIPANTS]', data)
-    })
-  }, [on, tableId])
+  // const watchForParticipants = useCallback(() => {
+  //   console.log('[GAME] [WATCH_FOR_PARTICIPANTS]')
+
+  //   on(SocketEvents.UPDATE_GAME_PARTICIPANTS, (data) => {
+  //     console.log('[GAME] [UPDATE_GAME_PARTICIPANTS]', data)
+  //   })
+
+  //   on(SocketEvents.JOIN_GAME, (data) => {
+  //     console.log('[GAME] [SOMEONE JOINED GAME]', data)
+  //   })
+  // }, [on, tableId])
 
   // Effect to emit participant entrance
   // useEffect(() => {
@@ -45,21 +51,32 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
   //   emitJoinGame();
   // }, [tableId])
 
+  const watchForNewParticipants = useCallback(() => {
+    on(SocketEvents.JOIN_GAME, (data: ISocketUser) => {
+      toast({
+        title: `${data.user.username} joined the game`,
+      })
+    })
+  }, [on])
+
   useEffect(() => {
     console.log('[GAME] [MOUNT]')
     emitJoinGame();
-    watchForParticipants();
+    // watchForParticipants();
+
+    // Watch
+    watchForNewParticipants();
 
     return () => {
       console.log('[GAME] [UNMOUNT]')
-      emitLeaveGame();
+      // emitLeaveGame();
         // isMounted.current = false;
 
         // if(isMounted.current) {
         //   alert('unmount')
         // }
     };
-  }, [tableId, emitJoinGame, emitLeaveGame, watchForParticipants]);
+  }, [tableId, emitJoinGame]);
 
   return { 
     gameParticipants,

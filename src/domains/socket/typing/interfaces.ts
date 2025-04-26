@@ -28,3 +28,11 @@ export type SocketState = {
   socketInstance: SocketInstance | null;
   connected: boolean;
 };
+
+export interface ISocketUser {
+  user: {
+    id: string;
+    username: string;
+    email: string;
+  }
+}

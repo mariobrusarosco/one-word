@@ -1,15 +1,15 @@
 import { Separator } from "@/domains/ui-system/components/ui/separator";
 import { GamePhase } from "../components/game-phase";
-import { useGameNew } from "../hooks/use-game";
+import { useGame } from "../hooks/use-game";
 import { GameParticipantsList } from "../components/game-participants";
 import { GameBoard } from "../components/game-board";
 
 const GameScreen = () => {
-  const { game, handlers } = useGameNew();
+  const { game, handlers } = useGame();
 
   if(!game) return null;
 
-  console.log('[TEST - game]', game);
+  console.log('[GAME]', game);
   return (
     <div data-ui="game-screen">
       <div className="heading font-extralight">

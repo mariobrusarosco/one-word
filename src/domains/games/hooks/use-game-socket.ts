@@ -1,108 +1,69 @@
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { SocketEvents } from "@/domains/socket/typing/enums";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { IGamePartipant, IGameState } from "../typing";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast, useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { useMember } from "@/domains/member/hooks/use-member";
+import { IMember } from "@/domains/auth/typing/enums-and-interfaces";
 
-const useGameSocket = (tableId?: string) => {
-  const member = useMember();
+const useGameSocket = (tableId?: string, member?: IMember) => {
   const { on, emit } = useWebSocket();
   const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>([]);
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const { toast } = useToast();
 
+  // Create a ref to avoid unmounted error
+  // const isMounted = useRef(true);
 
-  const emitGame = {
-    participantEntrance: useCallback(() => {
-      debugger
-      tableId && emit(SocketEvents.GAME_PARTICIPANT_ENTRANCE, `table-${tableId}-game`);
-    }, [emit, tableId]),
-    participantExit: useCallback(() => {
-      debugger
-      tableId && emit(SocketEvents.GAME_PARTICIPANT_EXIT, {
-        userID: member?.data?.id,
-        username: member?.data?.firstName,
-        gameRoom: `table-${tableId}-game`
-      });
-    }, [emit, tableId]),
-  }
+  const emitJoinGame = useCallback(() => {
+    console.log('[GAME] [JOIN_GAME]')
+    emit(SocketEvents.JOIN_GAME, {
+      gameId: `game-${tableId}`,
+      memberId: member?.id
+    })
+  }, [emit, tableId])
 
-  const watchForGame = {
-    participantEntrance: useCallback(() => {
-      tableId && on(SocketEvents.GAME_PARTICIPANT_ENTRANCE, (participant: IGamePartipant) => {
-        setGameParticipants((prev) => [...prev, participant]);
-        toast({
-          title: participant.username,
-          description: "has joined the game",
-        });
-      });
-    }, [tableId, on]),
-    participantExit: useCallback(() => {
-      tableId && on(SocketEvents.GAME_PARTICIPANT_EXIT, (participant: IGamePartipant) => {
-        setGameParticipants((prev) => prev.filter((p) => p.userID !== participant.userID));
-        toast({
-          title: participant.username,
-          description: "has left the game",
-        });
-      });
-    }, [tableId, on]),
-    participantsUpdate: useCallback(() => {
-      tableId && on<IGamePartipant[]>(
-        SocketEvents.UPDATE_GAME_PARTICIPANTS, 
-        setGameParticipants
-      );
-    }, [tableId, on]),
-  }
+  const emitLeaveGame = useCallback(() => {
+    console.log('[GAME] [LEAVE_GAME]')
+    emit(SocketEvents.LEAVE_GAME, {
+      gameId: `game-${tableId}`,
+      memberId: member?.id
+    })
+  }, [emit, tableId])
 
+  const watchForParticipants = useCallback(() => {
+    console.log('[GAME] [WATCH_FOR_PARTICIPANTS]')
+    on(SocketEvents.UPDATE_GAME_PARTICIPANTS, (data) => {
+      console.log('[GAME] [UPDATE_GAME_PARTICIPANTS]', data)
+    })
+  }, [on, tableId])
 
-  const watchForGameUpdate = useCallback(() => {
-    tableId && on(SocketEvents.GAME_UPDATE, (gameState: IGameState) => {
-      queryClient.setQueryData(['gameState'], gameState);
-    });
-  }, [tableId, on, queryClient]);
-
-  const updateGameOnSocket = useCallback((game: IGameState) => {
-    tableId && emit(SocketEvents.GAME_UPDATE, game);
-  }, [tableId, emit]);
-
-  const watchForDisconnections = useCallback(() => {
-    tableId && on<IGamePartipant[]>(
-      SocketEvents.DISCONNECTED, 
-      (participants) => {
-        setGameParticipants(participants);
-      }
-    );
-  }, [tableId, on]);
-
+  // Effect to emit participant entrance
+  // useEffect(() => {
+ 
+  //   emitJoinGame();
+  // }, [tableId])
 
   useEffect(() => {
-    emitGame.participantEntrance();
-    watchForGame.participantEntrance();
-    // watchForParticipantsUpdate();
-    // watchForGameParticipantExit();
-    // watchForDisconnections();
-    // watchForGameUpdate();
+    console.log('[GAME] [MOUNT]')
+    emitJoinGame();
+    watchForParticipants();
 
     return () => {
-      emitGame.participantExit();
+      console.log('[GAME] [UNMOUNT]')
+      emitLeaveGame();
+        // isMounted.current = false;
+
+        // if(isMounted.current) {
+        //   alert('unmount')
+        // }
     };
-  }, [
-    watchForGame.participantEntrance,
-    watchForGame.participantExit,
-    // emitNewGameParticipant, 
-    // watchForNewGameParticipant, 
-    // watchForParticipantsUpdate,
-    // watchForGameParticipantExit,
-    // watchForDisconnections, 
-    // emitGameParticipantExit, 
-    // watchForGameUpdate,
-  ]);
+  }, [tableId, emitJoinGame, emitLeaveGame, watchForParticipants]);
 
   return { 
     gameParticipants,
-    updateGameOnSocket
+    // updateGameOnSocket
   };
 };
 

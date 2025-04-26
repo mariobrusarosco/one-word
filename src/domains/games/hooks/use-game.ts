@@ -4,15 +4,14 @@ import { useParams } from "react-router-dom";
 import { GamePhaseStatus } from "../typing";
 import { useMember } from "@/domains/member/hooks/use-member";
 
-export const useGameNew = () => {
-    const { tableId } = useParams<{ tableId: string }>();
-    const { gameParticipants,updateGameOnSocket } = useGameSocket(tableId);
+export const useGame = () => {
     const { data: member } = useMember();
+    const { tableId } = useParams<{ tableId: string }>();
+    const { gameParticipants } = useGameSocket(tableId, member);
 
-    console.log('[TEST - gameParticipants]', gameParticipants);
     
     const query = useQuery({
-        queryKey: ['gameState'],
+        queryKey: ['GAME'],
         queryFn: () => ({
             participants: [],
             activePhase: GamePhaseStatus.NOT_STARTED,
@@ -32,7 +31,7 @@ export const useGameNew = () => {
     });
 
     const handlers = {
-        updateGameOnSocket,
+        // updateGameOnSocket,
     }
 
     return { game: query.data, handlers };

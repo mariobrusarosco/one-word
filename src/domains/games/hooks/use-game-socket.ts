@@ -25,13 +25,13 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
     })
   }, [emit, tableId])
 
-  // const emitLeaveGame = useCallback(() => {
-  //   console.log('[GAME] [LEAVE_GAME]')
-  //   emit(SocketEvents.LEAVE_GAME, {
-  //     gameId: `game-${tableId}`,
-  //     memberId: member?.id
-  //   })
-  // }, [emit, tableId])
+  const emitLeaveGame = useCallback(() => {
+    console.log('[GAME] [LEAVE_GAME]')
+    emit(SocketEvents.LEAVE_GAME, {
+      gameId: `game-${tableId}`,
+      memberId: member?.id
+    })
+  }, [emit, tableId])
 
   // const watchForParticipants = useCallback(() => {
   //   console.log('[GAME] [WATCH_FOR_PARTICIPANTS]')
@@ -51,7 +51,7 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
   //   emitJoinGame();
   // }, [tableId])
 
-  const watchForNewParticipants = useCallback(() => {
+  const watchForJoinGame = useCallback(() => {
     on(SocketEvents.JOIN_GAME, (data: ISocketUser) => {
       toast({
         title: `${data.user.username} joined the game`,
@@ -59,17 +59,27 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
     })
   }, [on])
 
+  const watchForLeaveGame = useCallback(() => {
+    on(SocketEvents.LEAVE_GAME, (data: ISocketUser) => {
+      toast({
+        title: `${data.user.username} left the game`,
+      })
+    })
+  }, [on])
+
   useEffect(() => {
     console.log('[GAME] [MOUNT]')
+
+    // Emit
     emitJoinGame();
     // watchForParticipants();
 
     // Watch
-    watchForNewParticipants();
-
+    watchForJoinGame();
+    watchForLeaveGame();
     return () => {
       console.log('[GAME] [UNMOUNT]')
-      // emitLeaveGame();
+      emitLeaveGame();
         // isMounted.current = false;
 
         // if(isMounted.current) {

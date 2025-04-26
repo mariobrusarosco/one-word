@@ -1,3 +1,5 @@
+import { ISocketUser } from "@/domains/socket/typing/interfaces"
+
 export interface ISimilarWord {
     userId: string
     userName: string
@@ -24,10 +26,7 @@ export interface IGameLeadRotation {
 
 export type IGameHook = IGameState & IGameActions
 
-export interface IGamePartipant {
-    userID: string;
-    username: string;
-}
+export interface IGamePartipant extends ISocketUser {}
 
 export interface IGameParticipantExitPayload {
     user: IGamePartipant;

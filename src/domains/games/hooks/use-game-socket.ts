@@ -14,9 +14,6 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
   // const queryClient = useQueryClient();
   const { toast } = useToast();
 
-  // Create a ref to avoid unmounted error
-  // const isMounted = useRef(true);
-
   const emitJoinGame = useCallback(() => {
     console.log('[GAME] [JOIN_GAME]')
     emit(SocketEvents.JOIN_GAME, {
@@ -33,17 +30,14 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
     })
   }, [emit, tableId])
 
-  // const watchForParticipants = useCallback(() => {
-  //   console.log('[GAME] [WATCH_FOR_PARTICIPANTS]')
+  const watchForParticipants = useCallback(() => {
+    console.log('[GAME] [WATCH_FOR_PARTICIPANTS]')
 
-  //   on(SocketEvents.UPDATE_GAME_PARTICIPANTS, (data) => {
-  //     console.log('[GAME] [UPDATE_GAME_PARTICIPANTS]', data)
-  //   })
-
-  //   on(SocketEvents.JOIN_GAME, (data) => {
-  //     console.log('[GAME] [SOMEONE JOINED GAME]', data)
-  //   })
-  // }, [on, tableId])
+    on(SocketEvents.UPDATE_GAME_PARTICIPANTS, (data: IGamePartipant[]) => {
+      console.log('[GAME] [UPDATE_GAME_PARTICIPANTS]', data)
+      setGameParticipants(data)
+    })
+  }, [on, tableId])
 
   // Effect to emit participant entrance
   // useEffect(() => {
@@ -72,19 +66,14 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
 
     // Emit
     emitJoinGame();
-    // watchForParticipants();
-
+    
     // Watch
+    watchForParticipants();
     watchForJoinGame();
     watchForLeaveGame();
     return () => {
       console.log('[GAME] [UNMOUNT]')
       emitLeaveGame();
-        // isMounted.current = false;
-
-        // if(isMounted.current) {
-        //   alert('unmount')
-        // }
     };
   }, [tableId, emitJoinGame]);
 

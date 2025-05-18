@@ -10,7 +10,8 @@ const useTableSocket = (tableId?: string) => {
   );
 
   const joinNewTable = useCallback(() => {
-    tableId && emit(SocketEvents.JOIN_TABLE, `table-${tableId}`);
+    if (!tableId) return;
+    emit(SocketEvents.JOIN_TABLE, `table-${tableId}`);
   }, [emit, tableId]);
 
   const leaveCurrentTable = useCallback(() => {
@@ -21,7 +22,6 @@ const useTableSocket = (tableId?: string) => {
     tableId &&
       on<ITablePartipant[]>(SocketEvents.UPDATE_TABLE_PARTICIPANTS, (data) => {
         setTableParticipants(data);
-        console.log(tableParticipants);
       });
   }, [tableId, on]);
 

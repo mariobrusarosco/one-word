@@ -14,28 +14,34 @@ import {
 import { useState } from "react";
 import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { Spinner } from "@/domains/ui-system/components/ui/spinner";
+import { useNavigate } from "react-router-dom";
 
 export const CreateTable = () => {
   const { toast } = useToast();
   const { closeModal, openModal, isOpen } = useModal("create-table");
   const [tableNameInput, setTableNameInput] = useState("");
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: createTableMutation,
-    onError: () => {
+    onError: (error) => {
+      console.log("error", error);
       toast({
         variant: "destructive",
-        title: "Ops! Something went wrong",
+        title: "Ops! Something went wrong!",
       });
     },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["tables"] });
+    onSuccess: async (createdTable) => {
+      await queryClient.invalidateQueries({
+        queryKey: ["tables"],
+      });
       toast({
         variant: "success",
         title: "Table created successfully!",
       });
       closeModal();
+
+      navigate(`/tables/${createdTable.id}`);
     },
   });
 

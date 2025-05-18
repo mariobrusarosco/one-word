@@ -30,8 +30,8 @@ export const TableList = () => {
 const TableListLoading = () => {
   return (
     <ul className="flex items-center gap-x-4">
-      {Array.from({ length: 6 }).map(() => {
-        return <Button variant="skeleton" size="small" roundness="full" />;
+      {Array.from({ length: 6 }).map((_, i) => {
+        return <Button variant="skeleton" key={i} size="small" roundness="full" />;
       })}
     </ul>
   );

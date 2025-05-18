@@ -1,5 +1,9 @@
 # Chatting
 
+`One Word` is integrated with `API One Word` project. To make `One Word` work on your machine, you also you'll need to have `API One Word` running.
+
+[API One Word](https://github.com/mariobrusarosco/api-one-word)
+
 This Chat feature uses a Web Socket connection to stablish a two-way-channel communication between Client and Server.
 
 ## Web Socket

@@ -1,6 +1,6 @@
+import { Skeleton } from "@/domains/ui-system/components/ui/skeleton";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
 import { ITablePartipant } from "../typing/interfaces";
-import { Skeleton } from "@/domains/ui-system/components/ui/skeleton";
 
 const Participant = ({ participant }: { participant: ITablePartipant }) => {
   return (
@@ -25,13 +25,12 @@ export const ParticpantsList = ({
 }: {
   tableParticipants: ITablePartipant[];
 }) => {
-  console.log("from ParticpantsList", { tableParticipants });
   return (
     <div className="table-participants overflow-hidden pb-14">
       <p className="uppercase text-sm font-light text-rose-800 dark:text-neutral-100 p-4">
         participants
       </p>
-      <ul className="flex flex-col overflow-auto scrollable px-4 h-0 min-h-[100%] ">
+      <ul className="flex flex-col overflow-auto scrollable px-4 min-h-[100%] ">
         {tableParticipants.map((participant) => (
           <Participant participant={participant} key={participant.username} />
         ))}
@@ -46,7 +45,7 @@ export const ParticpantsListLoading = () => {
       <p className="uppercase text-sm font-light text-rose-800 dark:text-neutral-100 p-4">
         participants
       </p>
-      <ul className="flex flex-col overflow-auto scrollable px-4 h-0 min-h-[100%] ">
+      <ul className="flex flex-col overflow-auto scrollable px-4 min-h-[100%] ">
         {Array.from({ length: 4 }).map((_, index) => (
           <ParticipantLoading key={index} />
         ))}

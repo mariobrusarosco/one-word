@@ -20,7 +20,7 @@ export const TableNameLoading = () => {
   return (
     <div
       data-ui="table-name-skeleton"
-      className="shadow-main-bottom px-4 py-4 flex justify-between"
+      className="shadow-main-bottom px-4 py-4 flex justify-between min-h-14"
     >
       <Skeleton className="w-full h-full rounded" />
     </div>

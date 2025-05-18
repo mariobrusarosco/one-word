@@ -23,26 +23,59 @@ export const DemoUsers = ({
   }, [authentication.isSuccess, handleUserSelection, navigate, queryClient]);
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <p className="text-neutral-100 text-2xl">
+        Change your player
+      </p>
+
+      <div className="flex gap-4">
+
       <div className="flex justify-center gap-3">
         <Button
           disabled={authentication.isLoading}
           variant="outline"
           className="px-8 py-6 min-w-[180px]"
-          onClick={() => setPublicId("dcb3e0ee-753d-4a8d-98fe-6db4ed01d3ac")}
+          onClick={() => setPublicId("1")}
         >
           Lara Croft
         </Button>
+      </div>
 
+      <div className="flex justify-center gap-3">
+
+        <Button
+            disabled={authentication.isLoading}
+            variant="outline"
+            className="px-8 py-6 min-w-[180px]"
+            onClick={() => setPublicId("2")}
+            >
+            Sherlock Holmes
+          </Button>
+        </div>
+
+      <div className="flex justify-center gap-3">
         <Button
           disabled={authentication.isLoading}
           variant="outline"
           className="px-8 py-6 min-w-[180px]"
-          onClick={() => setPublicId("013373bc-9e88-4f17-83bf-9f7bf59d908f")}
+          onClick={() => setPublicId("3")}
         >
-          Sherlock Holmes
+          Walter White
         </Button>
       </div>
+
+      <div className="flex justify-center gap-3">
+        <Button
+          disabled={authentication.isLoading}
+          variant="outline"
+          className="px-8 py-6 min-w-[180px]"
+          onClick={() => setPublicId("4")}
+        >
+          Jesse Pinkman
+        </Button>
+      </div>
+      </div>
+
 
       {authentication.isLoading ? (
         <div className="flex gap-x-2 justify-center items-center mt-10">

@@ -1,26 +1,27 @@
 import { Separator } from "@/domains/ui-system/components/ui/separator";
+import { GamePhase } from "../components/game-phase";
+import { useGame } from "../hooks/use-game";
+import { GameParticipantsList } from "../components/game-participants";
+import { GameBoard } from "../components/game-board";
 
 const GameScreen = () => {
+  const game = useGame();
+
+  console.log("[DEBUG] Game Screen", game);
+  if (!game) return null;
+
   return (
     <div data-ui="game-screen">
       <div className="heading font-extralight">
-        <div className="flex justify-between items-center font-sans ">
-          <p className="text-rose-800 dark:text-violet-800 text-3xl desktop:text-5xl">
-            Game
-          </p>
-          <p className="table-name font-sans text-3xl text-violet-800 dark:text-neutral-100 desktop:text-5xl">
-            Not Started
-          </p>
-        </div>
-
-        <Separator className="bg-rose-800 my-4" />
+        <GamePhase game={game} />
+        <Separator className="bg-rose-800 dark:bg-neutral-100 my-4" />
       </div>
 
-      <ul className="grid overflow-auto h-full pb-10">
-        {/* {tableSocket.participants.map((participant) => (
-          <li key={participant.userId}>{participant.username}</li>
-        ))} */}
-      </ul>
+      <div className="flex gap-4 justify-between">
+        <GameParticipantsList game={game} />
+
+        <GameBoard game={game} />
+      </div>
     </div>
   );
 };

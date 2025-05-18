@@ -10,4 +10,8 @@ export enum SocketEvents {
   MESSAGE = "message",
   NEW_CHAT_MESSAGE = "new-chat-message",
   UPDATE_CHAT_MESSAGES = "update-chat-messages",
+  GAME_UPDATE = "game-update",
+  UPDATE_GAME_PARTICIPANTS = "update-game-participants",
+  JOIN_GAME = "join-game",
+  LEAVE_GAME = "leave-game",
 }

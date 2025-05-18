@@ -140,7 +140,7 @@ socket.onAny((event, ...args) => {
 The application has a game state system with defined phases:
 
 ```typescript
-export enum GamePhaseStatus {
+export enum GamePhaseStatuses {
   NOT_STARTED = 'NOT_STARTED',
   CHOOSING_THE_WORD = 'CHOOSING_THE_WORD',
   WRITING_SIMILAR_WORDS = 'WRITING_THE_WORD',
@@ -158,8 +158,8 @@ To debug game states:
 
 ```typescript
 interface IGameState {
-  gamePhases: Map<GamePhaseStatus, IGamePhase>;
-  activePhase: GamePhaseStatus;
+  gamePhases: Map<GamePhaseStatuses, IGamePhase>;
+  activePhase: GamePhaseStatuses;
   rotation: {
     leadPlayer: string;
     leadPlayerIndex: number;
@@ -352,7 +352,7 @@ socket.onAny((event, ...args) => {
 The application has a game state system with defined phases that can be monitored through sockets:
 
 ```typescript
-export enum GamePhaseStatus {
+export enum GamePhaseStatuses {
   NOT_STARTED = 'NOT_STARTED',
   CHOOSING_THE_WORD = 'CHOOSING_THE_WORD',
   WRITING_SIMILAR_WORDS = 'WRITING_THE_WORD',

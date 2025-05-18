@@ -1,38 +1,86 @@
 import { useQuery } from "@tanstack/react-query";
-import { useGameSocket } from "./use-game-socket";
+import { useGameSocket } from "@/domains/games/hooks/use-game-socket";
 import { useParams } from "react-router-dom";
-import { GamePhaseStatus } from "../typing";
+import { GamePhaseStatuses } from "@/domains/games/typing/phase";
 import { useMember } from "@/domains/member/hooks/use-member";
+import { SocketEvents } from "@/domains/socket/typing/enums";
+import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
+import { IGame } from "@/domains/games/typing/game";
+import { useQueryClient } from "@tanstack/react-query";
+import { IGamePartipant } from "../typing/participant";
+import { IMember } from "@/domains/auth/typing/enums-and-interfaces";
+import { useGameRotation } from "./use-game-rotation";
+import { useEffect } from "react";
 
-export const useGame = () => {
-    const { data: member } = useMember();
-    const { tableId } = useParams<{ tableId: string }>();
-    const { gameParticipants } = useGameSocket(tableId, member);
+export const useGame = (): IGame | undefined => {
+  const { data: member } = useMember();
+  const { tableId } = useParams<{ tableId: string }>() as { tableId: string };
+  const { gameParticipants } = useGameSocket(tableId, member);
+  const { emit } = useWebSocket();
+  const queryClient = useQueryClient();
+  const queryKey = ["game", tableId, gameParticipants];
+  const rotation = useGameRotation({
+    gameParticipants,
+    member,
+  });
 
-    
-    const query = useQuery({
-        queryKey: ['GAME'],
-        queryFn: () => ({
-            participants: [],
-            activePhase: GamePhaseStatus.NOT_STARTED,
-            rotation: { leadPlayer: '', isMemberLeadPlayer: false }
-        }),
-        enabled: !!member && gameParticipants.length > 0,
-        select: (data) => {
-            const leadPlayer = gameParticipants[0]?.username || '';
-            const isMemberLeadPlayer = `${member?.firstName} ${member?.lastName}` === leadPlayer;
-            
-            return {
-                ...data,
-                participants: gameParticipants,
-                rotation: { leadPlayer, isMemberLeadPlayer }
-            };
-        }
-    });
+  const query = useQuery<IGame>({
+    queryKey,
+    queryFn: ({ queryKey }) => {
+      const [_, __, gameParticipants] = queryKey as [
+        string,
+        string,
+        IGamePartipant[]
+      ];
+      return {
+        participants: gameParticipants,
+        activePhase: GamePhaseStatuses.NOT_STARTED,
+        rotation,
+        actions: {
+          moveToNextPhase,
+          updateGameOnSocket,
+        },
+      };
+    },
+    select: (data) => {
+      return {
+        ...data,
+        actions: {
+          moveToNextPhase,
+          updateGameOnSocket,
+        },
+        rotation,
+      };
+    },
+    enabled: !!member && gameParticipants.length > 0,
+  });
 
-    const handlers = {
-        // updateGameOnSocket,
+  useEffect(() => {
+    if (gameParticipants.length > 0) {
+      debugger;
+      queryClient.invalidateQueries({ queryKey });
     }
+  }, [gameParticipants]);
 
-    return { game: query.data, handlers };
-}
+  console.log(" [useGame]", gameParticipants?.length);
+
+  const updateGameOnSocket = () => {
+    emit(SocketEvents.GAME_UPDATE, {
+      gameId: `game-${tableId}`,
+      game: query.data,
+    });
+  };
+
+  const moveToNextPhase = (phase: GamePhaseStatuses) => {
+    if (!query.data) return;
+
+    debugger;
+
+    queryClient.setQueryData(queryKey, {
+      ...query.data,
+      activePhase: phase,
+    });
+  };
+
+  return query.data;
+};

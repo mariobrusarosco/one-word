@@ -1,6 +1,6 @@
 import { Skeleton } from "@/domains/ui-system/components/ui/skeleton";
 import { getInitials } from "@/domains/utils-and-helpers/string-manipulation";
-import { IGamePartipant, IGameState } from "../typing";
+import { IGamePartipant, IGameState } from "../typing/game";
 
 
 export const GameParticipantsList = ({
@@ -11,10 +11,10 @@ export const GameParticipantsList = ({
   const { participants, rotation } = game;
   
   // Remove the destructured leadPlayer and use rotation.leadPlayer directly
-  console.log('[GAME - GameParticipantsList]', rotation.leadPlayer);
+  // console.log('[GAME - GameParticipantsList]', rotation.leadPlayer);
   
   return (
-    <div data-ui="game-participants" className="overflow-hidden flex flex-col gap-4 max-w-[320px]">
+    <div data-ui="game-participants" className="overflow-hidden flex flex-col gap-4 min-w-[250px] max-w-[320px]">
       <p className=" text-3xl font-light text-rose-800 dark:text-neutral-100">
         Waiting Room
       </p>

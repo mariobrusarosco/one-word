@@ -5,11 +5,11 @@ import { GameParticipantsList } from "../components/game-participants";
 import { GameBoard } from "../components/game-board";
 
 const GameScreen = () => {
-  const { game, handlers } = useGame();
+  const game = useGame();
 
-  if(!game) return null;
+  console.log("[DEBUG] Game Screen", game);
+  if (!game) return null;
 
-  console.log('[GAME]', game);
   return (
     <div data-ui="game-screen">
       <div className="heading font-extralight">
@@ -19,10 +19,9 @@ const GameScreen = () => {
 
       <div className="flex gap-4 justify-between">
         <GameParticipantsList game={game} />
-      
-        <GameBoard game={game} handlers={handlers}  />
-      </div>
 
+        <GameBoard game={game} />
+      </div>
     </div>
   );
 };

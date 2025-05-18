@@ -1,7 +1,7 @@
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { SocketEvents } from "@/domains/socket/typing/enums";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { IGamePartipant, IGameState } from "../typing";
+import { IGamePartipant, IGameState } from "../typing/game";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast, useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { useMember } from "@/domains/member/hooks/use-member";
@@ -48,7 +48,7 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
   const watchForJoinGame = useCallback(() => {
     on(SocketEvents.JOIN_GAME, (data: ISocketUser) => {
       toast({
-        title: `${data.user.username} joined the game`,
+        title: `${data.username} joined the game`,
       })
     })
   }, [on])
@@ -56,7 +56,7 @@ const useGameSocket = (tableId?: string, member?: IMember) => {
   const watchForLeaveGame = useCallback(() => {
     on(SocketEvents.LEAVE_GAME, (data: ISocketUser) => {
       toast({
-        title: `${data.user.username} left the game`,
+        title: `${data.username} left the game`,
       })
     })
   }, [on])

@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from 'react'
-import { GamePhaseStatus, IGamePartipant, ISimilarWord } from '../typing'
+import { GamePhaseStatuses, IGamePartipant, ISimilarWord } from '../typing/game'
 
 export const useSimilarWords = (
   participants: IGamePartipant[], 
-  updateGamePhase: (phaseId: GamePhaseStatus) => void
+  updateGamePhase: (phaseId: GamePhaseStatuses) => void
 ) => {
   const [similarWords, setSimilarWords] = useState<ISimilarWord[]>([]);
 
@@ -13,7 +13,7 @@ export const useSimilarWords = (
 
   useEffect(() => {
     if(similarWords.length === participants.length - 1) {
-      updateGamePhase(GamePhaseStatus.REMOVING_SIMILAR_WORDS);
+      updateGamePhase(GamePhaseStatuses.REMOVING_SIMILAR_WORDS);
     }
   }, [similarWords.length, participants.length, updateGamePhase]);
 

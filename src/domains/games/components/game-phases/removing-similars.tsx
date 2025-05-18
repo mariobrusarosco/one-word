@@ -1,4 +1,4 @@
-import { IGameHandlers, IGameState } from "../../typing";
+import { IGameHandlers, IGameState } from "../../typing/game";
 
 export const RemovingSimilarWords = ({ game, handlers }: { game: IGameState, handlers: IGameHandlers }) => {
 

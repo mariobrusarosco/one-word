@@ -30,9 +30,7 @@ export type SocketState = {
 };
 
 export interface ISocketUser {
-  user: {
-    id: string;
-    username: string;
-    email: string;
-  }
+  id: string;
+  username: string;
+  email: string;
 }

@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { IGameState } from "../../typing";
-import { GamePhaseStatus } from "../../typing";
+import { IGameState } from "../../typing/game";
+import { GamePhaseStatuses } from "../../typing/game";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ export const GuessingTheWord = ({ game }: { game: IGameState }) => {
           userName: '',
           value: formattedWord
         }],
-        activePhase: GamePhaseStatus.REMOVING_SIMILAR_WORDS
+        activePhase: GamePhaseStatuses.REMOVING_SIMILAR_WORDS
       }));
     };
   

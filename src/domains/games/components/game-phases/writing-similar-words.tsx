@@ -1,7 +1,7 @@
 import { Button } from "@/domains/ui-system/components/ui/button";
-import { GamePhaseStatus, IGameState } from "../../typing";
+import { GamePhaseStatuses, IGameState } from "../../typing/game";
 import { useQueryClient } from "@tanstack/react-query";
-import { IGameHandlers } from "../../typing";
+import { IGameHandlers } from "../../typing/game";
 import { useState } from "react";
 
 export const WritingSimilarWords = ({ game, handlers }: { game: IGameState, handlers: IGameHandlers }) => {
@@ -35,7 +35,7 @@ export const WritingSimilarWords = ({ game, handlers }: { game: IGameState, hand
     };
 
     if (similarWords.length + 1 === nonLeadPlayers.length) {
-      updatedGame.activePhase = GamePhaseStatus.REMOVING_SIMILAR_WORDS;
+      updatedGame.activePhase = GamePhaseStatuses.REMOVING_SIMILAR_WORDS;
     }
 
     queryClient.setQueryData(['gameState'], updatedGame);

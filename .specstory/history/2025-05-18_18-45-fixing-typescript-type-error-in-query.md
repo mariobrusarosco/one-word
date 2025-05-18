@@ -264,3 +264,567 @@ You should now be able to use this code without the previous overload/type issue
 
 ---
 
+_**User**_
+
+Now, when changing the game phase we need to emit a socket event
+
+---
+
+_**Assistant**_
+
+```diff
+    console.log(" [useGame]", gameParticipants?.length);
+  
+-   const updateGameOnSocket = () => {
++   const updateGameOnSocket = (game: IGame) => {
+      emit(SocketEvents.GAME_UPDATE, {
+        gameId: `game-${tableId}`,
+-       game: query.data,
++       game,
+      });
+    };
+```
+
+```diff
+      if (!query.data) return;
+  
+-     debugger;
+- 
+-     queryClient.setQueryData(queryKey, {
++     const updatedGame = {
+        ...query.data,
+        activePhase: phase,
+-     });
++     };
++     queryClient.setQueryData(queryKey, updatedGame);
++     updateGameOnSocket(updatedGame);
+    };
+  
+```
+
+---
+
+Now, when you change the game phase using `moveToNextPhase`, the updated game state is emitted via the socket event right after updating the query data. This ensures all clients are notified of the phase change in real time.
+
+---
+
+_**User**_
+
+Nice! now the back end needs to listen to and brodcast to all other game participants
+
+---
+
+_**Assistant**_
+
+Great! Here’s what you need to do on the backend to listen for the game phase change and broadcast it to all participants:
+
+---
+
+### 1. **Listen for the Game Update Event**
+
+Assuming you’re using something like Socket.IO, listen for the event (e.g., `GAME_UPDATE`) from the client:
+
+```js
+io.on('connection', (socket) => {
+  socket.on('GAME_UPDATE', ({ gameId, game }) => {
+    // Handle the update and broadcast below
+  });
+});
+```
+
+---
+
+### 2. **Broadcast the Update to All Participants**
+
+You should broadcast the update to all sockets in the game’s room except the sender (or to everyone, as needed):
+
+```js
+socket.to(gameId).emit('GAME_UPDATE', { gameId, game });
+```
+
+Or, if you want to send to everyone including the sender:
+
+```js
+io.in(gameId).emit('GAME_UPDATE', { gameId, game });
+```
+
+---
+
+### 3. **(Optional) Join Sockets to Game Rooms**
+
+Make sure each participant joins the correct room when they join the game:
+
+```js
+socket.join(gameId);
+```
+
+---
+
+### **Example: Full Handler**
+
+```js
+io.on('connection', (socket) => {
+  socket.on('JOIN_GAME', (gameId) => {
+    socket.join(gameId);
+  });
+
+  socket.on('GAME_UPDATE', ({ gameId, game }) => {
+    // Broadcast to all participants in the room
+    io.in(gameId).emit('GAME_UPDATE', { gameId, game });
+  });
+});
+```
+
+---
+
+**Summary:**  
+- Listen for the `GAME_UPDATE` event.
+- Broadcast the update to all sockets in the game’s room.
+- Ensure all participants join the correct room.
+
+Let me know if you need a code sample in a specific backend framework or have questions about this setup!
+
+---
+
+_**User**_
+
+@api-one-word Can you scan this project?
+
+---
+
+_**Assistant**_
+
+<details>
+            <summary>Listed directory src • **10** results</summary>
+        
+| Name |
+|-------|
+| 📄 `vite-env.d.ts` |
+| 📁 `testing` |
+| 📁 `mocks` |
+| 📁 `styling` |
+| 📄 `main.tsx` |
+| 📁 `domains` |
+| 📁 `docs` |
+| 📁 `api` |
+| 📄 `App.css` |
+| 📄 `App.tsx` |
+
+</details>
+
+---
+
+<details>
+            <summary>Listed directory src/api • **2** results</summary>
+        
+| Name |
+|-------|
+| 📄 `index.ts` |
+| 📄 `interceptors.ts` |
+
+</details>
+
+---
+
+Read file: src/api/index.ts
+
+---
+
+<details>
+            <summary>Listed directory src/domains • **12** results</summary>
+        
+| Name |
+|-------|
+| 📁 `ui-system` |
+| 📁 `games` |
+| 📁 `utils-and-helpers` |
+| 📁 `tables` |
+| 📁 `socket` |
+| 📁 `shared` |
+| 📁 `message` |
+| 📁 `member` |
+| 📁 `chat` |
+| 📁 `dashboard` |
+| 📁 `channel` |
+| 📁 `auth` |
+
+</details>
+
+---
+
+<details>
+            <summary>Listed directory src/domains/socket • **3** results</summary>
+        
+| Name |
+|-------|
+| 📁 `typing` |
+| 📁 `components` |
+| 📁 `providers` |
+
+</details>
+
+---
+
+<details>
+            <summary>Listed directory src/domains/socket/providers • **1** results</summary>
+        
+| Name |
+|-------|
+| 📁 `web-socket` |
+
+</details>
+
+---
+
+<details>
+            <summary>Listed directory src/domains/socket/providers/web-socket • **2** results</summary>
+        
+| Name |
+|-------|
+| 📄 `provider.tsx` |
+| 📄 `hook.ts` |
+
+</details>
+
+---
+
+Read file: src/domains/socket/providers/web-socket/provider.tsx
+
+---
+
+Your current code is for the **frontend** and uses `socket.io-client` to connect to a backend socket server.  
+To listen for and broadcast game updates to all participants, you need to implement this logic on your **backend** (Node.js/Express/Socket.IO server).
+
+---
+
+## What to do on the backend
+
+1. **Set up a Socket.IO server** (if not already).
+2. **Listen for the `GAME_UPDATE` event** from any client.
+3. **Broadcast the update to all clients in the game room**.
+
+---
+
+### Example: Minimal Backend Socket.IO Logic
+
+```js
+const { Server } = require("socket.io");
+const io = new Server(server, { /* options */ });
+
+io.on("connection", (socket) => {
+  // When a user joins a game, join them to a room
+  socket.on("JOIN_GAME", (gameId) => {
+    socket.join(gameId);
+  });
+
+  // Listen for game updates
+  socket.on("GAME_UPDATE", ({ gameId, game }) => {
+    // Broadcast to all in the room (including sender)
+    io.in(gameId).emit("GAME_UPDATE", { gameId, game });
+    // Or, to all except sender: socket.to(gameId).emit(...)
+  });
+});
+```
+
+---
+
+### What you need to do
+
+- Make sure your backend is running a Socket.IO server.
+- When a user joins a game, call `socket.join(gameId)` on the backend.
+- When a client emits `GAME_UPDATE`, broadcast it to the room as shown above.
+
+---
+
+**If you want me to find the exact backend file to edit, please show me your backend's main server file (often called `server.js`, `index.js`, or similar, and usually not in the `src/` of your frontend).**  
+If your backend is in a different repo/folder, please attach or point me to it!
+
+---
+
+_**User**_
+
+Nice! Now, we`re watching for game-update event! When that happens we need to update the game state
+
+---
+
+_**Assistant**_
+
+Great! To update the game state when you receive a `GAME_UPDATE` event from the socket, you should:
+
+1. **Listen for the `GAME_UPDATE` event** using your socket.
+2. **Update the React Query cache** with the new game data when the event is received.
+
+Here’s how you can do it in your `useGame` hook:
+
+---
+
+### Add a useEffect to Listen and Update
+
+Add this inside your `useGame` hook, after you define `queryKey` and `queryClient`:
+
+```ts
+useEffect(() => {
+  const handleGameUpdate = ({ game }: { game: IGame }) => {
+    queryClient.setQueryData(queryKey, game);
+  };
+
+  // Listen for the event
+  const off = emit.on?.(SocketEvents.GAME_UPDATE, handleGameUpdate);
+
+  // Cleanup
+  return () => {
+    if (off) off();
+    // Or, if your socket API uses .off:
+    // emit.off?.(SocketEvents.GAME_UPDATE, handleGameUpdate);
+  };
+}, [emit, queryClient, queryKey]);
+```
+
+**Note:**  
+- If your `emit` object does not have `.on`/`.off`, use your actual socket instance or context’s `on`/`off` methods.
+- The exact API may differ depending on your socket implementation. Adjust as needed.
+
+---
+
+### Summary
+
+- Listen for `GAME_UPDATE` socket events.
+- When received, update the React Query cache with the new game state.
+
+Let me know if you want this inserted directly into your file, or if you need help with your socket API specifics!
+
+---
+
+_**User**_
+
+Can you think about a better solution
+
+---
+
+_**Assistant**_
+
+Looking at your code more carefully, I notice you already have `useGameSocket` hook being used. This would be a better place to handle socket events since it's specifically designed for game-related socket operations.
+
+Here's a better approach:
+
+1. **Move the socket event handling to `useGameSocket`** - This keeps all game-related socket logic in one place
+2. **Use React Query's cache updates** consistently
+3. **Keep the game state management centralized**
+
+Let me check your `useGameSocket` implementation:
+
+---
+
+<details>
+            <summary>Searched codebase "use-game-socket.ts" • **1** results</summary>
+        
+| File |
+|------|
+| `undefined` |
+
+</details>
+
+---
+
+Read file: src/domains/games/hooks/use-game-socket.ts
+
+---
+
+Now I can suggest a better solution! Here's how to improve the game state management:
+
+1. First, let's modify `useGameSocket` to properly handle game updates:
+
+---
+
+```diff
+  const useGameSocket = (tableId?: string, member?: IMember) => {
+    const { on, emit } = useWebSocket();
+-   const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>(
+-     []
+-   );
+-   // const queryClient = useQueryClient();
++   const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>([]);
++   const queryClient = useQueryClient();
+    const { toast } = useToast();
++   const queryKey = ["game", tableId];
+  
+    const emitJoinGame = useCallback(() => {
+```
+
+```diff
+        memberId: member?.id,
+      });
+-   }, [emit, tableId]);
++   }, [emit, tableId, member?.id]);
+  
+    const emitLeaveGame = useCallback(() => {
+```
+
+```diff
+        memberId: member?.id,
+      });
+-   }, [emit, tableId]);
++   }, [emit, tableId, member?.id]);
+  
+    const watchForParticipants = useCallback(() => {
+```
+
+```diff
+        setGameParticipants(data);
+      });
+-   }, [on, tableId]);
++   }, [on]);
+  
+    const watchForJoinGame = useCallback(() => {
+```
+
+```diff
+      });
+    }, [on]);
+- 
+  
+    const updateGameOnSocket = useCallback((game: IGame) => {
+-     console.log("[GAME] [UPDATE_GAME]", game);
+-   }, []);
++     console.log("[GAME] [EMIT_UPDATE_GAME]", game);
++     emit(SocketEvents.GAME_UPDATE, {
++       gameId: `game-${tableId}`,
++       game,
++     });
++   }, [emit, tableId]);
+  
+-   const watchForGameUpdate = useCallback((updateCallback: (game: IGame) => void) => {
+-     on(SocketEvents.GAME_UPDATE, (data: IGame) => {
+-       console.log("[GAME] [UPDATE_GAME]", data);
+-       updateCallback(data)
++   const watchForGameUpdate = useCallback(() => {
++     on(SocketEvents.GAME_UPDATE, ({ game }: { game: IGame }) => {
++       console.log("[GAME] [RECEIVED_GAME_UPDATE]", game);
++       queryClient.setQueryData(queryKey, game);
+      });
+-   }, [on, tableId]);
++   }, [on, queryClient, queryKey]);
+  
+    useEffect(() => {
+```
+
+```diff
+        emitLeaveGame();
+      };
+-   }, [tableId, emitJoinGame]);
++   }, [
++     emitJoinGame,
++     emitLeaveGame,
++     watchForParticipants,
++     watchForJoinGame,
++     watchForLeaveGame,
++     watchForGameUpdate
++   ]);
+  
+    return {
+```
+
+---
+
+2. Now, let's simplify your `useGame` hook since most of the socket logic is now in `useGameSocket`:
+
+---
+
+```diff
+  import { GamePhaseStatuses } from "@/domains/games/typing/phase";
+  import { useMember } from "@/domains/member/hooks/use-member";
+- import { SocketEvents } from "@/domains/socket/typing/enums";
+- import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
+- import { IGame } from "@/domains/games/typing/game";
+  import { useQueryClient } from "@tanstack/react-query";
+  import { IGamePartipant } from "../typing/participant";
+- import { IMember } from "@/domains/auth/typing/enums-and-interfaces";
++ import { IGame } from "@/domains/games/typing/game";
+  import { useGameRotation } from "./use-game-rotation";
+  import { useEffect } from "react";
+```
+
+```diff
+    const { data: member } = useMember();
+    const { tableId } = useParams<{ tableId: string }>() as { tableId: string };
+-   const { gameParticipants } = useGameSocket(tableId, member);
+-   const { emit } = useWebSocket();
+    const queryClient = useQueryClient();
+    const queryKey = ["game", tableId];
++   
++   const { gameParticipants, updateGameOnSocket } = useGameSocket(tableId, member);
+    const rotation = useGameRotation({
+      gameParticipants,
+```
+
+```diff
+      queryKey,
+      queryFn: ({ queryKey }) => {
+-       const [_, __, gameParticipants] = queryKey as [
+-         string,
+-         string,
+-         IGamePartipant[]
+-       ];
++       const [_, __, participants] = queryKey as [string, string, IGamePartipant[]];
+        return {
+-         participants: gameParticipants,
++         participants,
+          activePhase: GamePhaseStatuses.NOT_STARTED,
+          rotation,
+```
+
+```diff
+    });
+  
+-   // todo mOVE THIS TO A FUNCTION AND USE IT ON THE SOCKET EVENT
+    useEffect(() => {
+      if (gameParticipants.length > 0) {
+-       queryClient.setQueryData(queryKey, (oldData: IGame) => {
++       queryClient.setQueryData(queryKey, (oldData: IGame | undefined) => {
++         if (!oldData) return;
+          return {
+            ...oldData,
+```
+
+```diff
+        });
+      }
+-   }, [gameParticipants]);
+- 
+-   console.log("[DEBUG] [useGame]", gameParticipants?.length);
+- 
+-   const updateGameOnSocket = (game: IGame) => {
+-     debugger;
+-     emit(SocketEvents.GAME_UPDATE, {
+-       gameId: `game-${tableId}`,
+-       game,
+-     });
+-   };
++   }, [gameParticipants, rotation]);
+  
+    const moveToNextPhase = (phase: GamePhaseStatuses) => {
+      if (!query.data) return;
+  
+-     const newData = {
++     const updatedGame = {
+        ...query.data,
+        activePhase: phase,
+      };
+-     // debugger;
+- 
+-     console.log("[DEBUG] [moveToNextPhase]", phase, newData);
+  
+-     queryClient.setQueryData(queryKey, newData);
+-     updateGameOnSocket(newData);
++     queryClient.setQueryData(queryKey, updatedGame);
++     updateGameOnSocket(updatedGame);
+    };
+  
+```
+
+---
+
+This is a
+
+---
+

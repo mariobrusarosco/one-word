@@ -20,6 +20,7 @@ import {
   IconShield,
   IconUser,
 } from "@tabler/icons-react";
+import { Icon } from "@tabler/icons-react";
 
 type names =
   | "chevron-down"
@@ -44,7 +45,7 @@ type names =
   | "user"
   | "shield";
 
-export const iconMapper: Record<names, any> = {
+export const iconMapper: Record<names, Icon> = {
   ["chevron-down"]: IconChevronDown,
   ["chevron-up"]: IconChevronUp,
   ["chevron-right"]: IconChevronRight,

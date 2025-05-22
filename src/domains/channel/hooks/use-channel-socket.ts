@@ -12,7 +12,7 @@ const useChannelSocket = (channelId?: string) => {
     return () => {
       emit(SocketEvents.LEAVE_CHAT, chatSlug);
     };
-  }, [channelId]);
+  }, [channelId, chatSlug, emit]);
 };
 
 export { useChannelSocket };

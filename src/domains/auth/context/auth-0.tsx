@@ -1,5 +1,4 @@
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
-import { AuthData } from "../typing/enums-and-interfaces";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 export default function OktaAuth0Provider({
   children,
@@ -18,12 +17,3 @@ export default function OktaAuth0Provider({
     </Auth0Provider>
   );
 }
-
-export const useOktaAuth0 = () => {
-  const auth0 = useAuth0();
-
-  return {
-    isAuthenticated: auth0.isAuthenticated,
-    isAuthenticating: auth0.isLoading,
-  } satisfies AuthData;
-};

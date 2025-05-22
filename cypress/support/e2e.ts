@@ -22,14 +22,19 @@ if (app && !app.document.head.querySelector('[data-hide-command-log-request]')) 
   app.document.head.appendChild(style);
 }
 
-// Prevent TypeScript from reading type declarations for Cypress in this file
-// This is necessary because we're mixing different types of imports
+// Define custom commands interface for e2e testing
+export interface E2ETestCommands {
+  // Add custom commands here if needed
+  // For example:
+  // login(email: string, password: string): Chainable<void>
+}
+
+// Augment the Cypress namespace
 declare global {
-  namespace Cypress {
-    interface Chainable {
-      // Add custom commands here if needed
-      // For example:
-      // login(email: string, password: string): Chainable<void>
-    }
+  interface Cypress {
+    Chainable: Cypress["Chainable"] & E2ETestCommands;
   }
-} 
+}
+
+// Make this file a module
+export {}; 

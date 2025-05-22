@@ -25,12 +25,15 @@ import '@testing-library/cypress/add-commands';
 // The mount function is automatically included by Cypress
 // when using component testing, so we don't need to import it
 
-// Augment the Cypress namespace to include type definitions
+// Define custom commands interface for component testing
+export interface ComponentTestCommands {
+  // Add custom commands for component testing here if needed
+}
+
+// Augment the Cypress namespace
 declare global {
-  namespace Cypress {
-    interface Chainable {
-      // Add custom commands for component testing here if needed
-    }
+  interface Cypress {
+    Chainable: Cypress["Chainable"] & ComponentTestCommands;
   }
 }
 

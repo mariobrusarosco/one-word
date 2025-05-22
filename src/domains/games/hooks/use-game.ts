@@ -7,9 +7,8 @@ import { SocketEvents } from "@/domains/socket/typing/enums";
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { IGame } from "@/domains/games/typing/game";
 import { useQueryClient } from "@tanstack/react-query";
-import { IGamePartipant } from "../typing/participant";
 import { useGameRotation } from "./use-game-rotation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 export const useGame = (): IGame | undefined => {
   const { data: member } = useMember();
@@ -24,20 +23,35 @@ export const useGame = (): IGame | undefined => {
   });
   const { emit } = useWebSocket();
   const queryClient = useQueryClient();
-  const queryKey = ["game", tableId];
+  const queryKey = useMemo(() => ["game", tableId], [tableId]);
   const rotation = useGameRotation({
     gameParticipants,
     member,
   });
 
+  const updateGameOnSocket = (game: IGame) => {
+    emit(SocketEvents.GAME_UPDATE, {
+      gameId: `game-${tableId}`,
+      game,
+    });
+  };
+
+  const moveToNextPhase = (phase: GamePhaseStatuses) => {
+    const game = queryClient.getQueryData(queryKey);
+    if (!game) return;
+
+    const newData = {
+      ...game,
+      activePhase: phase,
+    };
+
+    queryClient.setQueryData(queryKey, newData);
+    updateGameOnSocket(newData as IGame);
+  };
+
   const query = useQuery<IGame>({
-    queryKey,
-    queryFn: ({ queryKey }) => {
-      const [_, __, gameParticipants] = queryKey as [
-        string,
-        string,
-        IGamePartipant[]
-      ];
+    queryKey: [...queryKey, { gameParticipants, rotation, moveToNextPhase, updateGameOnSocket }],
+    queryFn: () => {
       return {
         participants: gameParticipants,
         activePhase: GamePhaseStatuses.NOT_STARTED,
@@ -51,7 +65,6 @@ export const useGame = (): IGame | undefined => {
     enabled: !!member && gameParticipants.length > 0,
   });
 
-  // todo mOVE THIS TO A FUNCTION AND USE IT ON THE SOCKET EVENT
   useEffect(() => {
     if (gameParticipants.length > 0) {
       queryClient.setQueryData(queryKey, (oldData: IGame) => {
@@ -62,32 +75,9 @@ export const useGame = (): IGame | undefined => {
         };
       });
     }
-  }, [gameParticipants]);
+  }, [gameParticipants, queryClient, queryKey, rotation]);
 
   // console.log("[DEBUG] [useGame]", gameParticipants?.length);
-
-  const updateGameOnSocket = (game: IGame) => {
-    emit(SocketEvents.GAME_UPDATE, {
-      gameId: `game-${tableId}`,
-      game,
-    });
-  };
-
-  const moveToNextPhase = (phase: GamePhaseStatuses) => {
-    const game = queryClient.getQueryData(queryKey);
-    // console.log("[DEBUG] [moveToNextPhase]", game);
-    if (!game) return;
-
-    const newData = {
-      ...game,
-      activePhase: phase,
-    };
-
-    // console.log("[DEBUG] [moveToNextPhase]", phase, newData);
-
-    queryClient.setQueryData(queryKey, newData);
-    updateGameOnSocket(newData as IGame);
-  };
 
   return query.data;
 };

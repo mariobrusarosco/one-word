@@ -43,15 +43,18 @@
 //   });
 // });
 
-// Declare the types for custom commands
+// Define the interface for custom commands
+export interface CustomCommands {
+  // Uncomment and modify these as needed
+  // login(email: string, password: string): Cypress.Chainable<void>
+  // mockAuth(): Cypress.Chainable<void>
+  // apiLogin(email: string, password: string): Cypress.Chainable<AUTWindow>
+}
+
+// Augment the Cypress namespace
 declare global {
-  namespace Cypress {
-    interface Chainable {
-      // Uncomment and modify these as needed
-      // login(email: string, password: string): Chainable<void>
-      // mockAuth(): Chainable<void>
-      // apiLogin(email: string, password: string): Chainable<AUTWindow>
-    }
+  interface Cypress {
+    Chainable: Cypress.Chainable & CustomCommands;
   }
 }
 

@@ -7,7 +7,7 @@ import {
 import { useAppTheme } from "./theming/theme";
 
 const UISystemScreen = () => {
-  const { setTheme, theme } = useAppTheme();
+  const { setTheme } = useAppTheme();
   return (
     <div>
       <h1>UI System</h1>

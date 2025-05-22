@@ -1,5 +1,6 @@
 import { QueryKey } from "@tanstack/react-query";
 import { api } from "../../../api";
+import { AxiosError } from "axios";
 
 export const tablesLoader = async () => {
   const result = await api.get("/tables");
@@ -14,13 +15,10 @@ export const tableLoader = async ({ queryKey }: { queryKey: QueryKey }) => {
     const result = await api.get(`/tables/${tableId}`);
 
     return result.data;
-  } catch (error:
-    | {
-        response: {
-          data: string;
-        };
-      }
-    | any) {
-    throw Error(error?.response?.data);
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.data) {
+      throw Error(error.response.data);
+    }
+    throw error;
   }
 };

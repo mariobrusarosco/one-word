@@ -1,10 +1,8 @@
 import { useWebSocket } from "@/domains/socket/providers/web-socket/hook";
 import { SocketEvents } from "@/domains/socket/typing/enums";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { IGame } from "../typing/game";
-import { useQueryClient } from "@tanstack/react-query";
-import { toast, useToast } from "@/domains/ui-system/components/ui/use-toast";
-import { useMember } from "@/domains/member/hooks/use-member";
+import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { IMember } from "@/domains/auth/typing/enums-and-interfaces";
 import { ISocketUser } from "@/domains/socket/typing/interfaces";
 import { IGamePartipant } from "../typing/participant";
@@ -15,10 +13,7 @@ const useGameSocket = (
   onGameUpdate?: (game: IGame) => void
 ) => {
   const { on, emit } = useWebSocket();
-  const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>(
-    []
-  );
-  // const queryClient = useQueryClient();
+  const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>([]);
   const { toast } = useToast();
 
   const emitJoinGame = useCallback(() => {
@@ -27,7 +22,7 @@ const useGameSocket = (
       gameId: `game-${tableId}`,
       memberId: member?.id,
     });
-  }, [emit, tableId]);
+  }, [emit, tableId, member?.id]);
 
   const emitLeaveGame = useCallback(() => {
     console.log("[GAME] [LEAVE_GAME]");
@@ -35,7 +30,7 @@ const useGameSocket = (
       gameId: `game-${tableId}`,
       memberId: member?.id,
     });
-  }, [emit, tableId]);
+  }, [emit, tableId, member?.id]);
 
   const watchForParticipants = useCallback(() => {
     console.log("[GAME] [WATCH_FOR_PARTICIPANTS]");
@@ -44,7 +39,7 @@ const useGameSocket = (
       console.log("[GAME] [UPDATE_GAME_PARTICIPANTS]", data);
       setGameParticipants(data);
     });
-  }, [on, tableId]);
+  }, [on]);
 
   const watchForJoinGame = useCallback(() => {
     on(SocketEvents.JOIN_GAME, (data: ISocketUser) => {
@@ -52,7 +47,7 @@ const useGameSocket = (
         title: `${data.username} joined the game`,
       });
     });
-  }, [on]);
+  }, [on, toast]);
 
   const watchForLeaveGame = useCallback(() => {
     on(SocketEvents.LEAVE_GAME, (data: ISocketUser) => {
@@ -60,7 +55,7 @@ const useGameSocket = (
         title: `${data.username} left the game`,
       });
     });
-  }, [on]);
+  }, [on, toast]);
 
   const updateGameOnSocket = useCallback((game: IGame) => {
     console.log("[GAME] [UPDATE_GAME]", game);
@@ -71,7 +66,7 @@ const useGameSocket = (
       console.log("[GAME] [UPDATE_GAME]", data);
       onGameUpdate?.(data);
     });
-  }, [on, tableId]);
+  }, [on, onGameUpdate]);
 
   useEffect(() => {
     console.log("[GAME] [MOUNT]");
@@ -87,7 +82,14 @@ const useGameSocket = (
       console.log("[GAME] [UNMOUNT]");
       emitLeaveGame();
     };
-  }, [tableId, emitJoinGame]);
+  }, [
+    emitJoinGame,
+    emitLeaveGame,
+    watchForParticipants,
+    watchForJoinGame,
+    watchForLeaveGame,
+    watchForGameUpdate
+  ]);
 
   return {
     gameParticipants,

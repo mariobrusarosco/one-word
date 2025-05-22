@@ -33,7 +33,7 @@ export const MessageList = ({
         queryKey: ["channel-messages", { channelId }],
       });
     });
-  }, [on]);
+  }, [on, queryClient, channelId]);
 
   const scrollListToBottom = () =>
     ref?.current?.scrollTo({
@@ -46,7 +46,7 @@ export const MessageList = ({
 
   useEffect(() => {
     watchForNewMessages();
-  }, [channelId, queryClient]);
+  }, [watchForNewMessages]);
 
   if (infiniteQuery.error) {
     return <div>Error: {infiniteQuery.error.message}</div>;

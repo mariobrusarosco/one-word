@@ -3,7 +3,14 @@ import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-const createUser = async (user: any) => {
+interface SignupUser {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
+const createUser = async (user: SignupUser) => {
   const result = await api.post("/auth/signup", user);
 
   return await result.data;
@@ -14,7 +21,7 @@ const useSignup = () => {
   const { toast } = useToast();
 
   const { mutate, status } = useMutation({
-    mutationFn: (user) => createUser(user),
+    mutationFn: (user: SignupUser) => createUser(user),
     onError: (error) => {
       toast({
         variant: "destructive",

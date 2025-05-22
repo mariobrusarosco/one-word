@@ -26,8 +26,8 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
   const isMounted = useRef(false);
 
   const onEvent = useCallback(
-    (event: SocketEvents, callback: any) =>
-      connected && socket?.on(event, callback),
+    <T,>(event: SocketEvents, callback?: (args: T) => void) =>
+      connected && socket?.on(event, callback as (args: T) => void),
     [connected, socket]
   ) satisfies OnEvent;
 
@@ -77,7 +77,7 @@ const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
         error
       );
     }
-  }, [member?.data?.firstName, member?.data?.lastName]);
+  }, [member?.data?.firstName, member?.data?.lastName, member?.data?.email, member?.data?.id]);
 
   return (
     <WebSocketContext.Provider

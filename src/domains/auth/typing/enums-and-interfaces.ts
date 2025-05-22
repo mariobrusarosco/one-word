@@ -21,6 +21,10 @@ export type IAuthAdapter = Record<
   APP_MODES,
   {
     Provider: ({ children }: { children: React.ReactNode }) => JSX.Element;
-    hook: () => AuthData | any;
+    hook: () => AuthData & {
+      member?: IMember;
+      login?: () => Promise<void>;
+      logout?: () => Promise<void>;
+    };
   }
 >;

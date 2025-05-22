@@ -8,6 +8,10 @@ export const GameParticipantsList = ({
 }: {
   game: IGameState;
 }) => {
+  if (!game.participants || !game.rotation) {
+    return <GameParticipantsListLoading />;
+  }
+
   const { participants, rotation } = game;
   
   // Remove the destructured leadPlayer and use rotation.leadPlayer directly
@@ -19,11 +23,11 @@ export const GameParticipantsList = ({
         Waiting Room
       </p>
       <ul className="flex flex-col overflow-auto scrollable min-h-[100%]">
-        {participants?.map((participant) => (
+        {participants.map((participant: IGamePartipant) => (
           <GameParticipant
             participant={participant}
             key={participant.username}
-            leadPlayer={rotation.leadPlayer}
+            leadPlayer={rotation.leadPlayer.username}
           />
         ))}
       </ul>

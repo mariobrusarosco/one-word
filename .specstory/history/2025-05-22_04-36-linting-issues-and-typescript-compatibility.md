@@ -1564,11 +1564,31 @@ Let's create separate files for the testing utilities:
 
 ---
 
-
+```diff
+- 
++ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
++ import { ReactNode } from "react";
++ 
++ export const createReactQueryWrapper = () => {
++   const queryClient = new QueryClient({
++     defaultOptions: {
++       queries: {
++         retry: false,
++       },
++     },
++   });
++ 
++   return ({ children }: { children: ReactNode }) => {
++     return (
++       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
++     );
++   };
++ }; 
+```
 
 ---
 
-
+Cancelled
 
 ---
 
@@ -1579,6 +1599,1033 @@ Can you revert just the changes to fix these last warnings, please?
 ---
 
 _**Assistant**_
+
+I understand you want to revert the changes we made to fix the last warnings. Let's revert them one by one:
+
+1. First, let's revert the bypass auth context changes:
+
+---
+
+```diff
+  import { useMember } from "@/domains/member/hooks/use-member";
++ import { createContext } from "react";
+  import { AuthData } from "../typing/enums-and-interfaces";
+  import { useAuthentication } from "../hooks/use-authentication";
+- import { ByPassAuthContext } from "./contexts/bypass-auth";
++ 
++ export const ByPassAuthContext = createContext<AuthData | undefined>(undefined);
+  
+  export const ByPassAuthProvider = ({
+```
+
+---
+
+2. Let's revert the testing utils changes:
+
+---
+
+
+
+---
+
+3. Let's delete the files we created:
+
+---
+
+Deleting the bypass auth context file as we're reverting changes
+
+---
+
+Deleting the query wrapper file as we're reverting changes
+
+---
+
+Deleting the render utils file as we're reverting changes
+
+---
+
+Let's run lint to confirm we're back to the previous state:
+
+---
+
+```bash
+yarn lint
+```
+
+```
+PS C:\coding\one-word> yarn lint
+
+C:\coding\one-word\src\domains\auth\context\bypass.tsx
+  6:14  warning  Fast refresh only works when a file only exports components. Move your React context(s
+) to a separate file  react-refresh/only-export-components
+
+C:\coding\one-word\src\domains\auth\context\index.tsx
+  5:14  warning  Fast refresh only works when a file only exports components. Use a new file to share c
+onstants or functions between components  react-refresh/only-export-components
+
+C:\coding\one-word\src\domains\ui-system\theming\adapters\react-context.tsx
+  13:7  warning  Fast refresh only works when a file only exports components. Move your component(s) to
+ a separate file  react-refresh/only-export-components
+
+C:\coding\one-word\src\testing\utils.tsx
+  23:14  warning  Fast refresh only works when a file only exports components. Use a new file to share 
+constants or functions between components  react-refresh/only-export-components
+  39:14  warning  Fast refresh only works when a file only exports components. Use a new file to share 
+constants or functions between components  react-refresh/only-export-components
+✖ 5 problems (0 errors, 5 warnings)
+
+ESLint found too many warnings (maximum: 0).
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+PS C:\coding\one-word>
+```
+
+---
+
+We've successfully reverted the changes and we're back to having just the 5 React Fast Refresh warnings. These warnings are not critical errors and don't affect the functionality of your code. They're just suggestions from ESLint about how to optimize your code for React's Fast Refresh feature.
+
+Would you like to:
+1. Keep the code as is with these warnings
+2. Try a different approach to fix these warnings
+3. Or would you like me to explain more about what these warnings mean and why they exist?
+
+---
+
+_**User**_
+
+yarn run v1.22.22
+$ tsc && vite build --mode demo
+src/domains/auth/adapters/index.ts(4,3): error TS2305: Module '"@/domains/auth/context/bypass"' has no exported member 'useAuthByPass'.
+src/domains/auth/adapters/index.ts(18,43): error TS2322: Type '<TUser extends User = User>(context?: Context<Auth0ContextInterface<User>> | undefined) => Auth0ContextInterface<TUser>' is not assignable to type '() => AuthData & { member?: IMember | undefined; login?: (() => Promise<void>) | undefined; logout?: (() => Promise<void>) | undefined; }'.
+  Type 'Auth0ContextInterface<User>' is not assignable to type 'AuthData & { member?: IMember | undefined; login?: (() => Promise<void>) | undefined; logout?: (() => Promise<void>) | undefined; }'.
+    Property 'isAuthenticating' is missing in type 'Auth0ContextInterface<User>' but required in type 'AuthData'.
+src/domains/auth/adapters/index.ts(19,46): error TS2322: Type '<TUser extends User = User>(context?: Context<Auth0ContextInterface<User>> | undefined) => Auth0ContextInterface<TUser>' is not assignable to type '() => AuthData & { member?: IMember | undefined; login?: (() => Promise<void>) | undefined; logout?: (() => Promise<void>) | undefined; }'.
+src/domains/games/components/game-participants.tsx(3,10): error TS2459: Module '"../typing/game"' declares 'IGamePartipant' locally, but it is not exported.
+src/domains/games/components/game-participants.tsx(3,26): error TS2305: Module '"../typing/game"' has no exported member 'IGameState'.
+src/domains/games/components/game-participants.tsx(22,29): error TS7006: Parameter 'participant' implicitly has an 'any' type.
+src/domains/games/components/game-phases/guessing-the-word.tsx(2,10): error TS2305: Module '"../../typing/game"' has no exported member 'IGameState'.
+src/domains/games/components/game-phases/guessing-the-word.tsx(3,10): error TS2459: Module '"../../typing/game"' declares 'GamePhaseStatuses' locally, but it is not exported.
+src/domains/games/components/game-phases/removing-similars.tsx(1,25): error TS2305: Module '"../../typing/game"' has no exported member 'IGameState'.
+src/domains/games/components/game-phases/results.tsx(1,10): error TS2305: Module '"../../typing/game"' has no exported member 'IGameState'.
+src/domains/games/components/game-phases/writing-similar-words.tsx(2,10): error TS2459: Module '"../../typing/game"' declares 'GamePhaseStatuses' locally, but it is not exported.
+src/domains/games/components/game-phases/writing-similar-words.tsx(2,29): error TS2305: Module '"../../typing/game"' has no exported member 'IGameState'.
+src/domains/games/components/game-phases/writing-similar-words.tsx(17,45): error TS7006: Parameter 'p' implicitly has an 'any' type.
+src/domains/games/components/game-phases/writing-similar-words.tsx(18,53): error TS7006: Parameter 'w' implicitly has an 'any' type.
+src/domains/games/components/game-phases/writing-similar-words.tsx(22,46): error TS7006: Parameter 'p' implicitly has an 'any' type.
+src/domains/games/components/game-phases/writing-similar-words.tsx(51,29): error TS7006: Parameter 'player' implicitly has an 'any' type.
+src/domains/games/components/game-phases/writing-similar-words.tsx(52,50): error TS7006: Parameter 'w' implicitly has an 'any' type.
+src/domains/games/components/game-phases/writing-similar-words.tsx(85,42): error TS7006: Parameter 'w' implicitly has an 'any' type.
+src/domains/games/hooks/use-game-phase.ts(2,10): error TS2459: Module '"../typing/game"' declares 'GamePhaseStatuses' locally, but it is not exported.
+src/domains/games/hooks/use-game-phase.ts(2,29): error TS2305: Module '"../typing/game"' has no exported member 'IGamePhase'.
+src/domains/games/hooks/use-game-phase.ts(2,41): error TS2305: Module '"../typing/game"' has no exported member 'IGamePhases'.
+src/domains/games/hooks/use-similar-words.ts(2,10): error TS2459: Module '"../typing/game"' declares 'GamePhaseStatuses' locally, but it is not exported.
+src/domains/games/hooks/use-similar-words.ts(2,29): error TS2459: Module '"../typing/game"' declares 'IGamePartipant' locally, but it is not exported.
+src/domains/games/hooks/use-similar-words.ts(2,45): error TS2305: Module '"../typing/game"' has no exported member 'ISimilarWord'.
+error Command failed with exit code 2.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+Error: Process completed with exit code 2.
+
+---
+
+_**Assistant**_
+
+I see we have several TypeScript errors that need to be fixed. The main issues are:
+
+1. Missing exports from game-related types
+2. Auth adapter type mismatches
+3. Missing `useAuthByPass` export
+
+Let's fix these issues one by one:
+
+1. First, let's fix the auth bypass hook export. We need to add back the hook file:
+
+---
+
+
+
+---
+
+2. Let's check the game types to fix the export issues:
+
+---
+
+Read file: src/domains/games/typing/game/index.ts
+
+---
+
+Let's check the phase types:
+
+---
+
+Read file: src/domains/games/typing/phase/index.ts
+
+---
+
+Let's check the participant types:
+
+---
+
+Read file: src/domains/games/typing/participant/index.ts
+
+---
+
+Let's check the similar word types:
+
+---
+
+Read file: src/domains/games/typing/words/index.ts
+
+---
+
+Let's fix the exports by creating a central export file for game types:
+
+---
+
+```diff
+- 
++ export * from './game';
++ export * from './phase';
++ export * from './participant';
++ export * from './words'; 
+```
+
+---
+
+Now let's check the auth adapter issue:
+
+---
+
+Read file: src/domains/auth/adapters/index.ts
+
+---
+
+Let's fix the auth adapter by creating a wrapper for the Auth0 hook:
+
+---
+
+```diff
+      isAuthenticated: auth0.isAuthenticated,
+      isAuthenticating: auth0.isLoading,
+-   } satisfies AuthData;
++     member: undefined,
++     login: auth0.loginWithRedirect,
++     logout: auth0.logout,
++   } satisfies AuthData & {
++     member?: undefined;
++     login?: () => Promise<void>;
++     logout?: () => Promise<void>;
++   };
+  }; 
+```
+
+---
+
+Now let's update the auth adapter to use our wrapper:
+
+---
+
+```diff
+- import { useAuth0 } from "@auth0/auth0-react";
+  import {
+    ByPassAuthProvider,
+    useAuthByPass,
+  } from "@/domains/auth/context/bypass";
+  import OktaAuth0Provider from "@/domains/auth/context/auth-0";
++ import { useOktaAuth0 } from "../context/hooks/use-okta-auth0";
+  import { IAuthAdapter } from "../typing/enums-and-interfaces";
+  
+```
+
+```diff
+      hook: useAuthByPass,
+    },
+-   staging: { Provider: OktaAuth0Provider, hook: useAuth0 },
+-   production: { Provider: OktaAuth0Provider, hook: useAuth0 },
++   staging: { Provider: OktaAuth0Provider, hook: useOktaAuth0 },
++   production: { Provider: OktaAuth0Provider, hook: useOktaAuth0 },
+  };
+  
+```
+
+---
+
+Let's run the build again to check our progress:
+
+---
+
+```bash
+yarn build
+```
+
+```
+PS C:\coding\one-word> yarn build
+yarn run v1.22.22
+$ tsc && vite build
+src/domains/auth/adapters/index.ts:3:3 - error TS2305: Module '"@/domains/auth/context/bypass"' has no 
+exported member 'useAuthByPass'.
+
+3   useAuthByPass,
+    ~~~~~~~~~~~~~
+
+src/domains/games/components/game-participants.tsx:3:10 - error TS2459: Module '"../typing/game"' decla
+res 'IGamePartipant' locally, but it is not exported.
+
+3 import { IGamePartipant, IGameState } from "../typing/game";
+           ~~~~~~~~~~~~~~
+
+  src/domains/games/typing/game/index.ts:2:15
+    2 import type { IGamePartipant } from "@/domains/games/typing/participant";
+                    ~~~~~~~~~~~~~~
+    'IGamePartipant' is declared here.
+
+src/domains/games/components/game-participants.tsx:3:26 - error TS2305: Module '"../typing/game"' has n
+o exported member 'IGameState'.
+
+3 import { IGamePartipant, IGameState } from "../typing/game";
+                           ~~~~~~~~~~
+
+src/domains/games/components/game-participants.tsx:22:29 - error TS7006: Parameter 'participant' implic
+itly has an 'any' type.
+
+22         {participants?.map((participant) => (
+                               ~~~~~~~~~~~
+
+src/domains/games/components/game-phases/guessing-the-word.tsx:2:10 - error TS2305: Module '"../../typi
+ng/game"' has no exported member 'IGameState'.
+
+2 import { IGameState } from "../../typing/game";
+           ~~~~~~~~~~                                                                                 o
+rted member 'ISimilarWord'. it is not exported.ed., but it is not exported.
+src/domains/games/components/game-phases/guessing-the-word.tsx:3:10 - error TS2459: Module '"../../typi
+     8  src/domains/games/components/game-phases/writing-similar-words.tsx:2
+     3  src/domains/games/hooks/use-game-phase.ts:2
+     3  src/domains/games/hooks/use-similar-words.ts:2
+error Command failed with exit code 2.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+PS C:\coding\one-word>
+```
+
+---
+
+We still have some issues to fix:
+
+1. The `useAuthByPass` hook is not being exported correctly. Let's update the bypass.tsx file:
+
+---
+
+```diff
+  import { useMember } from "@/domains/member/hooks/use-member";
+- import { createContext } from "react";
++ import { createContext, useContext } from "react";
+  import { AuthData } from "../typing/enums-and-interfaces";
+  import { useAuthentication } from "../hooks/use-authentication";
+```
+
+```diff
+    );
+  };
++ 
++ export const useAuthByPass = () => {
++   const context = useContext(ByPassAuthContext);
++ 
++   if (context === undefined)
++     throw new Error(
++       "useReactContextAdapter must be used within a ByPassAuthProvider"
++     );
++ 
++   return context;
++ };
+  
+```
+
+---
+
+2. Let's fix the game type exports. We need to create an IGameState interface:
+
+---
+
+```diff
+  import type { GamePhaseStatuses } from "@/domains/games/typing/phase";
+  import type { IGamePartipant } from "@/domains/games/typing/participant";
++ import type { ISimilarWord } from "@/domains/games/typing/words";
++ 
++ export interface IGameState {
++   chosenWord?: string;
++   similarWords?: ISimilarWord[];
++   score?: number;
++   phase?: GamePhaseStatuses;
++ }
+  
+  export interface IGame {
+```
+
+```diff
+    participants: IGamePartipant[];
+    actions: IGameActions;
++   state?: IGameState;
+  }
+  
+```
+
+```diff
+    updateGameOnSocket: (game: IGame) => void;
+  }
++ 
++ export type { IGamePartipant } from "@/domains/games/typing/participant";
++ export { GamePhaseStatuses } from "@/domains/games/typing/phase";
+  
+```
+
+---
+
+I'll help analyze the current state and determine what needs to be done to fix the remaining TypeScript errors. Let me first check the current state of the codebase.
+
+First, I'll look for any TypeScript build errors:
+
+---
+
+```bash
+tsc --noEmit
+```
+
+```
+PS C:\coding\one-word> tsc --noEmit
+tsc : The term 'tsc' is not recognized as the name of a cmdlet, function, script file, or operable 
+program. Check the spelling of the name, or if a path was included, verify that the path is correct 
+and try again.
+At line:1 char:1
++ tsc --noEmit
+    + CategoryInfo          : ObjectNotFound: (tsc:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\coding\one-word>
+```
+
+---
+
+I see we need to use the TypeScript compiler through npm/yarn. Let me check the package manager configuration:
+
+---
+
+Read file: package.json
+
+---
+
+Let me run the TypeScript check using the project's setup:
+
+---
+
+```bash
+yarn tsc --noEmit
+```
+
+```
+PS C:\coding\one-word> yarn tsc --noEmit
+src/domains/games/components/game-participants.tsx:11:11 - error TS2339: Property 'participants' does n
+ot exist on type 'IGameState'.
+
+11   const { participants, rotation } = game;
+             ~~~~~~~~~~~~
+
+src/domains/games/components/game-participants.tsx:11:25 - error TS2339: Property 'rotation' does not e
+xist on type 'IGameState'.
+
+11   const { participants, rotation } = game;
+                           ~~~~~~~~
+
+src/domains/games/components/game-participants.tsx:22:29 - error TS7006: Parameter 'participant' implic
+itly has an 'any' type.
+
+22         {participants?.map((participant) => (
+                               ~~~~~~~~~~~
+
+src/domains/games/components/game-phases/guessing-the-word.tsx:17:36 - error TS2339: Property 'guessedW
+ords' does not exist on type 'IGameState'.
+
+17         guessedWords: [...(oldData.guessedWords || []), {
+                                      ~~~~~~~~~~~~
+
+src/domains/games/components/game-phases/guessing-the-word.tsx:27:7 - error TS2339: Property 'rotation'
+ does not exist on type 'IGameState'.
+
+27       rotation: { isMemberLeadPlayer, leadPlayer },
+         ~~~~~~~~
+
+src/domains/games/components/game-phases/writing-similar-words.tsx:11:5 - error TS2339: Property 'rotat
+ion' does not exist on type 'IGameState'.
+
+11     rotation: { isMemberLeadPlayer, leadPlayer },
+       ~~~~~~~~
+
+src/domains/games/components/game-phases/writing-similar-words.tsx:12:5 - error TS2339: Property 'parti
+cipants' does not exist on type 'IGameState'.
+
+12     participants,
+       ~~~~~~~~~~~~
+
+src/domains/games/components/game-phases/writing-similar-words.tsx:17:45 - error TS7006: Parameter 'p' 
+implicitly has an 'any' type.
+
+17   const currentUsername = participants.find(p =>
+                                               ~
+
+src/domains/games/components/game-phases/writing-similar-words.tsx:22:46 - error TS7006: Parameter 'p' 
+implicitly has an 'any' type.
+
+22   const nonLeadPlayers = participants.filter(p => p.username !== leadPlayer);
+                                                ~
+
+src/domains/games/components/game-phases/writing-similar-words.tsx:38:19 - error TS2339: Property 'acti
+vePhase' does not exist on type '{ similarWords: { userId: any; userName: any; value: string; }[]; chos
+enWord?: string | undefined; score?: number | undefined; phase?: string | undefined; }'.
+
+38       updatedGame.activePhase = GamePhaseStatuses.REMOVING_SIMILAR_WORDS;
+                     ~~~~~~~~~~~
+
+src/domains/games/components/game-phases/writing-similar-words.tsx:42:33 - error TS2345: Argument of ty
+pe '{ similarWords: { userId: any; userName: any; value: string; }[]; chosenWord?: string | undefined; 
+score?: number | undefined; phase?: string | undefined; }' is not assignable to parameter of type 'IGam
+e'.
+  Type '{ similarWords: { userId: any; userName: any; value: string; }[]; chosenWord?: string | undefin
+ed; score?: number | undefined; phase?: string | undefined; }' is missing the following properties from
+ type 'IGame': activePhase, rotation, participants, actions
+
+42     handlers.updateGameOnSocket(updatedGame);
+                                   ~~~~~~~~~~~
+
+src/domains/games/components/game-phases/writing-similar-words.tsx:51:29 - error TS7006: Parameter 'pla
+yer' implicitly has an 'any' type.
+
+51         {nonLeadPlayers.map(player => {
+                               ~~~~~~
+
+src/domains/games/hooks/use-game-phase.ts:2:29 - error TS2305: Module '"../typing/game"' has no exporte
+d member 'IGamePhase'.
+
+2 import { GamePhaseStatuses, IGamePhase, IGamePhases } from '../typing/game'
+                              ~~~~~~~~~~
+
+src/domains/games/hooks/use-game-phase.ts:2:41 - error TS2305: Module '"../typing/game"' has no exporte
+d member 'IGamePhases'.
+
+2 import { GamePhaseStatuses, IGamePhase, IGamePhases } from '../typing/game'
+                                          ~~~~~~~~~~~
+
+src/domains/games/hooks/use-similar-words.ts:2:45 - error TS2459: Module '"../typing/game"' declares 'I
+SimilarWord' locally, but it is not exported.
+
+2 import { GamePhaseStatuses, IGamePartipant, ISimilarWord } from '../typing/game'
+                                              ~~~~~~~~~~~~
+
+  src/domains/games/typing/game/index.ts:3:15
+     2  src/domains/games/hooks/use-game-phase.ts:2
+     1  src/domains/games/hooks/use-similar-words.ts:2
+     1  src/domains/games/screens/game.tsx:21
+error Command failed with exit code 2.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+PS C:\coding\one-word>
+```
+
+---
+
+I see several TypeScript errors that need to be addressed. The main issues are:
+
+1. Missing type exports from the game module:
+   - `IGamePhase`
+   - `IGamePhases`
+   - `ISimilarWord`
+
+2. Properties missing from `IGameState` interface:
+   - `participants`
+   - `rotation`
+   - `guessedWords`
+   - `activePhase`
+
+3. Implicit 'any' types in several components
+
+Let me first check the game types to fix these issues:
+
+---
+
+Read file: src/domains/games/typing/game/index.ts
+
+---
+
+Let me also check the phase types:
+
+---
+
+Read file: src/domains/games/typing/phase/index.ts
+
+---
+
+Let me also check the words types:
+
+---
+
+Read file: src/domains/games/typing/words/index.ts
+
+---
+
+I see the issues now. Let me fix them:
+
+1. First, let's fix the game state interface to include all required properties:
+
+---
+
+```diff
+    chosenWord?: string;
+    similarWords?: ISimilarWord[];
++   guessedWords?: ISimilarWord[];
+    score?: number;
+    phase?: GamePhaseStatuses;
++   rotation?: {
++     leadPlayer: IGamePartipant;
++     leadPlayerIndex: number;
++     isMemberLeadPlayer: boolean;
++   };
++   participants?: IGamePartipant[];
++   activePhase?: GamePhaseStatuses;
+  }
+  
+```
+
+```diff
+  }
+  
+- export type { IGamePartipant } from "@/domains/games/typing/participant";
++ export type { 
++   IGamePartipant,
++   IGamePhase,
++   IGamePhases,
++   ISimilarWord 
++ } from "@/domains/games/typing/participant";
+  export { GamePhaseStatuses } from "@/domains/games/typing/phase";
+  
+```
+
+---
+
+I see the issue - we're trying to import types from the wrong module. Let me fix the exports:
+
+---
+
+```diff
+  }
+  
+- export type { 
+-   IGamePartipant,
+-   IGamePhase,
+-   IGamePhases,
+-   ISimilarWord 
+- } from "@/domains/games/typing/participant";
++ export type { IGamePartipant } from "@/domains/games/typing/participant";
++ export type { IGamePhase, IGamePhases } from "@/domains/games/typing/phase";
++ export type { ISimilarWord } from "@/domains/games/typing/words";
+  export { GamePhaseStatuses } from "@/domains/games/typing/phase";
+  
+```
+
+---
+
+Now let's fix the implicit 'any' types in the game-participants component:
+
+---
+
+Read file: src/domains/games/components/game-participants.tsx
+
+---
+
+Let me fix the typing issues in the game-participants component:
+
+---
+
+```diff
+    game: IGameState;
+  }) => {
++   if (!game.participants || !game.rotation) {
++     return <GameParticipantsListLoading />;
++   }
++ 
+    const { participants, rotation } = game;
+    
+```
+
+```diff
+        </p>
+        <ul className="flex flex-col overflow-auto scrollable min-h-[100%]">
+-         {participants?.map((participant) => (
++         {participants.map((participant: IGamePartipant) => (
+            <GameParticipant
+              participant={participant}
+              key={participant.username}
+-             leadPlayer={rotation.leadPlayer}
++             leadPlayer={rotation.leadPlayer.username}
+            />
+          ))}
+```
+
+---
+
+Now let's check the writing-similar-words component to fix its type issues:
+
+---
+
+Read file: src/domains/games/components/game-phases/writing-similar-words.tsx
+
+---
+
+Let me fix the typing issues in the writing-similar-words component:
+
+---
+
+
+
+---
+
+Let me try to reapply the edit since it seems the model didn't apply the changes:
+
+---
+
+```diff
+- import { Button } from "@/domains/ui-system/components/ui/button";
+- import { GamePhaseStatuses, IGameState } from "../../typing/game";
+- import { useQueryClient } from "@tanstack/react-query";
+- import { IGameHandlers } from "../../typing/game";
+- import { useState } from "react";
+- 
+- export const WritingSimilarWords = ({ game, handlers }: { game: IGameState, handlers: IGameHandlers }) => {
+-   const queryClient = useQueryClient();
+-   const [word, setWord] = useState("");
+-   const {
+-     rotation: { isMemberLeadPlayer, leadPlayer },
+-     participants,
+-     similarWords = []
+-   } = game;
+- 
+-   // Get current user's username
+-   const currentUsername = participants.find(p => 
+-     p.username !== leadPlayer && !similarWords.some(w => w.userName === p.username)
+-   )?.username;
+- 
+-   // Exclude lead player from participants who need to submit
+-   const nonLeadPlayers = participants.filter(p => p.username !== leadPlayer);
+- 
+- 
+-   const handleSubmitWord = () => {
+-     if (!word.trim() || !currentUsername) return;
+- 
+-     const updatedGame = {
+-       ...game,
+-       similarWords: [...similarWords, {
+-         userId: currentUsername,
+-         userName: currentUsername,
+-         value: word.trim()
+-       }]
+-     };
+- 
+-     if (similarWords.length + 1 === nonLeadPlayers.length) {
+-       updatedGame.activePhase = GamePhaseStatuses.REMOVING_SIMILAR_WORDS;
+-     }
+- 
+-     queryClient.setQueryData(['gameState'], updatedGame);
+-     handlers.updateGameOnSocket(updatedGame);
+-     setWord("");
+-   };
+- 
+-   // Player submission status display
+-   const SubmissionStatus = () => (
+-     <div className="flex flex-col gap-2 mb-4">
+-       <p className="text-lg text-white mb-2">Submission Status:</p>
+-       <div className="grid grid-cols-1 gap-2">
+-         {nonLeadPlayers.map(player => {
+-           const hasSubmitted = similarWords.some(w => w.userName === player.username);
+-           return (
+-             <div 
+-               key={player.userId} 
+-               className={`flex items-center gap-2 p-2 rounded ${
+-                 hasSubmitted ? 'bg-green-900/50' : 'bg-neutral-800'
+-               }`}
+-             >
+-               <span className="text-white">{player.username}</span>
+-               {hasSubmitted ? (
+-                 <span className="text-green-400 text-sm">is done!</span>
+-               ) : (
+-                 <span className="text-yellow-400 text-sm">needs to submit a word</span>
+-               )}
+-             </div>
+-           );
+-         })}
+-       </div>
+-     </div>
+-   );
+- 
+-   if (isMemberLeadPlayer) {
+-     return (
+-       <div className="flex flex-col gap-4">
+-         <div className="flex items-center gap-2 mb-4">
+-           <p className="text-lg text-white">Your word:</p>
+-           <span className="text-xl font-bold text-rose-400">{game.chosenWord}</span>
+-         </div>
+-         <SubmissionStatus />
+-       </div>
+-     );
+-   }
+- 
+-   const hasSubmitted = similarWords.some(w => w.userId === currentUsername);
+- 
+-   return (
+-     <div className="flex flex-col gap-4">
+-       <div className="flex items-center gap-2 mb-4">
+-         <p className="text-lg text-white">{leadPlayer}'s word:</p>
+-         <span className="text-xl font-bold text-rose-400">{game.chosenWord}</span>
+-       </div>
+- 
+-       <SubmissionStatus />
+- 
+-       {!hasSubmitted && (
+-         <div className="flex flex-col gap-4">
+-           <div className="flex flex-col gap-2">
+-             <p className="text-lg text-white">Write a similar word:</p>
+-             <input 
+-               type="text" 
+-               value={word}
+-               onChange={(e) => setWord(e.target.value)}
+-               className="p-2 rounded bg-neutral-700 text-white"
+-               placeholder="Enter your word..."
+-             />
+-           </div>
+- 
+-           <Button 
+-             onClick={handleSubmitWord}
+-             disabled={!word.trim()}
+-           >
+-             Submit Word
+-           </Button>
+-         </div>
+-       )}
+-     </div>
+-   );
+- };
+- 
++ import { Button } from "@/domains/ui-system/components/ui/button";
++ import { GamePhaseStatuses, IGameState, IGamePartipant, ISimilarWord } from "../../typing/game";
++ import { useQueryClient } from "@tanstack/react-query";
++ import { IGameHandlers } from "../../typing/game";
++ import { useState } from "react";
++ 
++ export const WritingSimilarWords = ({ game, handlers }: { game: IGameState, handlers: IGameHandlers }) => {
++   const queryClient = useQueryClient();
++   const [word, setWord] = useState("");
++ 
++   if (!game.rotation || !game.participants) {
++     return null;
++   }
++ 
++   const {
++     rotation: { isMemberLeadPlayer, leadPlayer },
++     participants,
++     similarWords = []
++   } = game;
++ 
++   // Get current user's username
++   const currentUsername = participants.find((p: IGamePartipant) => 
++     p.username !== leadPlayer.username && !similarWords.some(w => w.userName === p.username)
++   )?.username;
++ 
++   // Exclude lead player from participants who need to submit
++   const nonLeadPlayers = participants.filter((p: IGamePartipant) => p.username !== leadPlayer.username);
++ 
++   const handleSubmitWord = () => {
++     if (!word.trim() || !currentUsername) return;
++ 
++     const updatedGame: IGameState = {
++       ...game,
++       similarWords: [...(similarWords || []), {
++         userId: currentUsername,
++         userName: currentUsername,
++         value: word.trim()
++       }]
++     };
++ 
++     if ((similarWords?.length || 0) + 1 === nonLeadPlayers.length) {
++       updatedGame.phase = GamePhaseStatuses.REMOVING_SIMILAR_WORDS;
++     }
++ 
++     queryClient.setQueryData(['gameState'], updatedGame);
++     handlers.updateGameOnSocket(updatedGame);
++     setWord("");
++   };
++ 
++   // Player submission status display
++   const SubmissionStatus = () => (
++     <div className="flex flex-col gap-2 mb-4">
++       <p className="text-lg text-white mb-2">Submission Status:</p>
++       <div className="grid grid-cols-1 gap-2">
++         {nonLeadPlayers.map((player: IGamePartipant) => {
++           const hasSubmitted = similarWords?.some(w => w.userName === player.username);
++           return (
++             <div 
++               key={player.userId} 
++               className={`flex items-center gap-2 p-2 rounded ${
++                 hasSubmitted ? 'bg-green-900/50' : 'bg-neutral-800'
++               }`}
++             >
++               <span className="text-white">{player.username}</span>
++               {hasSubmitted ? (
++                 <span className="text-green-400 text-sm">is done!</span>
++               ) : (
++                 <span className="text-yellow-400 text-sm">needs to submit a word</span>
++               )}
++             </div>
++           );
++         })}
++       </div>
++     </div>
++   );
++ 
++   if (isMemberLeadPlayer) {
++     return (
++       <div className="flex flex-col gap-4">
++         <div className="flex items-center gap-2 mb-4">
++           <p className="text-lg text-white">Your word:</p>
++           <span className="text-xl font-bold text-rose-400">{game.chosenWord}</span>
++         </div>
++         <SubmissionStatus />
++       </div>
++     );
++   }
++ 
++   const hasSubmitted = similarWords?.some(w => w.userId === currentUsername);
++ 
++   return (
++     <div className="flex flex-col gap-4">
++       <div className="flex items-center gap-2 mb-4">
++         <p className="text-lg text-white">{leadPlayer.username}'s word:</p>
++         <span className="text-xl font-bold text-rose-400">{game.chosenWord}</span>
++       </div>
++ 
++       <SubmissionStatus />
++ 
++       {!hasSubmitted && (
++         <div className="flex flex-col gap-4">
++           <div className="flex flex-col gap-2">
++             <p className="text-lg text-white">Write a similar word:</p>
++             <input 
++               type="text" 
++               value={word}
++               onChange={(e) => setWord(e.target.value)}
++               className="p-2 rounded bg-neutral-700 text-white"
++               placeholder="Enter your word..."
++             />
++           </div>
++ 
++           <Button 
++             onClick={handleSubmitWord}
++             disabled={!word.trim()}
++           >
++             Submit Word
++           </Button>
++         </div>
++       )}
++     </div>
++   );
++ };
++ 
+```
+
+---
+
+Now let's check the guessing-the-word component to fix its type issues:
+
+---
+
+Read file: src/domains/games/components/game-phases/guessing-the-word.tsx
+
+---
+
+
+
+
+
+---
+
+_**User**_
+
+Do you know why the build command catch errors that lint command does not?
+
+---
+
+_**Assistant**_
+
+Yes, I can explain why the build command catches errors that the lint command doesn't. This is happening because ESLint and TypeScript serve different purposes and check for different types of issues:
+
+1. ESLint (`yarn lint`):
+- Focuses on code style, formatting, and potential runtime issues
+- Checks for best practices and coding standards
+- Can catch some basic type issues, but its type checking capabilities are limited
+- In your project, it's configured to check `.ts` and `.tsx` files for unused disable directives and has max warnings set to 0 (as seen in package.json: `"lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"`)
+
+2. TypeScript Build (`tsc` during `yarn build`):
+- Performs full type checking
+- Validates type compatibility across your entire codebase
+- Ensures type safety between modules
+- Checks that interfaces are properly implemented
+- Verifies generic type parameters
+
+Looking at your errors from the build command, they're all TypeScript type-related issues that ESLint wouldn't catch:
+
+1. Property access on potentially undefined objects:
+```typescript
+const { participants, rotation } = game;  // Error: Properties might be undefined
+```
+
+2. Type mismatches:
+```typescript
+updatedGame.activePhase = GamePhaseStatuses.REMOVING_SIMILAR_WORDS;
+// Error: Type mismatch between IGameState and IGame
+```
+
+3. Missing type annotations:
+```typescript
+participants?.map((participant) => // Error: Parameter implicitly has 'any' type
+```
+
+4. Interface implementation errors:
+```typescript
+// Error: Argument type not assignable to parameter type
+handlers.updateGameOnSocket(updatedGame);  // IGameState vs IGame type mismatch
+```
+
+The build process is more strict because:
+1. It ensures your application will run correctly in production
+2. It catches type-related issues that could cause runtime errors
+3. It validates the entire type system of your application
+
+To catch these issues earlier in development, you could:
+1. Add `"strict": true` to your `tsconfig.json`
+2. Run `tsc --noEmit` as part of your lint script
+3. Use TypeScript-aware ESLint rules by configuring `@typescript-eslint` plugin with stricter rules
+
+This way, you'll catch type issues during development rather than at build time.
+
+---
+
+_**User**_
+
+Let's do all three items
+
+---
+
+_**Assistant**_
+
+
+
+---
+
+
+
+---
 
 
 

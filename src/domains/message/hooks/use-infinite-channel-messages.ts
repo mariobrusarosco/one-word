@@ -15,14 +15,17 @@ export const useInfiniteChannelMessages = ({
     isFetching,
   } = useInfiniteQuery({
     queryKey: ["channel-messages", { channelId }],
-    queryFn: ({ pageParam }) =>
-      loaderPaginatedMessages({
+    queryFn: async ({ pageParam }) => {
+      if (!channelId) throw new Error("Channel ID is required");
+      const result = await loaderPaginatedMessages({
         channelId,
         pageParam,
         take: 10,
-      }),
+      });
+      return result ?? { messages: [], lastCursor: null };
+    },
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage?.lastCursor,
+    getNextPageParam: (lastPage) => lastPage.lastCursor,
     select: (data) => ({
       pages: [...data.pages].reverse(),
       pageParams: [...data.pageParams].reverse(),

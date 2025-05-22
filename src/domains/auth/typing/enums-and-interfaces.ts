@@ -17,14 +17,16 @@ export type AuthData = {
   isAuthenticated: boolean;
 };
 
+export type AuthHookResult = AuthData & {
+  member: IMember | undefined;
+  login: () => Promise<void>;
+  logout: () => Promise<void>;
+};
+
 export type IAuthAdapter = Record<
   APP_MODES,
   {
     Provider: ({ children }: { children: React.ReactNode }) => JSX.Element;
-    hook: () => AuthData & {
-      member?: IMember;
-      login?: () => Promise<void>;
-      logout?: () => Promise<void>;
-    };
+    hook: () => AuthHookResult;
   }
 >;

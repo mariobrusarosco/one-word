@@ -33,12 +33,13 @@ export const ChatInput = () => {
     },
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent): boolean => {
     e.preventDefault();
 
     if (!inputMessage) return false;
 
     mutation.mutate();
+    return true;
   };
 
   return (

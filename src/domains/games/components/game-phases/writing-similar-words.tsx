@@ -1,12 +1,18 @@
 import { Button } from "@/domains/ui-system/components/ui/button";
-import { GamePhaseStatuses, IGameState } from "../../typing/game";
+import { GamePhaseStatuses } from "../../typing/game";
+import type { IGameState, IGame } from "../../typing/game";
 import { useQueryClient } from "@tanstack/react-query";
-import { IGameHandlers } from "../../typing/game";
+import type { IGameHandlers } from "../../typing/game";
 import { useState } from "react";
 
 export const WritingSimilarWords = ({ game, handlers }: { game: IGameState, handlers: IGameHandlers }) => {
   const queryClient = useQueryClient();
   const [word, setWord] = useState("");
+
+  if (!game.rotation || !game.participants) {
+    return null;
+  }
+
   const {
     rotation: { isMemberLeadPlayer, leadPlayer },
     participants,
@@ -14,32 +20,31 @@ export const WritingSimilarWords = ({ game, handlers }: { game: IGameState, hand
   } = game;
 
   // Get current user's username
-  const currentUsername = participants.find(p => 
-    p.username !== leadPlayer && !similarWords.some(w => w.userName === p.username)
+  const currentUsername = participants.find((p) => 
+    p.username !== leadPlayer.username && !similarWords.some(w => w.userName === p.username)
   )?.username;
 
   // Exclude lead player from participants who need to submit
-  const nonLeadPlayers = participants.filter(p => p.username !== leadPlayer);
-
+  const nonLeadPlayers = participants.filter((p) => p.username !== leadPlayer.username);
 
   const handleSubmitWord = () => {
     if (!word.trim() || !currentUsername) return;
 
-    const updatedGame = {
+    const updatedGame: IGameState = {
       ...game,
-      similarWords: [...similarWords, {
+      similarWords: [...(similarWords || []), {
         userId: currentUsername,
         userName: currentUsername,
         value: word.trim()
       }]
     };
 
-    if (similarWords.length + 1 === nonLeadPlayers.length) {
-      updatedGame.activePhase = GamePhaseStatuses.REMOVING_SIMILAR_WORDS;
+    if ((similarWords?.length || 0) + 1 === nonLeadPlayers.length) {
+      updatedGame.phase = GamePhaseStatuses.REMOVING_SIMILAR_WORDS;
     }
 
     queryClient.setQueryData(['gameState'], updatedGame);
-    handlers.updateGameOnSocket(updatedGame);
+    handlers.updateGameOnSocket(updatedGame as IGame);
     setWord("");
   };
 
@@ -48,11 +53,11 @@ export const WritingSimilarWords = ({ game, handlers }: { game: IGameState, hand
     <div className="flex flex-col gap-2 mb-4">
       <p className="text-lg text-white mb-2">Submission Status:</p>
       <div className="grid grid-cols-1 gap-2">
-        {nonLeadPlayers.map(player => {
-          const hasSubmitted = similarWords.some(w => w.userName === player.username);
+        {nonLeadPlayers.map((player) => {
+          const hasSubmitted = similarWords?.some(w => w.userName === player.username);
           return (
             <div 
-              key={player.userId} 
+              key={player.id} 
               className={`flex items-center gap-2 p-2 rounded ${
                 hasSubmitted ? 'bg-green-900/50' : 'bg-neutral-800'
               }`}
@@ -82,12 +87,12 @@ export const WritingSimilarWords = ({ game, handlers }: { game: IGameState, hand
     );
   }
 
-  const hasSubmitted = similarWords.some(w => w.userId === currentUsername);
+  const hasSubmitted = similarWords?.some(w => w.userId === currentUsername);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2 mb-4">
-        <p className="text-lg text-white">{leadPlayer}'s word:</p>
+        <p className="text-lg text-white">{leadPlayer.username}'s word:</p>
         <span className="text-xl font-bold text-rose-400">{game.chosenWord}</span>
       </div>
 

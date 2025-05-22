@@ -19,7 +19,7 @@ const TableScreen = () => {
 
   return (
     <div data-ui="table-screen">
-      <ScreenHeading title="Table" subtitle={table?.name} loading={isLoading}>
+      <ScreenHeading title="Table" subtitle={table?.name ?? ""} loading={isLoading}>
         <InviteMember />
       </ScreenHeading>
     </div>

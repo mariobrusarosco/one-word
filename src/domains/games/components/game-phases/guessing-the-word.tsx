@@ -1,9 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { IGameState } from "../../typing/game";
+import type { IGameState } from "../../typing/game";
 import { GamePhaseStatuses } from "../../typing/game";
 import { Button } from "@/domains/ui-system/components/ui/button";
 import { useState } from "react";
-
 
 export const GuessingTheWord = ({ game }: { game: IGameState }) => {
     const queryClient = useQueryClient();
@@ -23,9 +22,9 @@ export const GuessingTheWord = ({ game }: { game: IGameState }) => {
       }));
     };
   
-    const {
-      rotation: { isMemberLeadPlayer, leadPlayer },
-    } = game;
+    const rotation = game.rotation;
+    const isMemberLeadPlayer = rotation?.isMemberLeadPlayer ?? false;
+    const leadPlayer = rotation?.leadPlayer;
       
     return (
       <div>
@@ -33,7 +32,7 @@ export const GuessingTheWord = ({ game }: { game: IGameState }) => {
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-2">
               <p className="text-lg text-white">
-                {leadPlayer} 
+                {leadPlayer?.username} 
               </p>
               <p className="text-lg text-white">
                 has chosen {game.chosenWord}

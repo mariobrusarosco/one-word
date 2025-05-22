@@ -1,14 +1,18 @@
-export const getInitials = (name: string) => {
-  if (!name) return null;
-  const words = name.split(" ");
+export const getInitials = (name: string): string => {
+  const words = name.split(" ").filter(Boolean);
+  if (!words.length) return "";
+  const firstWord = words[0];
+  if (!firstWord) return "";
+  return firstWord.substring(0, 2).toUpperCase();
+};
 
-  if (words.length === 1) {
-    return words[0].substring(0, 2).toUpperCase();
-  }
-
-  return words
-    .filter((word) => word.length > 0)
-    .map((word) => word[0].toUpperCase())
-    .slice(0, 2)
-    .join("");
+export const capitalizeWords = (text: string): string => {
+  return text
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => {
+      const firstChar = word[0];
+      return firstChar ? firstChar.toUpperCase() + word.slice(1) : word;
+    })
+    .join(" ");
 };

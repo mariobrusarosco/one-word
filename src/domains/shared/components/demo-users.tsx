@@ -24,58 +24,53 @@ export const DemoUsers = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-neutral-100 text-2xl">
-        Change your player
-      </p>
+      <p className="text-neutral-100 text-2xl">Change your player</p>
 
       <div className="flex gap-4">
-
-      <div className="flex justify-center gap-3">
-        <Button
-          disabled={authentication.isLoading}
-          variant="outline"
-          className="px-8 py-6 min-w-[180px]"
-          onClick={() => setPublicId("1")}
-        >
-          Lara Croft
-        </Button>
-      </div>
-
-      <div className="flex justify-center gap-3">
-
-        <Button
+        <div className="flex justify-center gap-3">
+          <Button
             disabled={authentication.isLoading}
             variant="outline"
             className="px-8 py-6 min-w-[180px]"
-            onClick={() => setPublicId("2")}
-            >
+            onClick={() => setPublicId("550e8400-e29b-41d4-a716-446655440001")}
+          >
+            Lara Croft
+          </Button>
+        </div>
+
+        <div className="flex justify-center gap-3">
+          <Button
+            disabled={authentication.isLoading}
+            variant="outline"
+            className="px-8 py-6 min-w-[180px]"
+            onClick={() => setPublicId("550e8400-e29b-41d4-a716-446655440002")}
+          >
             Sherlock Holmes
           </Button>
         </div>
 
-      <div className="flex justify-center gap-3">
-        <Button
-          disabled={authentication.isLoading}
-          variant="outline"
-          className="px-8 py-6 min-w-[180px]"
-          onClick={() => setPublicId("3")}
-        >
-          Walter White
-        </Button>
-      </div>
+        <div className="flex justify-center gap-3">
+          <Button
+            disabled={authentication.isLoading}
+            variant="outline"
+            className="px-8 py-6 min-w-[180px]"
+            onClick={() => setPublicId("550e8400-e29b-41d4-a716-446655440003")}
+          >
+            Walter White
+          </Button>
+        </div>
 
-      <div className="flex justify-center gap-3">
-        <Button
-          disabled={authentication.isLoading}
-          variant="outline"
-          className="px-8 py-6 min-w-[180px]"
-          onClick={() => setPublicId("4")}
-        >
-          Jesse Pinkman
-        </Button>
+        <div className="flex justify-center gap-3">
+          <Button
+            disabled={authentication.isLoading}
+            variant="outline"
+            className="px-8 py-6 min-w-[180px]"
+            onClick={() => setPublicId("550e8400-e29b-41d4-a716-446655440004")}
+          >
+            Jesse Pinkman
+          </Button>
+        </div>
       </div>
-      </div>
-
 
       {authentication.isLoading ? (
         <div className="flex gap-x-2 justify-center items-center mt-10">

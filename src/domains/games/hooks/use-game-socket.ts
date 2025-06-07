@@ -13,7 +13,9 @@ const useGameSocket = (
   onGameUpdate?: (game: IGame) => void
 ) => {
   const { on, emit } = useWebSocket();
-  const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>([]);
+  const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>(
+    []
+  );
   const { toast } = useToast();
 
   const emitJoinGame = useCallback(() => {
@@ -32,21 +34,28 @@ const useGameSocket = (
     });
   }, [emit, tableId, member?.id]);
 
-  const watchForParticipants = useCallback(() => {
-    console.log("[GAME] [WATCH_FOR_PARTICIPANTS]");
+  // const watchForParticipants = useCallback(() => {
+  //   console.log("[GAME] [WATCH_FOR_PARTICIPANTS]");
 
-    on(SocketEvents.UPDATE_GAME_PARTICIPANTS, (data: IGamePartipant[]) => {
-      console.log("[GAME] [UPDATE_GAME_PARTICIPANTS]", data);
-      setGameParticipants(data);
-    });
-  }, [on]);
+  //   on(SocketEvents.UPDATE_GAME_PARTICIPANTS, (data: IGamePartipant[]) => {
+  //     console.log("[GAME] [UPDATE_GAME_PARTICIPANTS]", data);
+  //     setGameParticipants(data);
+  //   });
+  // }, [on]);
 
   const watchForJoinGame = useCallback(() => {
-    on(SocketEvents.JOIN_GAME, (data: ISocketUser) => {
-      toast({
-        title: `${data.username} joined the game`,
-      });
-    });
+    on(
+      SocketEvents.JOIN_GAME,
+      (data: {
+        joined: ISocketUser;
+        gameId: string;
+        allParticipants: ISocketUser[];
+      }) => {
+        toast({
+          title: `${data.joined.username} joined the game`,
+        });
+      }
+    );
   }, [on, toast]);
 
   const watchForLeaveGame = useCallback(() => {
@@ -73,7 +82,7 @@ const useGameSocket = (
     // Emit
     emitJoinGame();
     // Watch
-    watchForParticipants();
+    // watchForParticipants();
     watchForJoinGame();
     watchForLeaveGame();
     watchForGameUpdate();
@@ -84,11 +93,11 @@ const useGameSocket = (
     };
   }, [
     emitJoinGame,
-    emitLeaveGame,
-    watchForParticipants,
-    watchForJoinGame,
-    watchForLeaveGame,
-    watchForGameUpdate
+    // emitLeaveGame,
+    // watchForParticipants,
+    // watchForJoinGame,
+    // watchForLeaveGame,
+    // watchForGameUpdate
   ]);
 
   return {

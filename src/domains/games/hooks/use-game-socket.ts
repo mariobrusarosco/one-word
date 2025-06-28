@@ -7,6 +7,14 @@ import { IMember } from "@/domains/auth/typing/enums-and-interfaces";
 import { ISocketUser } from "@/domains/socket/typing/interfaces";
 import { IGamePartipant } from "../typing/participant";
 
+const updateGameParticipants = (gameParticipants: IGamePartipant[]) => {
+  return gameParticipants.map((participant) => ({
+    id: participant.id,
+    username: participant.username,
+    email: participant.email,
+  }));
+};
+
 const useGameSocket = (
   tableId?: string,
   member?: IMember,
@@ -54,6 +62,8 @@ const useGameSocket = (
         toast({
           title: `${data.joined.username} joined the game`,
         });
+        debugger;
+        setGameParticipants(updateGameParticipants(data.allParticipants));
       }
     );
   }, [on, toast]);

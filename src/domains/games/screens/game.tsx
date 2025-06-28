@@ -13,14 +13,14 @@ const GameScreen = () => {
   return (
     <div data-ui="game-screen">
       <div className="heading font-extralight">
-        <GamePhase game={game} />
+        {/* <GamePhase game={game} /> */}
         <Separator className="bg-rose-800 dark:bg-neutral-100 my-4" />
       </div>
 
       <div className="flex gap-4 justify-between">
         <GameParticipantsList game={game} />
 
-        <GameBoard game={game} />
+        {/* <GameBoard game={game} /> */}
       </div>
     </div>
   );

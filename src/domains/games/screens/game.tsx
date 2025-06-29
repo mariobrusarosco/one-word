@@ -7,8 +7,9 @@ import { GameBoard } from "../components/game-board";
 const GameScreen = () => {
   const game = useGame();
 
-  console.log("[DEBUG] Game Screen", game);
   if (!game) return null;
+
+  console.log("[DEBUG] [useGame]", game);
 
   return (
     <div data-ui="game-screen">

@@ -6,6 +6,7 @@ import { useToast } from "@/domains/ui-system/components/ui/use-toast";
 import { IMember } from "@/domains/auth/typing/enums-and-interfaces";
 import { ISocketUser } from "@/domains/socket/typing/interfaces";
 import { IGamePartipant } from "../typing/participant";
+import { GamePhaseStatuses } from "@/domains/games/typing/";
 
 const updateGameParticipants = (gameParticipants: IGamePartipant[]) => {
   return gameParticipants.map((participant) => ({
@@ -18,12 +19,12 @@ const updateGameParticipants = (gameParticipants: IGamePartipant[]) => {
 const useGameSocket = (
   tableId?: string,
   member?: IMember,
-  onGameUpdate?: (game: IGame) => void
+  onGameUpdate?: (game: Partial<IGame>) => void
 ) => {
   const { on, emit } = useWebSocket();
-  const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>(
-    []
-  );
+  // const [gameParticipants, setGameParticipants] = useState<IGamePartipant[]>(
+  //   []
+  // );
   const { toast } = useToast();
 
   const emitJoinGame = useCallback(() => {
@@ -62,23 +63,31 @@ const useGameSocket = (
         toast({
           title: `${data.joined.username} joined the game`,
         });
-        debugger;
-        setGameParticipants(updateGameParticipants(data.allParticipants));
+
+        onGameUpdate?.({
+          participants: data.allParticipants,
+        });
       }
     );
   }, [on, toast]);
 
   const watchForLeaveGame = useCallback(() => {
-    on(SocketEvents.LEAVE_GAME, (data: ISocketUser) => {
-      toast({
-        title: `${data.username} left the game`,
-      });
-    });
+    on(
+      SocketEvents.LEAVE_GAME,
+      (data: {
+        left: ISocketUser;
+        gameId: string;
+        allParticipants: ISocketUser[];
+      }) => {
+        toast({
+          title: `${data.left.username} left the game`,
+        });
+        onGameUpdate?.({
+          participants: data.allParticipants,
+        });
+      }
+    );
   }, [on, toast]);
-
-  const updateGameOnSocket = useCallback((game: IGame) => {
-    console.log("[GAME] [UPDATE_GAME]", game);
-  }, []);
 
   const watchForGameUpdate = useCallback(() => {
     on(SocketEvents.GAME_UPDATE, (data: IGame) => {
@@ -110,10 +119,7 @@ const useGameSocket = (
     // watchForGameUpdate
   ]);
 
-  return {
-    gameParticipants,
-    updateGameOnSocket,
-  };
+  return {};
 };
 
 export { useGameSocket };

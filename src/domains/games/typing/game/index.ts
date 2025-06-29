@@ -19,15 +19,15 @@ export interface IGameState {
 
 export interface IGame {
   activePhase: GamePhaseStatuses;
-  rotation: {
-    leadPlayer: IGamePartipant;
-    leadPlayerIndex: number;
-    isMemberLeadPlayer: boolean;
-    rotateToNextPlayer: () => void;
-  };
+  // rotation: {
+  //   leadPlayer: IGamePartipant;
+  //   leadPlayerIndex: number;
+  //   isMemberLeadPlayer: boolean;
+  //   rotateToNextPlayer: () => void;
+  // };
   participants: IGamePartipant[];
-  actions: IGameActions;
-  state?: IGameState;
+  // actions: IGameActions;
+  // state?: IGameState;
 }
 
 export interface IGameActions {

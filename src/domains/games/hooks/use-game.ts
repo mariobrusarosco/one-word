@@ -16,36 +16,30 @@ const GAME_QUERY_KEY = (tableId: string) => ["game", tableId];
 export const useGame = (): IGame | undefined => {
   const { data: member } = useMember();
   const { tableId } = useParams<{ tableId: string }>() as { tableId: string };
-  const { gameParticipants } = useGameSocket(tableId, member, (game: IGame) => {
+  useGameSocket(tableId, member, (currentGameData: Partial<IGame>) => {
     queryClient.setQueryData(
       GAME_QUERY_KEY(tableId),
-      (oldData: IGame | undefined) => {
-        if (!oldData) return game;
+      (oldGameData: IGame | undefined) => {
+        if (!oldGameData) return currentGameData;
+
         return {
-          ...oldData,
-          ...game,
+          ...oldGameData,
+          ...currentGameData,
         };
       }
     );
-  });
-
-  console.log("[DEBUG] [useGame]", {
-    gameParticipants,
-    member,
-    tableId,
   });
 
   const queryClient = useQueryClient();
   const query = useQuery<IGame>({
     queryKey: GAME_QUERY_KEY(tableId),
     queryFn: () => {
-      const game: IGame = {
-        participants: gameParticipants,
+      return {
+        participants: [],
         activePhase: GamePhaseStatuses.NOT_STARTED,
-      };
-      return game;
+      } satisfies IGame;
     },
-    enabled: Boolean(member && gameParticipants.length > 0),
+    enabled: Boolean(member),
   });
 
   return query.data;
